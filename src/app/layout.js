@@ -30,7 +30,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning={true}>
       <body className={inter.className + " max-w-screen-2xl mx-auto bg-white dark:bg-black transition-[background-color] duration-300"}>
         <DarkModeProvider>
         <Header />
