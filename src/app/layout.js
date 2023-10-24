@@ -30,13 +30,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" suppressHydrationWarning={true}>
-      <body className={inter.className + " max-w-screen-2xl mx-auto bg-white dark:bg-black transition-[background-color] duration-300"}>
+    <html lang="es" suppressHydrationWarning={true} className='scroll-smooth h-full'>
+      <body className={inter.className + " bg-white dark:bg-black transition-[background-color] h-full"}>
         <DarkModeProvider>
         <Header />
-        <main>
+        <div className='max-w-screen-2xl mx-auto px-[1%] h-full flex'>
         {children}
-        </main>
+        </div>
         </DarkModeProvider>
       </body>
     </html>
