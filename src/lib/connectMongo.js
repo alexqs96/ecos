@@ -1,4 +1,5 @@
-import { connect, connection, set } from "mongoose";
+import { connect, connection, model, set } from "mongoose";
+import { commentSchema } from "./models/Comment";
 
 export const connectMongo = async () => {
   if (connection.readyState === 1 || connection.readyState === 2) {
@@ -10,6 +11,7 @@ export const connectMongo = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    model('Comments', commentSchema);
     console.log("Conectado a MongoDB");
   } catch (error) {
     console.error("MongoDB Error: " + error);
