@@ -1,9 +1,15 @@
-import { SignInForm } from "@/components/Forms";
+import { SignInForm } from "@/components/Forms/AuthForms";
+import { Toaster } from "react-hot-toast";
 
-export default function SignIn() {
+/*
+  callbackUrl es para guardar la url a la que el cliente solicita entrar pero primero debe iniciar sesion.
+*/
+
+export default function SignIn(searchParams) {
   return (
     <>
-      <SignInForm />
+      <Toaster />
+      <SignInForm callbackUrl={searchParams.callbackUrl} />
     </>
   )
 }

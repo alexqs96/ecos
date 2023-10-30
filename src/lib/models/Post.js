@@ -9,11 +9,15 @@ const postSchema = new mongoose.Schema(
     },
     content: {
       type: String,
-      required: true,
+      default: ""
     },
     images: [{
       type: String
     }],
+    category: {
+      type: String,
+      default: "post"
+    },
     likes: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
@@ -28,6 +32,6 @@ const postSchema = new mongoose.Schema(
   },
 );
 
-const Post = mongoose.models.Post || mongoose.model("Posts", postSchema)
+const Post = mongoose.models.Posts || mongoose.model("Posts", postSchema)
 
 export default Post

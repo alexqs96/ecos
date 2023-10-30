@@ -2,5 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+  scrollbar-gutter: stable;
+}
+
+.dark {
+  color-scheme: light dark;
+  color: #fff;
+}
+
+.hideScrollbar{
+  scrollbar-width: none;
+}
+
+.hideScrollbar::-webkit-scrollbar { 
+  display: none;
+}
+
+/*
+  Si guardan las clases adentro de utilities van a poder usar
+  las media queries de tailwind con sus clases por ejemplo md:pressable
+*/
+
 @layer utilities{
+  .flow {
+    display: inline-block;
+    transition: transform 2s;
+    animation: flow 2.5s linear infinite;
+    transform-origin: bottom right;
+  }
+
+  @keyframes flow {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    75% {
+      transform: rotate(5deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  
+  .pressable:active {
+    animation: pressable 2s cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  @keyframes pressable {
+    0% {
+      transform: scale(0.98);
+    }
+  
+    40% {
+      transform: scale(1.01);
+    }
+  
+    100% {
+      transform: scale(1);
+    }
+  }
 }

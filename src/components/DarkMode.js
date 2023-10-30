@@ -1,24 +1,29 @@
 "use client";
 
-import { ThemeProvider, useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-
 export const DarkMode = () => {
-  const { setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const changeTheme = (theme) => {
+    document.documentElement.classList.remove("light");
+    document.documentElement.classList.remove("dark");
+  
+    if (theme) {
+      theme !== "light" && document.documentElement.classList.add(theme);
+      localStorage.theme = theme;
+    } else {
+      localStorage.removeItem('theme');
 
-  if (!mounted) {
-    return null;
-  }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.add("light");
+      }
+    }
+  };
 
   return (
     <div className="flex items-center gap-3">
       <button
-        onClick={() => setTheme("light")}
+        onClick={() => changeTheme("light")}
         aria-label="Boton de tema claro"
       >
         <svg
@@ -39,7 +44,7 @@ export const DarkMode = () => {
         </svg>
       </button>
       <button
-        onClick={() => setTheme("dark")}
+        onClick={() => changeTheme("dark")}
         aria-label="Boton de tema oscuro"
       >
         <svg
@@ -59,7 +64,7 @@ export const DarkMode = () => {
         </svg>
       </button>
       <button
-        onClick={() => setTheme("system")}
+        onClick={() => changeTheme()}
         aria-label="Boton de tema del sistema"
       >
         <svg
@@ -74,7 +79,7 @@ export const DarkMode = () => {
           width="20"
           color="currentColor"
         >
-          <title>Tema Automatico</title>
+          <title>Tema del Dispositivo</title>
           <rect width="20" height="14" x="2" y="3" rx="2" ry="2"></rect>
           <path d="M8 21h8M12 17v4"></path>
         </svg>
@@ -82,13 +87,3 @@ export const DarkMode = () => {
     </div>
   );
 };
-
-const DarkModeProvider = ({ children }) => {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="light">
-      {children}
-    </ThemeProvider>
-  );
-};
-
-export default DarkModeProvider;

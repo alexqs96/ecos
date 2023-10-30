@@ -19,21 +19,31 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    email: {
+      type: String,
+      required: true,
+    },
     photo: {
       type: String,
-      default: "default_profile.png",
+      default: "",
     },
     banner: {
       type: String,
-      default: "default_banner.png",
+      default: "",
     },
     about: {
       type: String,
       default: ""
     },
     location: {
-      type: String,
-      default: ""
+      country: {
+        type: String,
+        default: ""
+      },
+      city: {
+        type: String,
+        default: ""
+      }
     },
     friends: [{
       type: mongoose.Schema.Types.ObjectId,
@@ -63,6 +73,6 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-const User = mongoose.models.User || mongoose.model("Users", userSchema)
+const User = mongoose.models.Users || mongoose.model("Users", userSchema)
 
 export default User
