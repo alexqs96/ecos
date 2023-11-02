@@ -1,6 +1,6 @@
 import User from "@/lib/models/User";
 import { connectMongo } from "@/lib/connectMongo";
-import { EMAIL_REGISTERED, MISSING_FIELDS, SERVER_ERROR, USER_REGISTERED } from "@/lib/consts";
+import { EMAIL_REGISTERED, MISSING_FIELDS, SERVER_ERROR, USER_REGISTERED } from "../../../../consts";
 import { SignUpSchema } from "@/lib/schemas";
 import { hashPassword } from "@/utils/auth";
 import { capitalize } from "@/utils/utils";

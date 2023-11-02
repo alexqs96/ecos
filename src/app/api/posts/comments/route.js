@@ -2,7 +2,7 @@ import Post from "@/lib/models/Post";
 import Comment from "@/lib/models/Comment";
 import { CloudinaryUpload } from "@/lib/cloudinaryUpload";
 import { connectMongo } from "@/lib/connectMongo";
-import { SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
+import { SERVER_ERROR, USER_NOT_LOGGED_IN } from "../../../../../consts";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../../auth/[...nextauth]/route";
