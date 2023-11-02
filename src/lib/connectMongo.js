@@ -3,6 +3,7 @@ import { commentSchema } from "./models/Comment";
 
 export const connectMongo = async () => {
   if (connection.readyState === 1 || connection.readyState === 2) {
+    console.log("Mongo esta conectado, solicitando datos de DB");
     return;
   }
 

@@ -7,7 +7,6 @@ import { Posts } from '@/components/Posts/Posts'
 import { Toaster } from 'react-hot-toast'
 
 export default function HomePage() {
-
   return (
     <>
     <Toaster />
