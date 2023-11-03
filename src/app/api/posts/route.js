@@ -56,7 +56,7 @@ export async function POST(req) {
         {},
         {
           status: 404,
-          statusText: MISSING_FIELDS,
+          statusText: "Campos Incompletos",
         },
       );
     }
