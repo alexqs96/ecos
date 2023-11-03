@@ -55,7 +55,7 @@ export async function POST(req) {
       return NextResponse.json(
         {},
         {
-          status: 404,
+          status: 400,
           statusText: "Campos Incompletos",
         },
       );
