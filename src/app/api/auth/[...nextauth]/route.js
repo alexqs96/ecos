@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import User from "@/lib/models/User";
 import bcrypt from 'bcryptjs'
 import { connectMongo } from "@/lib/connectMongo";
-import { INVALID_CREDENTIALS, MISSING_FIELDS } from "../../../../../consts";
+import { INVALID_CREDENTIALS, MISSING_FIELDS } from "@/lib/consts";
 import { SignInSchema } from "@/lib/schemas";
 
 const handleLogin = async (data) => {

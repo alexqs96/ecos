@@ -1,7 +1,7 @@
 import Post from "@/lib/models/Post";
 import { CloudinaryUpload } from "@/lib/cloudinaryUpload";
 import { connectMongo } from "@/lib/connectMongo";
-import { MISSING_FIELDS, SERVER_ERROR, USER_NOT_LOGGED_IN } from "../../../../consts";
+import { MISSING_FIELDS, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../auth/[...nextauth]/route";
