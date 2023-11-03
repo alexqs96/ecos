@@ -50,7 +50,7 @@ export function PostForm() {
         })
       })
 
-      console.log(res.statusText);
+      console.dir(res);
 
       if (res.status === 201) {
         reset()
