@@ -89,7 +89,7 @@ export async function imagesToBase64(images, amountLimit) {
     .filter((image) => image !== null);
 
   if (!amountLimit) {
-    return previewImages[0]
+    return previewImages[0];
   }
 
   return previewImages;
@@ -98,7 +98,7 @@ export async function imagesToBase64(images, amountLimit) {
 /**
  * Cambia el tamaño del input a medida que se incrementa el contenido del input, tipo X
  * @param {HTMLInputElement} e
- * @param {number} wordLengthStarter 
+ * @param {number} wordLengthStarter
  * @param {number} maxHeight
  */
 
@@ -116,25 +116,98 @@ export function handleResizeInput(e, wordLengthStarter, maxHeight) {
 }
 
 export function formatDate(value) {
-  const dateValue = new Date(value);
   const currentDate = new Date();
+  const inputDate = new Date(value);
 
-  const difference = currentDate - dateValue;
+  const currentYear = currentDate.getFullYear();
+  const inputYear = inputDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  const inputMonth = inputDate.getMonth();
+  const currentDay = currentDate.getDate();
+  const inputDay = inputDate.getDate();
+  const currentHour = currentDate.getHours();
+  const inputHour = inputDate.getHours();
+  const currentMinute = currentDate.getMinutes();
+  const inputMinute = inputDate.getMinutes();
 
-  if (difference < 1000) {
-      return "Hace menos de un segundo";
-  } else if (difference < 60000) {
-      const seconds = Math.floor(difference / 1000);
-      return `Hace ${seconds} segundo(s)`;
-  } else if (difference < 3600000) {
-      const minutes = Math.floor(difference / 60000);
-      return `Hace ${minutes} minuto(s)`;
-  } else if (dateValue.toDateString() === currentDate.toDateString()) {
-      const hours = dateValue.getHours();
-      const minutes = dateValue.getMinutes();
-      const seconds = dateValue.getSeconds();
-      return `Hoy a las ${hours}:${minutes}:${seconds}`;
-  } else {
-      return dateValue.toDateString();
+  let longDate = inputDate.toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric'
+  }) + "hs";
+
+  if (currentYear === inputYear && currentMonth === inputMonth) {
+    const dayDifference = currentDay - inputDay;
+    if (dayDifference === 1) {
+      return {
+        short: "hace 1 día",
+        long: longDate
+      };
+    } else if (dayDifference > 1) {
+      return {
+        short: `hace ${dayDifference} días`,
+        long: longDate
+      };
+    } else if (dayDifference === 0) {
+      const hourDifference = currentHour - inputHour;
+      if (hourDifference === 1) {
+        return {
+          short: "hace 1 hora",
+          long: longDate
+        };
+      } else if (hourDifference > 1) {
+        return {
+          short: `hace ${hourDifference} horas`,
+          long: longDate
+        };
+      } else if (hourDifference === 0) {
+        const minuteDifference = currentMinute - inputMinute;
+        if (minuteDifference === 1) {
+          return {
+            short: "hace 1 minuto",
+            long: longDate
+          };
+        } else if (minuteDifference > 1) {
+          return {
+            short: `hace ${minuteDifference} minutos`,
+            long: longDate
+          };
+        } else {
+          return {
+            short: "ahora",
+            long: longDate
+          };
+        }
+      }
+    }
+  } else if (currentYear === inputYear) {
+    const monthDifference = currentMonth - inputMonth;
+    if (monthDifference === 1) {
+      if (currentDay <= inputDay) {
+        const daysInCurrentMonth = new Date(currentYear, currentMonth, 0).getDate();
+        const remainingDays = daysInCurrentMonth - inputDay + currentDay;
+        return {
+          short: `hace ${remainingDays} días`,
+          long: longDate
+        };
+      } else {
+        return {
+          short: "hace 1 mes",
+          long: longDate
+        };
+      }
+    } else if (monthDifference > 1) {
+      return {
+        short: `hace ${monthDifference} meses`,
+        long: longDate
+      };
+    }
   }
+
+  return {
+    short: currentYear - inputYear === 1 ? "hace 1 año" : `hace ${currentYear - inputYear} años`,
+    long: longDate
+  };
 }

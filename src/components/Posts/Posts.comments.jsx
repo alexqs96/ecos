@@ -44,7 +44,10 @@ export default function Comments({data}){
             <Link className="block w-fit" href={e.creator.username}>
               <small className="font-medium">{e.creator.name} {e.creator.surname} · @{e.creator.username}</small>
             </Link>
-            <small className="font-medium opacity-80">{formatDate(e.createdAt)}</small>
+            <small className="font-medium opacity-80 group relative cursor-pointer transition duration-200 hover:underline">
+              {formatDate(e.createdAt).short}
+              <small className="py-1 px-1.5 rounded-md bg-black dark:bg-white text-white dark:text-black hidden group-hover:block absolute -bottom-6 left-0">{formatDate(e.createdAt).long}</small>
+            </small>
             <p className="whitespace-break-spaces">{e.content}</p>
             {
               e.image?
