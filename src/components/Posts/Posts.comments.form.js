@@ -4,13 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { handleResizeInput, imagesToBase64 } from "@/utils/utils";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { PostFormSchema } from "@/lib/schemas";
 import { BsImage } from "react-icons/bs";
 import { AiOutlineClose, AiOutlineLoading, AiOutlineSend } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { PiUserCircleFill } from "react-icons/pi";
+import { COMMENT_ADDED, COMMENT_ERROR } from "@/lib/consts";
+import { useQueryClient } from "@tanstack/react-query";
 
 /**
  * Formulario de comentario
@@ -19,7 +20,7 @@ import { PiUserCircleFill } from "react-icons/pi";
  */
 
 export default function CommentForm({id}) {
-  const router = useRouter();
+  const queryClient = useQueryClient();
   const { data: session, status } = useSession();
   const [image, setImage] = useState(null);
   const {
@@ -50,19 +51,17 @@ export default function CommentForm({id}) {
         }),
       });
 
-      console.log(res.statusText);
-
       if (res.status === 201) {
         reset();
         setImage(null);
-        toast.success("Comentario Agregado 🥳");
-        router.refresh();
+        toast.success(COMMENT_ADDED);
+        queryClient.invalidateQueries('posts');
       }
 
       document.querySelector("#uploadImageComment").value = null;
     } catch (error) {
-      toast.error("Hubo un error al comentar.");
-      console.log(error);
+      toast.error(COMMENT_ERROR);
+      console.error(error);
     }
   };
 
@@ -76,9 +75,24 @@ export default function CommentForm({id}) {
         <>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex items-center w-full overflow-hidden"
+          className="flex items-center w-full overflow-hidden border-t border-t-black/5 dark:border-t-white/10 pt-5"
         >
-          <PiUserCircleFill size={48} className="mb-auto" />
+          {
+            session.user?.image?
+            <Image
+              className="block h-fit w-fit mb-auto aspect-square object-cover rounded-full overflow-hidden"
+              width={48.1}
+              height={48.1}
+              onError={e => {
+                e.target.src = "/img/profile_default.webp"
+              }}
+              src={session.user?.image || "/img/profile_default.webp"}
+              alt={"Foto de "+session.user.username}
+              unoptimized
+            />
+            :
+            <PiUserCircleFill size={48.1} className="block w-fit h-fit mb-auto" />
+          }
           <div className="flex flex-col w-full h-full pl-3">
             <textarea
               {...register("content")}

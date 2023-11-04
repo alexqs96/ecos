@@ -2,9 +2,15 @@ import User from "@/lib/models/User";
 import { connectMongo } from "@/lib/connectMongo";
 import { EMAIL_REGISTERED, MISSING_FIELDS, SERVER_ERROR, USER_REGISTERED } from "@/lib/consts";
 import { SignUpSchema } from "@/lib/schemas";
-import { hashPassword } from "@/utils/auth";
 import { capitalize } from "@/utils/utils";
 import { NextResponse } from "next/server";
+
+const hashPassword = async (password) => {
+  const saltRounds = 10;
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hash = await bcrypt.hash(password, salt);
+  return hash;
+}
 
 export async function POST(req) {
   try {

@@ -1,5 +1,5 @@
 "use client";
-import CommentForm from "../Forms/CommentForm";
+import CommentForm from "./Posts.comments.form";
 import ImagesLayout from "../ImagesLayout";
 import Comments from "./Posts.comments";
 

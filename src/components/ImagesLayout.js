@@ -23,7 +23,6 @@ export default function ImagesLayout({ images, creator }) {
             height={128.1}
             alt={"Imagen 1 del post de @" + creator}
             unoptimized
-            priority
           />
           <Image
             onClick={() => setPreviewImagePost(images[1])}
@@ -33,7 +32,6 @@ export default function ImagesLayout({ images, creator }) {
             height={128.1}
             alt={"Imagen 2 del post de @" + creator}
             unoptimized
-            priority
           />
         </div>
       ) : amount === 3 ? (
@@ -46,7 +44,6 @@ export default function ImagesLayout({ images, creator }) {
             height={128.1}
             alt={"Imagen 1 del post de @" + creator}
             unoptimized
-            priority
           />
           <div className="flex h-[128px]">
             <Image
@@ -57,7 +54,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 2 del post de @" + creator}
               unoptimized
-              priority
             />
             <Image
               onClick={() => setPreviewImagePost(images[2])}
@@ -67,7 +63,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 3 del post de @" + creator}
               unoptimized
-              priority
             />
           </div>
         </div>
@@ -81,7 +76,6 @@ export default function ImagesLayout({ images, creator }) {
             height={128.1}
             alt={"Imagen 1 del post de @" + creator}
             unoptimized
-            priority
           />
           <div className="h-full w-[70%] overflow-hidden">
             <Image
@@ -92,7 +86,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 2 del post de @" + creator}
               unoptimized
-              priority
             />
             <Image
               onClick={() => setPreviewImagePost(images[2])}
@@ -102,7 +95,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 3 del post de @" + creator}
               unoptimized
-              priority
             />
             <Image
               onClick={() => setPreviewImagePost(images[3])}
@@ -112,7 +104,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 4 del post de @" + creator}
               unoptimized
-              priority
             />
           </div>
         </div>
@@ -127,7 +118,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 1 del post de @" + creator}
               unoptimized
-              priority
             />
             <Image
               onClick={() => setPreviewImagePost(images[1])}
@@ -137,7 +127,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 2 del post de @" + creator}
               unoptimized
-              priority
             />
           </div>
           <div className="flex h-[128px]">
@@ -149,7 +138,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 3 del post de @" + creator}
               unoptimized
-              priority
             />
             <Image
               onClick={() => setPreviewImagePost(images[3])}
@@ -159,7 +147,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 4 del post de @" + creator}
               unoptimized
-              priority
             />
             <Image
               onClick={() => setPreviewImagePost(images[4])}
@@ -169,7 +156,6 @@ export default function ImagesLayout({ images, creator }) {
               height={128.1}
               alt={"Imagen 5 del post de @" + creator}
               unoptimized
-              priority
             />
           </div>
         </div>
@@ -182,7 +168,6 @@ export default function ImagesLayout({ images, creator }) {
           height={128.1}
           alt={"Imagen del post de @" + creator}
           unoptimized
-          priority
         />
       )}
     </>

@@ -114,3 +114,27 @@ export function handleResizeInput(e, wordLengthStarter, maxHeight) {
 
   return null;
 }
+
+export function formatDate(value) {
+  const dateValue = new Date(value);
+  const currentDate = new Date();
+
+  const difference = currentDate - dateValue;
+
+  if (difference < 1000) {
+      return "Hace menos de un segundo";
+  } else if (difference < 60000) {
+      const seconds = Math.floor(difference / 1000);
+      return `Hace ${seconds} segundo(s)`;
+  } else if (difference < 3600000) {
+      const minutes = Math.floor(difference / 60000);
+      return `Hace ${minutes} minuto(s)`;
+  } else if (dateValue.toDateString() === currentDate.toDateString()) {
+      const hours = dateValue.getHours();
+      const minutes = dateValue.getMinutes();
+      const seconds = dateValue.getSeconds();
+      return `Hoy a las ${hours}:${minutes}:${seconds}`;
+  } else {
+      return dateValue.toDateString();
+  }
+}

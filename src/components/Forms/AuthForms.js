@@ -10,6 +10,7 @@ import { EcosLogo } from "../Icons";
 import { SignInSchema, SignUpSchema } from "@/lib/schemas";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { INVALID_CREDENTIALS, WELCOME } from "@/lib/consts";
 
 export function SignInForm({ callbackUrl }) {
   const router = useRouter();
@@ -23,8 +24,6 @@ export function SignInForm({ callbackUrl }) {
   });
 
   const onSubmit = async (data) => {
-    console.log("Enviando");
-
     const res = await signIn("credentials", {
       username: data.username,
       password: data.password,
@@ -32,7 +31,7 @@ export function SignInForm({ callbackUrl }) {
     });
 
     if (res.status === 200) {
-      toast.success("Bienvenido 🥳");
+      toast.success(WELCOME);
       setTimeout(() => {
         if (callbackUrl) {
           router.push(callbackUrl);
@@ -41,7 +40,7 @@ export function SignInForm({ callbackUrl }) {
         }
       }, 500);
     } else {
-      toast.error("Credenciales invalidas.");
+      toast.error(INVALID_CREDENTIALS);
     }
   };
 

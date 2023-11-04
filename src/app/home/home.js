@@ -1,10 +1,9 @@
 'use client'
 
-import { LeftSidebar, RightSidebar } from '@/components/Sidebars'
-import { PostForm } from '@/components/Forms/PostForms'
-import { Suspense } from 'react'
-import { Posts } from '@/components/Posts/Posts'
+import { LeftSidebar, RightSidebar } from '@/app/home/home.sidebars'
+import { PostForm } from '@/components/Posts/Posts.form'
 import { Toaster } from 'react-hot-toast'
+import { Posts } from '@/components/Posts/Posts'
 
 export default function HomePage() {
   return (
@@ -14,9 +13,7 @@ export default function HomePage() {
       <LeftSidebar />
       <section className='grid gap-2 w-full'>
       <PostForm />
-      <Suspense fallback={<p>Cargando posts...</p>}>
-        <Posts />
-      </Suspense>
+      <Posts />
       </section>
       <RightSidebar />
     </section>

@@ -16,7 +16,7 @@ export async function GET(){
       path: "comments",
       populate: {
         path: "creator",
-        select: "username photo -_id",
+        select: "username name surname photo -_id",
       },
     })
     .sort({ createdAt: -1 });
@@ -55,8 +55,8 @@ export async function POST(req) {
       return NextResponse.json(
         {},
         {
-          status: 400,
-          statusText: "Campos Incompletos",
+          status: 404,
+          statusText: MISSING_FIELDS,
         },
       );
     }

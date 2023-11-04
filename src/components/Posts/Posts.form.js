@@ -12,6 +12,8 @@ import Image from "next/image";
 import ImageModal from "../ImageModal";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { MISSING_FIELDS, POST_ADDED, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
+import Link from "next/link";
 
 export function PostForm() {
   const router = useRouter()
@@ -50,22 +52,24 @@ export function PostForm() {
         })
       })
 
-      console.dir(res);
-
       if (res.status === 201) {
         reset()
         setImages([])
-        toast.success("Post Publicado 🥳");
+        toast.success(POST_ADDED);
         router.refresh()
       }
-      else
-      {
-        toast.error(res.statusText);  
+      
+      if (res.status === 401) {
+        toast.error(USER_NOT_LOGGED_IN)
+      }
+
+      if (res.status === 404){
+        toast.error(MISSING_FIELDS);  
       }
 
       document.querySelector("#uploadImage").value = null 
     } catch (error) {
-      toast.error("Hubo un error al publicar.");
+      toast.error(SERVER_ERROR);
       console.log(error);
     }
   };
@@ -78,7 +82,22 @@ export function PostForm() {
         </section>
       ) : session && session.user ? (
         <section className="flex gap-5 mt-1 h-fit p-4 border dark:border-white/20 rounded-md">
-          <PiUserCircleFill size={48} />
+          {
+            session.user?.image?
+            <Image
+              className="block h-fit w-fit aspect-square object-cover rounded-full overflow-hidden"
+              width={48.1}
+              height={48.1}
+              onError={e => {
+                e.target.src = "/img/profile_default.webp"
+              }}
+              src={session.user?.image || "/img/profile_default.webp"}
+              alt={"Foto de "+session.user.username}
+              unoptimized
+            />
+            :
+            <PiUserCircleFill size={48.1} className="block w-fit h-fit mb-auto" />
+          }
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col w-full"
