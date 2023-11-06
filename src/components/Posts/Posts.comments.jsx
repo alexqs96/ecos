@@ -97,7 +97,7 @@ export default function Comments({data}){
                   :
                   null
                 :
-                <span>Cargando..</span>
+                null
               }
             </div>
             <p className="whitespace-break-spaces">{e.content}</p>
