@@ -19,6 +19,16 @@ html{
   display: none;
 }
 
+.danger{
+  background-color: hsl(0 100% 97%);
+  color: hsl(0 70% 40%);
+}
+
+.dark .danger{
+  background-color: hsl(0 70% 40%);
+  color: hsl(0 100% 97%);
+}
+
 /*
   Si guardan las clases adentro de utilities van a poder usar
   las media queries de tailwind con sus clases por ejemplo md:pressable

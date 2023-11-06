@@ -1,76 +1,69 @@
 "use client";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { AiOutlineClose, AiOutlineLoading } from "react-icons/ai";
 import { BsImage } from "react-icons/bs";
 import { PiUserCircleFill } from "react-icons/pi";
-import { PostFormSchema } from "@/lib/schemas";
 import { useSession } from "next-auth/react";
 import { Children, useState } from "react";
 import { handleResizeInput, imagesToBase64 } from "@/utils/utils";
 import Image from "next/image";
 import ImageModal from "../ImageModal";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { MISSING_FIELDS, POST_ADDED, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
-import Link from "next/link";
+import { SERVER_ERROR } from "@/lib/consts";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function PostForm() {
-  const router = useRouter()
   const { data: session, status } = useSession();
   const [images, setImages] = useState([]);
   const [viewImage, setViewImage] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { isSubmitting },
-  } = useForm({
-    resolver: zodResolver(PostFormSchema),
-  });
+  const queryClient = useQueryClient();
+  const sendPost = useMutation({
+    mutationFn: async (data) => {
+      return await fetch('/api/posts', {
+        method: "POST",
+        credentials: 'include',
+        body: JSON.stringify(data)
+      })
+    },
+    onSuccess: async (result) => {
+      const res = await result.json()
+      if (result.status === 201) {
+        setImages([])
+        toast.success(res.message+" 🥳");
+        queryClient.invalidateQueries('posts'); 
+      }
+      else
+      {
+        toast.error(res.message);
+      }
+    },
+    onError: () => {
+      toast.error(SERVER_ERROR);
+    }
+  })
 
   const removeImages = (file) => {
     const bucket = images.filter((e) => e !== file);
     setImages(bucket);
   };
 
-  const loadImages = async (files) => {
-    const previewImages = await imagesToBase64(files, 5);
+  const loadImages = async (e) => {
+    const previewImages = await imagesToBase64(e.target.files, 5);
     setImages([...images, ...previewImages]);
-    document.querySelector("#uploadImage").value = null;
+    e.target.value = null;
   };
 
-  const onSubmit = async (data) => {
-    try {
-      const res = await fetch('/api/posts', {
-        method: "POST",
-        credentials: 'include',
-        body: JSON.stringify({
-          content: data.content,
-          images,
-          category: 'post'
-        })
-      })
+  const onSubmit = async (e) => {
+    e.preventDefault()
 
-      if (res.status === 201) {
-        reset()
-        setImages([])
-        toast.success(POST_ADDED);
-        router.refresh()
-      }
-      
-      if (res.status === 401) {
-        toast.error(USER_NOT_LOGGED_IN)
-      }
+    const res = await sendPost.mutateAsync({
+      content: e.target.content.value,
+      images,
+      category: 'post'
+    })
 
-      if (res.status === 404){
-        toast.error(MISSING_FIELDS);  
-      }
-
-      document.querySelector("#uploadImage").value = null 
-    } catch (error) {
-      toast.error(SERVER_ERROR);
-      console.log(error);
+    if (res.status === 201) {
+      e.target.reset()
     }
   };
 
@@ -81,7 +74,7 @@ export function PostForm() {
           <AiOutlineLoading size={24} className="animate-spin" />
         </section>
       ) : session && session.user ? (
-        <section className="flex gap-5 mt-1 h-fit p-4 border dark:border-white/20 rounded-md">
+        <section className="flex gap-5 mt-2 h-fit p-6 border dark:border-white/20 rounded-xl">
           {
             session.user?.image?
             <Image
@@ -99,11 +92,11 @@ export function PostForm() {
             <PiUserCircleFill size={48.1} className="block w-fit h-fit mb-auto" />
           }
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={e => onSubmit(e)}
             className="flex flex-col w-full"
           >
             <textarea
-              {...register("content")}
+              name="content"
               onChange={(e) => handleResizeInput(e, 70, 180)}
               className="not-sr-only bg-transparent resize-none outline-none w-full transition-[height] duration-200 border-b border-b-transparent focus-within:border-b-black/5 focus-within:dark:border-white/10 pb-2"
               placeholder="Comparti lo que quieras aqui."
@@ -131,7 +124,6 @@ export function PostForm() {
                         src={e}
                         alt={"Preview Image " + index}
                         unoptimized
-                        priority
                       />
                     </div>
                   )),
@@ -140,23 +132,28 @@ export function PostForm() {
             ) : null}
 
             <div className="flex items-center justify-between mt-2">
-              <label className="cursor-pointer" htmlFor="uploadImage">
+              <label className="cursor-pointer" htmlFor="uploadImagePost" aria-labelledby="Subir imagenes para tu publicación">
                 <input
-                  onChange={(e) => loadImages(e.target.files)}
+                  onChange={(e) => loadImages(e)}
                   className="hidden"
-                  id="uploadImage"
+                  id="uploadImagePost"
                   type="file"
                   multiple
                 />
-                <BsImage size={20} />
+                <span
+                  tabIndex="0"
+                  role="button"
+                  >
+                  <BsImage size={20} />
+                </span>
               </label>
 
               <button
-                disabled={isSubmitting}
+                disabled={sendPost.isPending}
                 className="py-1 px-3 rounded-md bg-black text-white dark:bg-white dark:text-black pressable"
                 type="submit"
               >
-                {isSubmitting ? (
+                {sendPost.isPending ? (
                   <span className="flex items-center gap-2">
                     <AiOutlineLoading size={16} className="animate-spin" />{" "}
                     Publicando

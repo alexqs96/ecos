@@ -2,7 +2,7 @@ import Post from "@/lib/models/Post";
 import Comment from "@/lib/models/Comment";
 import { CloudinaryUpload } from "@/lib/cloudinaryUpload";
 import { connectMongo } from "@/lib/connectMongo";
-import { SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
+import { COMMENT_ADDED, COMMENT_DELETED, MISSING_FIELDS, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../../auth/[...nextauth]/route";
@@ -46,7 +46,9 @@ export async function POST(req) {
 
     if (!session) {
       return NextResponse.json(
-        {},
+        {
+          message: USER_NOT_LOGGED_IN
+        },
         {
           status: 401,
           statusText: USER_NOT_LOGGED_IN,
@@ -56,7 +58,9 @@ export async function POST(req) {
 
     if (!content && !image > 0) {
       return NextResponse.json(
-        {},
+        {
+          message: MISSING_FIELDS
+        },
         {
           status: 404,
           statusText: MISSING_FIELDS,
@@ -84,16 +88,101 @@ export async function POST(req) {
     );
 
     return NextResponse.json(
-      {},
+      {
+        message: COMMENT_ADDED
+      },
       {
         status: 201,
-        statusText: "Comentario Agregado",
+        statusText: COMMENT_ADDED,
       },
     );
   } catch (error) {
     console.log("/posts/comments error: " + error);
     return NextResponse.json(
-      {},
+      {
+        message: SERVER_ERROR
+      },
+      {
+        status: 500,
+        statusText: SERVER_ERROR,
+      },
+    );
+  }
+}
+
+export async function DELETE(req) {
+  try {
+    const session = await getServerSession(AuthOptions);
+    const { post, id } = await req.json();
+
+    if (!session) {
+      return NextResponse.json(
+        {
+          message: USER_NOT_LOGGED_IN
+        },
+        {
+          status: 401,
+          statusText: USER_NOT_LOGGED_IN,
+        },
+      );
+    }
+
+    if (!post && !id > 0) {
+      return NextResponse.json(
+        {
+          message: MISSING_FIELDS
+        },
+        {
+          status: 404,
+          statusText: MISSING_FIELDS,
+        },
+      );
+    }
+
+    const validateUser = await Comment.findOne({
+      creator: session.user._id,
+      post,
+      _id: id
+    })
+
+    if (!validateUser) {
+      console.log("El usuario logueado no es el creador de este comentario");
+
+      return NextResponse.json(
+        {
+          message: SERVER_ERROR
+        },
+        {
+          status: 500,
+          statusText: SERVER_ERROR,
+        },
+      );
+    }
+
+    await connectMongo();
+
+    await Comment.findByIdAndRemove(id);
+
+    await Post.findByIdAndUpdate(post, {
+      $pull: { comments: id },
+    });
+
+    return NextResponse.json(
+      {
+        message: COMMENT_DELETED
+      },
+      {
+        status: 201,
+        statusText: COMMENT_DELETED,
+      },
+    );
+  }
+  catch(error){
+    console.log("/posts/comments error: " + error);
+    return NextResponse.json(
+      {
+        message: SERVER_ERROR
+      },
       {
         status: 500,
         statusText: SERVER_ERROR,

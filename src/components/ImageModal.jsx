@@ -11,7 +11,7 @@ export default function ImageModal({ image, close }) {
         <button
           type="button"
           onClick={() => close("")}
-          className="block bg-red-100 text-red-500 py-1.5 px-3 rounded-full ml-auto absolute -right-5 -top-10"
+          className="block danger py-1 px-2.5 rounded-md ml-auto absolute -right-5 -top-10"
           aria-label="Cerrar Modal"
         >
           Cerrar

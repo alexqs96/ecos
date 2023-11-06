@@ -21,7 +21,7 @@ export default function Header() {
           Ecos
         </span>
         :
-        <Link href='/home' className="flex items-center gap-1 text-xl font-medium">
+        <Link href='/home' className="flex items-center gap-1 text-xl font-medium" scroll={false}>
           <EcosLogo />
           Ecos
         </Link>
@@ -34,7 +34,7 @@ export default function Header() {
             session && session.user ?
             <div className="flex items-center gap-2 flex-wrap">
               <span className="font-medium">@{session.user.username}</span>
-              <button onClick={() => signOut()} className="text-sm py-1 px-3 rounded-md bg-red-100 text-red-600">
+              <button onClick={() => signOut()} className="text-sm py-1 px-2.5 rounded-md danger">
                 Salir
               </button>
             </div>

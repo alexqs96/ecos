@@ -10,7 +10,7 @@ export function PostCard({ data }) {
   }
 
   return (
-    <section className="border dark:border-white/20 p-4 rounded-xl flex flex-col gap-5">
+    <section className="border dark:border-white/20 p-6 rounded-xl flex flex-col gap-5">
       <div className="flex flex-col">
         <span>@{data.creator.username}</span>
         <small className="font-medium opacity-80 group relative cursor-pointer transition duration-200 hover:underline">
@@ -26,7 +26,7 @@ export function PostCard({ data }) {
         }
       </div>
       <Comments data={data.comments}/>
-      <CommentForm id={data._id}/>
+      <CommentForm id={data._id} creator={data.creator.username}/>
     </section>
   );
 }

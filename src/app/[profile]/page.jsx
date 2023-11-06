@@ -1,7 +1,9 @@
-export default function Profile() {
+import Profile from "./Profile";
+
+export default function ProfilePage() {
   return (
     <>
-    <p>Pagina de Perfil</p>
+    <Profile />
     </>
   )
 }

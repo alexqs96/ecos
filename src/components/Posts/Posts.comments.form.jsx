@@ -1,67 +1,62 @@
 "use client";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useState } from "react";
 import { handleResizeInput, imagesToBase64 } from "@/utils/utils";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { PostFormSchema } from "@/lib/schemas";
 import { BsImage } from "react-icons/bs";
 import { AiOutlineClose, AiOutlineLoading, AiOutlineSend } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { PiUserCircleFill } from "react-icons/pi";
-import { COMMENT_ADDED, COMMENT_ERROR } from "@/lib/consts";
-import { useQueryClient } from "@tanstack/react-query";
+import { SERVER_ERROR } from "@/lib/consts";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-/**
- * Formulario de comentario
- * @param {string} id de la publicacion
- * @returns {JSX}
- */
-
-export default function CommentForm({id}) {
-  const queryClient = useQueryClient();
+export default function CommentForm({id, creator}) {
   const { data: session, status } = useSession();
   const [image, setImage] = useState(null);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { isSubmitting },
-  } = useForm({
-    resolver: zodResolver(PostFormSchema),
-  });
-
-  const loadImages = async (file) => {
-    const previewImages = await imagesToBase64(file);
-
-    setImage(previewImages);
-    document.querySelector("#uploadImageComment").value = null;
-  };
-
-  const onSubmit = async (data) => {
-    try {
-      const res = await fetch("/api/posts/comments", {
+  const queryClient = useQueryClient();
+  const sendComment = useMutation({
+    mutationFn: async (data) => {
+      return await fetch('/api/posts/comments', {
         method: "POST",
-        credentials: "include",
-        body: JSON.stringify({
-          post: id,
-          content: data.content,
-          image,
-        }),
-      });
-
-      if (res.status === 201) {
-        reset();
-        setImage(null);
-        toast.success(COMMENT_ADDED);
+        credentials: 'include',
+        body: JSON.stringify(data)
+      })
+    },
+    onSuccess: async (result) => {
+      const res = await result.json()
+      if (result.status === 201) {
+        setImage(null)
+        toast.success(res.message+" 🥳");
         queryClient.invalidateQueries('posts');
       }
+      else
+      {
+        toast.error(res.message);
+      }
+    },
+    onError: () => {
+      toast.error(SERVER_ERROR);
+    }
+  })
 
-      document.querySelector("#uploadImageComment").value = null;
-    } catch (error) {
-      toast.error(COMMENT_ERROR);
-      console.error(error);
+  const loadImages = async (e) => {
+    const previewImages = await imagesToBase64(e.target.files);
+    setImage(previewImages);
+    e.target.value = null;
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await sendComment.mutateAsync({
+      post: id,
+      content: e.target.content.value,
+      image,
+    })
+
+    if (res.status === 201) {
+      e.target.reset()
     }
   };
 
@@ -74,7 +69,7 @@ export default function CommentForm({id}) {
       ) : session && session.user ? (
         <>
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={e => onSubmit(e)}
           className="flex items-center w-full overflow-hidden border-t border-t-black/5 dark:border-t-white/10 pt-5"
         >
           {
@@ -95,28 +90,34 @@ export default function CommentForm({id}) {
           }
           <div className="flex flex-col w-full h-full pl-3">
             <textarea
-              {...register("content")}
+              name="content"
               onChange={(e) => handleResizeInput(e, 70, 180)}
               className="not-sr-only bg-transparent resize-none outline-none w-full transition-[height] duration-200 pb-2"
               placeholder="Aa"
             />
             <div className="flex justify-between pt-2">
-              <label className="cursor-pointer" htmlFor="uploadImageComment">
+              <label className="cursor-pointer" htmlFor="uploadImageComment" aria-labelledby={"Subir una imagen para la publicación de @"+creator}>
                 <input
-                  onChange={(e) => loadImages(e.target.files)}
+                  onChange={(e) => loadImages(e)}
                   className="hidden"
                   id="uploadImageComment"
                   type="file"
                 />
-                <BsImage size={24} />
+                  <span
+                    tabIndex="0"
+                    role="button"
+                    >
+                    <BsImage size={24} />
+                  </span>
               </label>
 
               <button
-                disabled={isSubmitting}
+                disabled={sendComment.isPending}
                 className="pressable"
                 type="submit"
+                aria-label="Publicar Comentario"
               >
-                {isSubmitting ? (
+                {sendComment.isPending ? (
                   <AiOutlineLoading size={24} className="animate-spin" />
                 ) : (
                   <AiOutlineSend size={24} />
@@ -140,7 +141,6 @@ export default function CommentForm({id}) {
                   src={image}
                   alt={"Foto de "+session.user.username}
                   unoptimized
-                  priority
                 />
               </div>
               :

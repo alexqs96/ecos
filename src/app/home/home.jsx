@@ -1,6 +1,6 @@
 'use client'
 
-import { LeftSidebar, RightSidebar } from '@/app/home/home.sidebars'
+import { LeftSidebar, RightSidebar } from '@/app/home/Home.sidebars'
 import { PostForm } from '@/components/Posts/Posts.form'
 import { Toaster } from 'react-hot-toast'
 import { Posts } from '@/components/Posts/Posts'
