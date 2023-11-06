@@ -70,7 +70,7 @@ export default function CommentForm({id, creator}) {
         <>
         <form
           onSubmit={e => onSubmit(e)}
-          className="flex items-center w-full overflow-hidden border-t border-t-black/5 dark:border-t-white/10"
+          className="flex items-center w-full overflow-hidden"
         >
           {
             session.user?.image?

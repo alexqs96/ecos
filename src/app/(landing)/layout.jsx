@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import "./globals.css";
+import "@/globals.css";
 import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
 import { loadTheme } from "@/utils/utils";
@@ -41,7 +41,6 @@ export default function RootLayout({ children }) {
       </head>
       <body className={inter.className + " bg-white dark:bg-black"}>
         <Providers>
-          <Header />
           <main className="max-w-screen-xl mx-auto px-[1%] flex">
             {children}
           </main>
