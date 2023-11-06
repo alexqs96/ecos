@@ -89,7 +89,7 @@ export function PostForm() {
               unoptimized
             />
             :
-            <PiUserCircleFill size={48.1} className="block w-fit h-fit mb-auto" />
+            <PiUserCircleFill size={48.1} className="block w-fit h-fit mb-auto max-w-[48px]" />
           }
           <form
             onSubmit={e => onSubmit(e)}

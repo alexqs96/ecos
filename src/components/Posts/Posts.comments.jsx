@@ -79,8 +79,8 @@ export default function Comments({data}){
           <div className="flex flex-col w-full">
             <div className="flex justify-between">
               <div className="flex flex-col">
-                <Link className="block w-fit" href={"/"+e.creator.username} aria-describedby={"Ver perfil de @"+e.creator.username}>
-                  <small className="font-medium">{e.creator.name} {e.creator.surname} · @{e.creator.username}</small>
+                <Link className="flex w-full max-w-[180px]" href={"/"+e.creator.username} aria-describedby={"Ver perfil de @"+e.creator.username}>
+                  <small className="font-medium truncate">{e.creator.name} {e.creator.surname}</small>
                 </Link>
                 <small className="-mt-1 font-medium opacity-80 group relative cursor-pointer transition duration-200 hover:underline">
                   {formatDate(e.createdAt).short}

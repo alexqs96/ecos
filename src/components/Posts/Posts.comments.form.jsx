@@ -70,12 +70,12 @@ export default function CommentForm({id, creator}) {
         <>
         <form
           onSubmit={e => onSubmit(e)}
-          className="flex items-center w-full overflow-hidden border-t border-t-black/5 dark:border-t-white/10 pt-5"
+          className="flex items-center w-full overflow-hidden border-t border-t-black/5 dark:border-t-white/10"
         >
           {
             session.user?.image?
             <Image
-              className="block h-fit w-fit mb-auto aspect-square object-cover rounded-full overflow-hidden"
+              className="block h-fit w-fit max-w-[48px] mb-auto aspect-square object-cover rounded-full overflow-hidden"
               width={48.1}
               height={48.1}
               onError={e => {
@@ -86,9 +86,9 @@ export default function CommentForm({id, creator}) {
               unoptimized
             />
             :
-            <PiUserCircleFill size={48.1} className="block w-fit h-fit mb-auto" />
+            <PiUserCircleFill size={48.1} className="block w-fit h-fit mb-auto max-w-[48px]" />
           }
-          <div className="flex flex-col w-full h-full pl-3">
+          <div className="flex flex-col w-full h-fit pl-3">
             <textarea
               name="content"
               onChange={(e) => handleResizeInput(e, 70, 180)}
@@ -96,11 +96,11 @@ export default function CommentForm({id, creator}) {
               placeholder="Aa"
             />
             <div className="flex justify-between pt-2">
-              <label className="cursor-pointer" htmlFor="uploadImageComment" aria-labelledby={"Subir una imagen para la publicación de @"+creator}>
+              <label className="cursor-pointer" htmlFor={"uploadImageComment"+id} aria-labelledby={"Subir una imagen para la publicación de @"+creator}>
                 <input
                   onChange={(e) => loadImages(e)}
                   className="hidden"
-                  id="uploadImageComment"
+                  id={"uploadImageComment"+id}
                   type="file"
                 />
                   <span
