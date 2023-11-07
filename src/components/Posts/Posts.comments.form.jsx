@@ -6,14 +6,12 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { BsImage } from "react-icons/bs";
 import { AiOutlineClose, AiOutlineLoading, AiOutlineSend } from "react-icons/ai";
-import { useSession } from "next-auth/react";
-import { PiUserCircleFill } from "react-icons/pi";
 import { SERVER_ERROR } from "@/lib/consts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function CommentForm({id, creator}) {
-  const { data: session, status } = useSession();
+export default function CommentForm({id, creator, session}) {
   const [image, setImage] = useState(null);
+  const [createComment, setCreateComment] = useState(false)
   const queryClient = useQueryClient();
   const sendComment = useMutation({
     mutationFn: async (data) => {
@@ -62,40 +60,32 @@ export default function CommentForm({id, creator}) {
 
   return (
     <>
-      {status === "loading" ? (
-        <section className="grid place-content-center py-10">
-          <AiOutlineLoading size={24} className="animate-spin" />
-        </section>
-      ) : session && session.user ? (
+      {session? (
         <>
         <form
           onSubmit={e => onSubmit(e)}
           className="flex items-center w-full overflow-hidden"
         >
-          {
-            session.user?.image?
-            <Image
-              className="block h-fit w-fit max-w-[48px] mb-auto aspect-square object-cover rounded-full overflow-hidden"
-              width={48.1}
-              height={48.1}
-              onError={e => {
-                e.target.src = "/img/profile_default.webp"
-              }}
-              src={session.user?.image || "/img/profile_default.webp"}
-              alt={"Foto de "+session.user.username}
-              unoptimized
-            />
-            :
-            <PiUserCircleFill size={48.1} className="block w-fit h-fit mb-auto max-w-[48px]" />
-          }
+          <Image
+            className="block w-[32px] md:w-[48px] mb-auto aspect-square object-cover rounded-full overflow-hidden"
+            width={48.1}
+            height={48.1}
+            onError={e => {
+              e.target.src = "/img/profile_default.webp"
+            }}
+            src={session?.image || "/img/profile_default.webp"}
+            alt={"Foto de "+session?.username}
+            unoptimized
+          />
           <div className="flex flex-col w-full h-fit pl-3">
             <textarea
               name="content"
+              onClick={() => setCreateComment(true)}
               onChange={(e) => handleResizeInput(e, 70, 180)}
-              className="not-sr-only bg-transparent resize-none outline-none w-full transition-[height] duration-200 pb-2"
+              className={(createComment? "pb-2" : "h-8")+" not-sr-only bg-transparent resize-none outline-none w-full transition-[height] duration-200"}
               placeholder="Aa"
             />
-            <div className="flex justify-between pt-2">
+            <div className={(createComment? "flex" : "hidden")+ " justify-between pt-2"}>
               <label className="cursor-pointer" htmlFor={"uploadImageComment"+id} aria-labelledby={"Subir una imagen para la publicación de @"+creator}>
                 <input
                   onChange={(e) => loadImages(e)}
@@ -139,7 +129,7 @@ export default function CommentForm({id, creator}) {
                   width={128.1}
                   height={128.1}
                   src={image}
-                  alt={"Foto de "+session.user.username}
+                  alt={"Foto de "+session?.username}
                   unoptimized
                 />
               </div>

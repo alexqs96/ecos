@@ -74,23 +74,18 @@ export function PostForm() {
           <AiOutlineLoading size={24} className="animate-spin" />
         </section>
       ) : session && session.user ? (
-        <section className="flex gap-5 mt-2 h-fit p-6 border dark:border-white/20 rounded-xl">
-          {
-            session.user?.image?
-            <Image
-              className="block h-fit w-fit aspect-square object-cover rounded-full overflow-hidden"
-              width={48.1}
-              height={48.1}
-              onError={e => {
-                e.target.src = "/img/profile_default.webp"
-              }}
-              src={session.user?.image || "/img/profile_default.webp"}
-              alt={"Foto de "+session.user.username}
-              unoptimized
-            />
-            :
-            <PiUserCircleFill size={48.1} className="block w-fit h-fit mb-auto max-w-[48px]" />
-          }
+        <section className="flex gap-3 mt-2 h-fit p-5 border dark:border-white/20 rounded-xl">
+          <Image
+            className="block w-[32px] md:w-[48px] mb-auto aspect-square object-cover rounded-full overflow-hidden"
+            width={48.1}
+            height={48.1}
+            onError={e => {
+              e.target.src = "/img/profile_default.webp"
+            }}
+            src={session.user?.image || "/img/profile_default.webp"}
+            alt={"Foto de "+session.user.username}
+            unoptimized
+          />
           <form
             onSubmit={e => onSubmit(e)}
             className="flex flex-col w-full"
@@ -98,7 +93,7 @@ export function PostForm() {
             <textarea
               name="content"
               onChange={(e) => handleResizeInput(e, 70, 180)}
-              className="not-sr-only bg-transparent resize-none outline-none w-full transition-[height] duration-200 border-b border-b-transparent focus-within:border-b-black/5 focus-within:dark:border-white/10 pb-2"
+              className="not-sr-only bg-transparent resize-none outline-none w-full transition-[height] duration-200 pb-2"
               placeholder="Comparti lo que quieras aqui."
             />
 

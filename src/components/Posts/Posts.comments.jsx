@@ -3,16 +3,13 @@
 import Image from "next/image"
 import ImageModal from "../ImageModal"
 import { useState } from "react"
-import { PiUserCircleFill } from "react-icons/pi"
 import Link from "next/link"
 import { formatDate } from "@/utils/utils"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import toast from "react-hot-toast"
 import { SERVER_ERROR } from "@/lib/consts"
-import { useSession } from "next-auth/react"
 
-export default function Comments({data}){
-  const { data: session, status } = useSession();
+export default function Comments({data, you}){
   const [imageCommented, setimageCommented] = useState(null)
   const queryClient = useQueryClient();
   const deleteComment = useMutation({
@@ -55,28 +52,21 @@ export default function Comments({data}){
     <ImageModal image={imageCommented} close={setimageCommented} />
     {
       data.map(e => (
-        <div key={e._id} className="flex gap-2">
-          {
-            e.creator?.image?
-            <Link href={e.creator.username} aria-label={"Ver perfil de @"+e.creator.username}>
-              <Image
-                className="aspect-square object-cover rounded-full overflow-hidden"
-                width={48.1}
-                height={48.1}
-                onError={e => {
-                  e.target.src = "/img/profile_default.webp"
-                }}
-                src={e.creator?.image || "/img/profile_default.webp"}
-                alt={"Foto de "+e.creator.username}
-                unoptimized
-              />
-            </Link>
-            :
-            <Link href={e.creator.username} aria-label={"Ver perfil de @"+e.creator.username}>
-              <PiUserCircleFill size={48.1} />
-            </Link>
-          }
-          <div className="flex flex-col w-full">
+        <div key={e._id} className="flex">
+          <Link href={e.creator.username} aria-label={"Ver perfil de @"+e.creator.username}>
+            <Image
+              className="block w-[32px] md:w-[48px] mb-auto aspect-square object-cover rounded-full overflow-hidden"
+              width={48.1}
+              height={48.1}
+              onError={e => {
+                e.target.src = "/img/profile_default.webp"
+              }}
+              src={e.creator?.image || "/img/profile_default.webp"}
+              alt={"Foto de "+e.creator.username}
+              unoptimized
+            />
+          </Link>
+          <div className="flex flex-col w-full pl-3">
             <div className="flex justify-between">
               <div className="flex flex-col">
                 <Link className="flex w-full max-w-[180px]" href={"/"+e.creator.username} aria-describedby={"Ver perfil de @"+e.creator.username}>
@@ -89,8 +79,8 @@ export default function Comments({data}){
               </div>
 
               {
-                session && session.user && status !== "loading"?
-                  e.creator.username === session.user.username?
+                you?
+                  e.creator.username === you?
                   <button onClick={() => handleDelete(e.post,e._id)} className="danger text-sm py-1 h-fit px-2.5 rounded-md">
                     Borrar
                   </button>

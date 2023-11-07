@@ -11,7 +11,7 @@ export default function HomePage() {
     <Toaster />
     <section className="flex justify-between gap-5 w-full max-sm:w-[95%] max-sm:mx-auto">
       <LeftSidebar />
-      <section className='grid gap-2 w-full'>
+      <section className='grid gap-2 w-full mb-10'>
       <PostForm />
       <Posts />
       </section>

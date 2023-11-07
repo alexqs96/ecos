@@ -2,7 +2,7 @@ import Post from "@/lib/models/Post";
 import Comment from "@/lib/models/Comment";
 import { CloudinaryUpload } from "@/lib/cloudinaryUpload";
 import { connectMongo } from "@/lib/connectMongo";
-import { COMMENT_ADDED, COMMENT_DELETED, MISSING_FIELDS, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
+import { COMMENT_ADDED, COMMENT_REMOVED, MISSING_FIELDS, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../../auth/[...nextauth]/route";
@@ -44,7 +44,7 @@ export async function POST(req) {
     const { content, image, post } = await req.json();
     const imagesUploaded = await CloudinaryUpload([image]);
 
-    if (!session) {
+    if (!session.user) {
       return NextResponse.json(
         {
           message: USER_NOT_LOGGED_IN
@@ -115,7 +115,7 @@ export async function DELETE(req) {
     const session = await getServerSession(AuthOptions);
     const { post, id } = await req.json();
 
-    if (!session) {
+    if (!session.user) {
       return NextResponse.json(
         {
           message: USER_NOT_LOGGED_IN
@@ -127,7 +127,7 @@ export async function DELETE(req) {
       );
     }
 
-    if (!post && !id > 0) {
+    if (!post || !id) {
       return NextResponse.json(
         {
           message: MISSING_FIELDS
@@ -169,11 +169,11 @@ export async function DELETE(req) {
 
     return NextResponse.json(
       {
-        message: COMMENT_DELETED
+        message: COMMENT_REMOVED
       },
       {
         status: 201,
-        statusText: COMMENT_DELETED,
+        statusText: COMMENT_REMOVED,
       },
     );
   }

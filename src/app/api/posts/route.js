@@ -12,6 +12,7 @@ export async function GET(){
 
     const posts = await Post.find()
     .populate("creator", "username photo -_id")
+    .populate("likes", "username -_id")
     .populate({
       path: "comments",
       populate: {
@@ -19,7 +20,13 @@ export async function GET(){
         select: "username name surname photo -_id",
       },
     })
-    .sort({ createdAt: -1 });
+    .sort({ createdAt: -1 }).lean();
+
+    for (const post of posts) {
+      if (post.likes && post.likes.length > 0) {
+        post.likes = post.likes.map(like => like.username);
+      }
+    }
 
     return NextResponse.json(posts, {
       status: 200,
@@ -41,7 +48,7 @@ export async function POST(req) {
     const categoryValue = category? category !== "news" || category !== "post"? "post" : category : "post"
     const imagesUploaded = await CloudinaryUpload(images)
 
-    if (!session) {
+    if (!session.user) {
       return NextResponse.json(
         {
           message: USER_NOT_LOGGED_IN
