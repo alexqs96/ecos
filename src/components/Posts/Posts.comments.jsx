@@ -68,7 +68,7 @@ export default function Comments({data, you}){
           </Link>
           <div className="flex flex-col w-full pl-3">
             <div className="flex justify-between">
-              <div className="flex flex-col">
+              <div className="flex flex-col w-full">
                 <Link className="flex w-full max-w-[180px]" href={"/"+e.creator.username} aria-describedby={"Ver perfil de @"+e.creator.username}>
                   <small className="font-medium truncate">{e.creator.name} {e.creator.surname}</small>
                 </Link>
