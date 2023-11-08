@@ -4,6 +4,7 @@ import { EMAIL_REGISTERED, MISSING_FIELDS, SERVER_ERROR, USER_REGISTERED } from 
 import { SignUpSchema } from "@/lib/schemas";
 import { capitalize } from "@/utils/utils";
 import { NextResponse } from "next/server";
+import bcrypt from 'bcryptjs'
 
 const hashPassword = async (password) => {
   const saltRounds = 10;

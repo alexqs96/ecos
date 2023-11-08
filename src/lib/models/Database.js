@@ -15,9 +15,6 @@ export const DatabaseSchema = new Schema(
         type: String,
         default: "Otro"
       },
-      coldBehavior: {
-        type: String,
-      },
       specificCharacteristics: {
         type: String,
       }
@@ -27,9 +24,6 @@ export const DatabaseSchema = new Schema(
         type: String,
       },
       plantsDistance: {
-        type: String
-      },
-      linesDistance: {
         type: String
       },
       asociateWith: {
@@ -60,12 +54,6 @@ export const DatabaseSchema = new Schema(
       sowingSeason:{
         type: String
       },
-      seedPerMeter:{
-        type: String
-      },
-      almagicoPerformance:{
-        type: String
-      },
       stagingRecomendation: {
         type: String
       },
@@ -81,9 +69,6 @@ export const DatabaseSchema = new Schema(
         type: String
       },
       recommendedHarvest:{
-        type: String
-      },
-      daysToHarvest:{
         type: String
       }
     },
