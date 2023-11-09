@@ -1,9 +1,9 @@
 import Profile from "./Profile";
 
-export default function ProfilePage() {
+export default function ProfilePage({params}) {
   return (
     <>
-    <Profile />
+    <Profile username={params?.profile}/>
     </>
   )
 }
