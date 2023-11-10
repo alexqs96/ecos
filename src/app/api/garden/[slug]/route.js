@@ -21,7 +21,7 @@ export async function GET(req, {params}){
     await connectMongo()
 
     const data = await Vegetable.findOne({
-      slug
+      slug: slug.toLowerCase()
     }).lean()
 
     if (data) {
