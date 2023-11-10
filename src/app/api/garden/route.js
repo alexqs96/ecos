@@ -1,4 +1,5 @@
 import { connectMongo } from "@/lib/connectMongo";
+import { SERVER_ERROR } from "@/lib/consts";
 import Vegetable from "@/lib/models/Vegetables";
 import { NextResponse } from "next/server";
 
@@ -7,15 +8,21 @@ export async function GET() {
     await connectMongo();
 
     const data = await Vegetable.find().lean();
-    console.log(data.length);
-    return NextResponse.json(data, {
+
+    return NextResponse.json({
+      message: "Lista de Verduras",
+      data
+    }, {
       status: 200,
       statusText: "Lista de Verduras",
     });
   } catch (error) {
-    console.log(error);
+    console.log("Error /garden "+error);
     return NextResponse.json(
-      {},
+      {
+        message: SERVER_ERROR,
+        data: []
+      },
       {
         status: 500,
         statusText: "Error Verduras",

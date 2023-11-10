@@ -1,6 +1,10 @@
 import { Schema, model, models } from "mongoose";
 
 export const vegetablesSchema = new Schema({
+  slug: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true,
