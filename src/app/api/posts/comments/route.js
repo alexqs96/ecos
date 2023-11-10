@@ -1,6 +1,6 @@
 import Post from "@/lib/models/Post";
 import Comment from "@/lib/models/Comment";
-import { CloudinaryUpload } from "@/lib/cloudinaryUpload";
+import { UploadImages } from "@/lib/cloudinaryUpload";
 import { connectMongo } from "@/lib/connectMongo";
 import { COMMENT_ADDED, COMMENT_REMOVED, MISSING_FIELDS, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { getServerSession } from "next-auth";
@@ -42,7 +42,7 @@ export async function POST(req) {
   try {
     const session = await getServerSession(AuthOptions);
     const { content, image, post } = await req.json();
-    const imagesUploaded = await CloudinaryUpload([image]);
+    const imagesUploaded = await UploadImages(image, true);
 
     if (!session.user) {
       return NextResponse.json(

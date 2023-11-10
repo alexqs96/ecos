@@ -30,7 +30,7 @@ export function PostCard({ data, session}) {
       {
         data.likes.length > 0 || data.comments.length > 0?
         <nav className="flex items-center justify-between">
-          <small className="flex items-center gap-2">{data.likes.length > 0? <><AiFillLike size={20} /> {data.likes.length}</> : ''}</small>
+          <small className="flex items-center gap-2" title={data.likes}>{data.likes.length > 0? <><AiFillLike size={20} /> {data.likes.length}</> : ''}</small>
         
           <small>{data.comments.length > 0? data.comments.length + " Comentarios" : ''}</small>
         </nav>

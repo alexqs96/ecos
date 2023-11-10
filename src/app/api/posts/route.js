@@ -1,5 +1,5 @@
 import Post from "@/lib/models/Post";
-import { CloudinaryUpload } from "@/lib/cloudinaryUpload";
+import { UploadImages } from "@/lib/cloudinaryUpload";
 import { connectMongo } from "@/lib/connectMongo";
 import { MISSING_FIELDS, POST_ADDED, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { getServerSession } from "next-auth";
@@ -46,7 +46,7 @@ export async function POST(req) {
     const session = await getServerSession(AuthOptions)
     const { content, category, images } = await req.json();
     const categoryValue = category? category !== "news" || category !== "post"? "post" : category : "post"
-    const imagesUploaded = await CloudinaryUpload(images)
+    const imagesUploaded = await UploadImages(images)
 
     if (!session.user) {
       return NextResponse.json(

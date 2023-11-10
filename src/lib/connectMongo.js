@@ -8,10 +8,7 @@ export const connectMongo = async () => {
   }
 
   try {
-    await connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await connect(process.env.MONGO_URI);
     model('Comments', commentSchema);
     console.log("Conectado a MongoDB");
   } catch (error) {
