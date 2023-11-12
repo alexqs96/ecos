@@ -4,7 +4,6 @@ import Image from "next/image";
 
 export default function ImagesLayout({ images, creator }) {
   const [previewImagePost, setPreviewImagePost] = useState(null);
-  console.log(images?.length);
   const amount = images?.length || 0;
 
   if (!images || !creator) {

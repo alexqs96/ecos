@@ -11,9 +11,12 @@ export async function GET(req){
   try {
     const {searchParams} = new URL(req.url)
     const page = searchParams.get('page') || 1
+    const username = searchParams.get('username') || ''
     const limit = 5
+    
+    const user = await User.findOne({username}).lean()
 
-    const posts = await Post.find()
+    const posts = await Post.find(user? {creator: user._id} : {})
     .populate("creator", "username photo -_id")
     .populate("likes", "username -_id")
     .populate({

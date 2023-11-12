@@ -28,19 +28,7 @@ export async function GET(req, { params }) {
         username,
       },
       "-password -_id -email -updatedAt -__v",
-    )
-      .populate({
-        path: "posts",
-        populate: {
-          path: "comments",
-          populate: {
-            path: "creator",
-            select: "username photo -_id",
-          },
-          options: { sort: { createdAt: -1 } },
-        },
-      })
-      .lean();
+    ).lean();
 
     if (!user) {
       return NextResponse.json(

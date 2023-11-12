@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer'
 import { Fragment, useEffect } from 'react';
 
-export function Posts(){
+export function Posts({query}){
   const { ref, inView } = useInView()
   const { data: session } = useSession();
   const {
@@ -20,7 +20,7 @@ export function Posts(){
   } = useInfiniteQuery({
     queryKey: ['posts'],
     queryFn: async ({pageParam}) => {
-      const data = await fetch(`/api/posts?page=${pageParam}`).then(res => res.json())
+      const data = await fetch(`/api/posts?page=${pageParam}&${query}`).then(res => res.json())
       return data
     },
     initialPageParam: 1,
@@ -34,7 +34,6 @@ export function Posts(){
 
   useEffect(() => {
     if (inView) {
-      console.log(inView);
       fetchNextPage()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

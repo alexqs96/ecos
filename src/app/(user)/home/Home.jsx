@@ -5,7 +5,7 @@ import { PostForm } from '@/components/Posts/Posts.form'
 import { Toaster } from 'react-hot-toast'
 import { Posts } from '@/components/Posts/Posts'
 
-export default function HomePage({searchParams}) {
+export default function HomePage() {
   return (
     <>
     <Toaster />
@@ -13,7 +13,7 @@ export default function HomePage({searchParams}) {
       <LeftSidebar />
       <section className='grid gap-2 w-full mb-10'>
       <PostForm />
-      <Posts searchParams={searchParams}/>
+      <Posts endpoint={"/api/posts"}/>
       </section>
       <RightSidebar />
     </section>
