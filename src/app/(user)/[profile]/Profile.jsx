@@ -18,8 +18,14 @@ export default function Profile({username}) {
     <>
       <section>
         {
+          session?.user?.username === username?
+          <p>Es tu perfil</p>
+          :
+          null
+        }
+        {
           data.username?
-          JSON.stringify(data)
+          JSON.stringify(data,null,2)
           :
           <p>usuario no existe</p>
         }

@@ -1,6 +1,9 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-const userSchema = new mongoose.Schema(
+mongoose.connect(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
+
+const userSchema = new Schema(
   {
     username: {
       type: String,
@@ -47,19 +50,19 @@ const userSchema = new mongoose.Schema(
     },
     friends: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
     }],
     posts: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Posts",
+      ref: "Post",
     }],
     chats: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Chats",
+      ref: "Chat",
     }],
     favorites: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Posts",
+      ref: "Post",
     }],
     trades: [{
       type: String
@@ -73,6 +76,6 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-const User = mongoose.models.Users || mongoose.model("Users", userSchema)
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User

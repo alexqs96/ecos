@@ -18,6 +18,7 @@ export function SignInForm({ callbackUrl }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(SignInSchema),
@@ -43,6 +44,12 @@ export function SignInForm({ callbackUrl }) {
       toast.error(INVALID_CREDENTIALS);
     }
   };
+
+  function InvitedMode(){
+    setValue('username', "invitado")
+    setValue('password', "invitado")
+    document.querySelector('form button[type="submit"]').click();
+  }
 
   return (
     <>
@@ -111,6 +118,14 @@ export function SignInForm({ callbackUrl }) {
           ¿No tienes cuenta? Regístrate aqui.
         </Link>
       </form>
+
+      <button
+        type="button"
+        className="border p-2 rounded-md block h-fit mt-auto"
+        onClick={() => InvitedMode()}
+      >
+        Ingresar como Invitado
+      </button>
     </>
   );
 }

@@ -1,10 +1,10 @@
 import HomePage from "./Home"
 
-export default function Home() {
+export default function Home({searchParams}) {
 
   return (
     <>
-      <HomePage />
+      <HomePage searchParams={searchParams}/>
     </>
   )
 }

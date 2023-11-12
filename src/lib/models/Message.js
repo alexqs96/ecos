@@ -1,15 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-const messageSchema = new mongoose.Schema(
+mongoose.connect(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
+
+const messageSchema = new Schema(
   {
     receiver: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: true,
     },
     sender: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: true,
     },
     message: {
@@ -22,6 +25,6 @@ const messageSchema = new mongoose.Schema(
   },
 );
 
-const Message = mongoose.models.Messages || mongoose.model("Messages", messageSchema)
+const Message = mongoose.models.Message || mongoose.model("Message", messageSchema)
 
 export default Message

@@ -1,12 +1,9 @@
-import { connectMongo } from "@/lib/connectMongo";
 import Database from "@/lib/models/Database";
 import { NextResponse } from "next/server";
 
 export async function POST(req){
   try {
     const body = await req.json()
-
-    await connectMongo()
 
     new Database({...body}).save()
 

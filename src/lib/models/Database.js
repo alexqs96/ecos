@@ -1,6 +1,9 @@
-import { Schema, models, model } from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-export const DatabaseSchema = new Schema(
+mongoose.connect(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
+
+const DatabaseSchema = new Schema(
   {
     kind: {
       type: String,
@@ -89,6 +92,6 @@ export const DatabaseSchema = new Schema(
   }
 );
 
-const Database = models.Database || model("Database", DatabaseSchema);
+const Database = mongoose.models.Database || mongoose.model("Database", DatabaseSchema);
 
 export default Database

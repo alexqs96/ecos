@@ -4,6 +4,7 @@ import Image from "next/image";
 
 export default function ImagesLayout({ images, creator }) {
   const [previewImagePost, setPreviewImagePost] = useState(null);
+  console.log(images?.length);
   const amount = images?.length || 0;
 
   if (!images || !creator) {
@@ -13,7 +14,20 @@ export default function ImagesLayout({ images, creator }) {
   return (
     <>
       <ImageModal image={previewImagePost} close={setPreviewImagePost} />
-      {amount === 2 ? (
+      {
+        amount === 1?
+        (
+          <Image
+            onClick={() => setPreviewImagePost(images[0])}
+            className="w-full h-[356px] object-cover cursor-pointer rounded-xl transition-[filter] duration-200 brightness-90 hover:brightness-100"
+            src={images[0]}
+            width={128.1}
+            height={128.1}
+            alt={"Imagen del post de @" + creator}
+            unoptimized
+          />
+        )
+        : amount === 2 ? (
         <div className="flex h-[356px] overflow-hidden rounded-xl">
           <Image
             onClick={() => setPreviewImagePost(images[0])}
@@ -70,14 +84,14 @@ export default function ImagesLayout({ images, creator }) {
         <div className="flex h-[356px] overflow-hidden rounded-xl">
           <Image
             onClick={() => setPreviewImagePost(images[0])}
-            className="w-full h-full object-cover cursor-pointer transition-[filter] duration-200 brightness-90 hover:brightness-100"
+            className="w-[60%] h-full object-cover cursor-pointer transition-[filter] duration-200 brightness-90 hover:brightness-100"
             src={images[0]}
             width={128.1}
             height={128.1}
             alt={"Imagen 1 del post de @" + creator}
             unoptimized
           />
-          <div className="h-full w-[70%] overflow-hidden">
+          <div className="h-full w-[40%] overflow-hidden">
             <Image
               onClick={() => setPreviewImagePost(images[1])}
               className="h-[33.4%] w-full object-cover cursor-pointer transition-[filter] duration-200 brightness-90 hover:brightness-100"
@@ -159,17 +173,10 @@ export default function ImagesLayout({ images, creator }) {
             />
           </div>
         </div>
-      ) : (
-        <Image
-          onClick={() => setPreviewImagePost(images[0])}
-          className="w-full h-[356px] object-cover cursor-pointer rounded-xl transition-[filter] duration-200 brightness-90 hover:brightness-100"
-          src={images[0]}
-          width={128.1}
-          height={128.1}
-          alt={"Imagen del post de @" + creator}
-          unoptimized
-        />
-      )}
+      )
+      :
+      null
+    }
     </>
   );
 }

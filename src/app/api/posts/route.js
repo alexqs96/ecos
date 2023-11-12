@@ -1,14 +1,17 @@
 import Post from "@/lib/models/Post";
+import Comment from "@/lib/models/Comment";
 import { UploadImages } from "@/lib/cloudinaryUpload";
-import { connectMongo } from "@/lib/connectMongo";
 import { MISSING_FIELDS, POST_ADDED, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../auth/[...nextauth]/route";
+import User from "@/lib/models/User";
 
-export async function GET(){
+export async function GET(req){
   try {
-    await connectMongo()
+    const {searchParams} = new URL(req.url)
+    const page = searchParams.get('page') || 1
+    const limit = 5
 
     const posts = await Post.find()
     .populate("creator", "username photo -_id")
@@ -20,7 +23,7 @@ export async function GET(){
         select: "username name surname photo -_id",
       },
     })
-    .sort({ createdAt: -1 }).lean();
+    .sort({ createdAt: -1 }).skip((+page * limit) - limit).limit(limit).lean();
 
     for (const post of posts) {
       if (post.likes && post.likes.length > 0) {
@@ -72,8 +75,6 @@ export async function POST(req) {
       );
     }
 
-    await connectMongo();
-
     const newPost = new Post({
       creator: session.user._id,
       content,
@@ -81,7 +82,12 @@ export async function POST(req) {
       category: categoryValue
     });
 
-    await newPost.save();
+    const postCreated = await newPost.save();
+
+    await User.findByIdAndUpdate(session.user._id,{
+      $push: { posts: postCreated._id },
+    },
+    { new: true },)
 
     return NextResponse.json(
       {

@@ -1,5 +1,4 @@
 import User from "@/lib/models/User";
-import { connectMongo } from "@/lib/connectMongo";
 import { EMAIL_REGISTERED, MISSING_FIELDS, SERVER_ERROR, USER_REGISTERED } from "@/lib/consts";
 import { SignUpSchema } from "@/lib/schemas";
 import { capitalize } from "@/utils/utils";
@@ -52,8 +51,6 @@ export async function POST(req) {
         },
       );
     }
-
-    await connectMongo();
 
     const userFound = await User.findOne(
       { username: username.toLowerCase() },

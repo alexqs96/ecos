@@ -1,5 +1,4 @@
 import Post from "@/lib/models/Post";
-import { connectMongo } from "@/lib/connectMongo";
 import { MISSING_FIELDS, LIKE_ADDED, LIKE_REMOVED, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
@@ -35,8 +34,6 @@ export async function POST(req){
         },
       );
     }
-
-    await connectMongo();
 
     const liked = await Post.findOne({ _id: post, likes: session.user._id }).populate(
       "likes",

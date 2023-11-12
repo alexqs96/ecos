@@ -1,16 +1,19 @@
 import Post from "@/lib/models/Post";
 import Comment from "@/lib/models/Comment";
 import { UploadImages } from "@/lib/cloudinaryUpload";
-import { connectMongo } from "@/lib/connectMongo";
-import { COMMENT_ADDED, COMMENT_REMOVED, MISSING_FIELDS, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
+import {
+  COMMENT_ADDED,
+  COMMENT_REMOVED,
+  MISSING_FIELDS,
+  SERVER_ERROR,
+  USER_NOT_LOGGED_IN,
+} from "@/lib/consts";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../../auth/[...nextauth]/route";
 
 export async function GET() {
   try {
-    await connectMongo();
-
     const posts = await Post.find()
       .populate("creator", "username photo -_id")
       .populate({
@@ -47,7 +50,7 @@ export async function POST(req) {
     if (!session.user) {
       return NextResponse.json(
         {
-          message: USER_NOT_LOGGED_IN
+          message: USER_NOT_LOGGED_IN,
         },
         {
           status: 401,
@@ -59,7 +62,7 @@ export async function POST(req) {
     if (!content && !image > 0) {
       return NextResponse.json(
         {
-          message: MISSING_FIELDS
+          message: MISSING_FIELDS,
         },
         {
           status: 404,
@@ -68,13 +71,11 @@ export async function POST(req) {
       );
     }
 
-    await connectMongo();
-
     const newComment = new Comment({
       post,
       creator: session.user._id,
       content,
-      image: imagesUploaded[0],
+      image: imagesUploaded,
     });
 
     const commentSaved = await newComment.save();
@@ -89,7 +90,7 @@ export async function POST(req) {
 
     return NextResponse.json(
       {
-        message: COMMENT_ADDED
+        message: COMMENT_ADDED,
       },
       {
         status: 201,
@@ -100,7 +101,7 @@ export async function POST(req) {
     console.log("/posts/comments error: " + error);
     return NextResponse.json(
       {
-        message: SERVER_ERROR
+        message: SERVER_ERROR,
       },
       {
         status: 500,
@@ -118,7 +119,7 @@ export async function DELETE(req) {
     if (!session.user) {
       return NextResponse.json(
         {
-          message: USER_NOT_LOGGED_IN
+          message: USER_NOT_LOGGED_IN,
         },
         {
           status: 401,
@@ -130,7 +131,7 @@ export async function DELETE(req) {
     if (!post || !id) {
       return NextResponse.json(
         {
-          message: MISSING_FIELDS
+          message: MISSING_FIELDS,
         },
         {
           status: 404,
@@ -142,15 +143,15 @@ export async function DELETE(req) {
     const validateUser = await Comment.findOne({
       creator: session.user._id,
       post,
-      _id: id
-    })
+      _id: id,
+    });
 
     if (!validateUser) {
       console.log("El usuario logueado no es el creador de este comentario");
 
       return NextResponse.json(
         {
-          message: SERVER_ERROR
+          message: SERVER_ERROR,
         },
         {
           status: 500,
@@ -159,9 +160,7 @@ export async function DELETE(req) {
       );
     }
 
-    await connectMongo();
-
-    await Comment.findByIdAndRemove(id);
+    await Comment.findByIdAndDelete(id);
 
     await Post.findByIdAndUpdate(post, {
       $pull: { comments: id },
@@ -169,19 +168,18 @@ export async function DELETE(req) {
 
     return NextResponse.json(
       {
-        message: COMMENT_REMOVED
+        message: COMMENT_REMOVED,
       },
       {
         status: 201,
         statusText: COMMENT_REMOVED,
       },
     );
-  }
-  catch(error){
+  } catch (error) {
     console.log("/posts/comments error: " + error);
     return NextResponse.json(
       {
-        message: SERVER_ERROR
+        message: SERVER_ERROR,
       },
       {
         status: 500,

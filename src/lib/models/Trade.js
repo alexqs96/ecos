@@ -1,15 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-const TradeSchema = new mongoose.Schema(
+mongoose.connect(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
+
+const TradeSchema = new Schema(
   {
     from: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: true,
     },
     to: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: true,
     },
     items: [{
@@ -21,6 +24,6 @@ const TradeSchema = new mongoose.Schema(
   },
 );
 
-const Trade = mongoose.models.Trades || mongoose.model("Trades", TradeSchema)
+const Trade = mongoose.models.Trade || mongoose.model("Trade", TradeSchema)
 
 export default Trade

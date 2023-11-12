@@ -1,10 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-const postSchema = new mongoose.Schema(
+mongoose.connect(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
+
+const postSchema = new Schema(
   {
     creator: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: true,
     },
     content: {
@@ -20,11 +23,11 @@ const postSchema = new mongoose.Schema(
     },
     likes: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
     }],
     comments: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Comments",
+      ref: "Comment",
     }]
   },
   {
@@ -32,6 +35,6 @@ const postSchema = new mongoose.Schema(
   },
 );
 
-const Post = mongoose.models.Posts || mongoose.model("Posts", postSchema)
+const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
 
 export default Post

@@ -1,4 +1,3 @@
-import { connectMongo } from "@/lib/connectMongo";
 import { SERVER_ERROR } from "@/lib/consts";
 import Vegetable from "@/lib/models/Vegetables";
 import { NextResponse } from "next/server";
@@ -17,8 +16,6 @@ export async function GET(req, {params}){
         statusText: "id no ingresado",
       });  
     }
-
-    await connectMongo()
 
     const data = await Vegetable.findOne({
       slug: slug.toLowerCase()

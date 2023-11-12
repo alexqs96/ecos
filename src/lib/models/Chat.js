@@ -1,15 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-const chatSchema = new mongoose.Schema(
+mongoose.connect(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
+
+const chatSchema = new Schema(
   {
     receiver: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: true,
     },
     sender: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: true,
     },
     lastMessage: {
@@ -21,7 +24,7 @@ const chatSchema = new mongoose.Schema(
     },
     messages: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Messages",
+      ref: "Message",
     }],
   },
   {
@@ -29,6 +32,6 @@ const chatSchema = new mongoose.Schema(
   },
 );
 
-const Chat = mongoose.models.Chats || mongoose.model("Chats", chatSchema)
+const Chat = mongoose.models.Chat || mongoose.model("Chat", chatSchema)
 
 export default Chat

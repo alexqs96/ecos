@@ -1,6 +1,9 @@
-import { Schema, model, models } from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-export const vegetablesSchema = new Schema({
+mongoose.connect(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
+
+const vegetablesSchema = new Schema({
   slug: {
     type: String,
     required: true
@@ -43,6 +46,6 @@ export const vegetablesSchema = new Schema({
   },
 });
 
-const Vegetable = models.Vegetable || model("Vegetable", vegetablesSchema);
+const Vegetable = mongoose.models.Vegetable || mongoose.model("Vegetable", vegetablesSchema);
 
 export default Vegetable;

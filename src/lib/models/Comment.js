@@ -1,6 +1,9 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-export const commentSchema = new mongoose.Schema(
+mongoose.connect(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
+
+const commentSchema = new Schema(
   {
     post: {
       type: mongoose.Schema.Types.ObjectId,
@@ -8,7 +11,7 @@ export const commentSchema = new mongoose.Schema(
     },
     creator: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: true,
     },
     content: {
@@ -20,11 +23,11 @@ export const commentSchema = new mongoose.Schema(
     },
     likes: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
     }],
     comments: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Comments",
+      ref: "Comment",
     }]
   },
   {
@@ -32,6 +35,6 @@ export const commentSchema = new mongoose.Schema(
   },
 );
 
-const Comment = mongoose.models.Comments
+const Comment = mongoose.models.Comment || mongoose.model("Comment", commentSchema);
 
 export default Comment
