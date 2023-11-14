@@ -44,8 +44,8 @@ export default function Reactions({ post, data, you, share}) {
       const res = await result.json()
       if (result.status === 201) {
         toast.success(res.message);
-        setShow(false)
         queryClient.invalidateQueries('posts');
+        setShow(false)
       }
       else {
         toast.error(res.message);
@@ -120,4 +120,4 @@ export default function Reactions({ post, data, you, share}) {
       </nav>
     </>
   )
-}
+} 

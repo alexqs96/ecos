@@ -83,6 +83,9 @@ export const AuthOptions = {
   pages: {
     signIn: "/signin",
   },
+  session: {
+    maxAge: 24 * 60 * 30
+  }
 }
 
 const handler = NextAuth(AuthOptions)
