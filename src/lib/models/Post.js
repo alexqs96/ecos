@@ -28,7 +28,33 @@ const postSchema = new Schema(
     comments: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
-    }]
+    }],
+    repost: {
+      username: {
+        type: String,
+        default: ""
+      },
+      name:{
+        type: String,
+        default: ""
+      },
+      surname:{
+        type: String,
+        default: ""
+      },
+      photo: {
+        type: String,
+        default: ""
+      },
+      createdAt: {
+        type: Date,
+        default: ""
+      },
+      content: {
+        type: String,
+        default: ""
+      }
+    }
   },
   {
     timestamps: true,

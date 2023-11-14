@@ -8,8 +8,11 @@ import { formatDate } from "@/utils/utils"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import toast from "react-hot-toast"
 import { SERVER_ERROR } from "@/lib/consts"
+import {ModalMessage} from "../Modal"
+import { FaTrashAlt } from "react-icons/fa"
 
 export default function Comments({data, you}){
+  const [show, setShow] = useState(false)
   const [imageCommented, setimageCommented] = useState(null)
   const queryClient = useQueryClient();
   const deleteComment = useMutation({
@@ -77,12 +80,16 @@ export default function Comments({data, you}){
                   <small className="py-1 px-1.5 rounded-md bg-black dark:bg-white text-white dark:text-black hidden group-hover:block absolute -bottom-6 left-0">{formatDate(e.createdAt).long}</small>
                 </small>
               </div>
-
+              <ModalMessage show={show} setShow={setShow} text={"¿Estas seguro que queres borrar este comentario?"} action={() => handleDelete(e.post,e._id)} status={deleteComment.status === "pending"} />
               {
                 you?
                   e.creator.username === you?
-                  <button onClick={() => handleDelete(e.post,e._id)} className="danger text-sm py-1 h-fit px-2.5 rounded-md">
-                    Borrar
+                  <button
+                    disabled={deleteComment.status === "pending"}
+                    className="text-red-700"
+                    onClick={() => setShow(!show)}
+                  >
+                    <FaTrashAlt size={20} />
                   </button>
                   :
                   null

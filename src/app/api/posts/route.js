@@ -111,3 +111,84 @@ export async function POST(req) {
     })
   }
 }
+
+export async function DELETE(req) {
+  try {
+    const session = await getServerSession(AuthOptions);
+    const { post } = await req.json();
+
+    if (!session.user) {
+      return NextResponse.json(
+        {
+          message: USER_NOT_LOGGED_IN,
+        },
+        {
+          status: 401,
+          statusText: USER_NOT_LOGGED_IN,
+        },
+      );
+    }
+
+    if (!post) {
+      return NextResponse.json(
+        {
+          message: MISSING_FIELDS,
+        },
+        {
+          status: 404,
+          statusText: MISSING_FIELDS,
+        },
+      );
+    }
+
+    const validatePost = await Post.findOne({
+      creator: session.user._id,
+      _id: post,
+    });
+
+    if (!validatePost) {
+      console.log("El usuario logueado no es el creador de este post");
+
+      return NextResponse.json(
+        {
+          message: SERVER_ERROR,
+        },
+        {
+          status: 500,
+          statusText: SERVER_ERROR,
+        },
+      );
+    }
+
+    await Post.findByIdAndDelete(post);
+
+    await User.findByIdAndUpdate(session.user._id, {
+      $pull: { posts: post },
+    });
+
+    await Comment.deleteMany({
+      post
+    })
+
+    return NextResponse.json(
+      {
+        message: "Post borrado",
+      },
+      {
+        status: 201,
+        statusText: "Post borrado",
+      },
+    );
+  } catch (error) {
+    console.log("/posts error: " + error);
+    return NextResponse.json(
+      {
+        message: SERVER_ERROR,
+      },
+      {
+        status: 500,
+        statusText: SERVER_ERROR,
+      },
+    );
+  }
+}
