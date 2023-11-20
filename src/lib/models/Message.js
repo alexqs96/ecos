@@ -5,10 +5,8 @@ mongoose.Promise = global.Promise;
 
 const messageSchema = new Schema(
   {
-    receiver: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    chatId: {
+      type: String
     },
     sender: {
       type: mongoose.Schema.Types.ObjectId,
@@ -17,8 +15,11 @@ const messageSchema = new Schema(
     },
     message: {
       type: String,
-      required: true
-    }
+      default: ""
+    },
+    images:[{
+      type: String
+    }]
   },
   {
     timestamps: true,

@@ -48,22 +48,6 @@ const userSchema = new Schema(
         default: ""
       }
     },
-    friends: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    }],
-    posts: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-    }],
-    chats: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Chat",
-    }],
-    favorites: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-    }],
     trades: [{
       type: String
     }],

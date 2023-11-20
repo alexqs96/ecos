@@ -1,6 +1,6 @@
 import User from "@/lib/models/User";
 import Post from "@/lib/models/Post";
-import { MISSING_FIELDS, POST_ADDED, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
+import { MISSING_FIELDS, POST_ADDED, POST_NOT_FOUND, POST_SHARED, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../../auth/[...nextauth]/route";
@@ -39,11 +39,11 @@ export async function POST(req){
     if (!getPost) {
       return NextResponse.json(
         {
-          message: "Post no encontrado"
+          message: POST_NOT_FOUND
         },
         {
           status: 404,
-          statusText: "Post no encontrado"
+          statusText: POST_NOT_FOUND
         },
       );
     }
@@ -76,7 +76,7 @@ export async function POST(req){
       },
       {
         status: 201,
-        statusText: "Post Compartido",
+        statusText: POST_SHARED,
       },
     );
   } catch (error) {

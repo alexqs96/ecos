@@ -83,6 +83,7 @@ export function ModalMessage({ show, setShow, text, action, status }) {
 }
 
 export function Modal({show, setShow, children}) {
+
   return (
     <Transition appear show={show} as={Fragment}>
       <Dialog
