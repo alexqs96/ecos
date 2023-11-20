@@ -25,8 +25,8 @@ export default function CommentForm({id, creator, session}) {
       const res = await result.json()
       if (result.status === 201) {
         setImage(null)
-        toast.success(res.message+" 🥳");
         queryClient.invalidateQueries('posts');
+        toast.success(res.message+" 🥳");
       }
       else
       {

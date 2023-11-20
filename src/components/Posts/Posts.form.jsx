@@ -29,8 +29,8 @@ export function PostForm() {
       const res = await result.json()
       if (result.status === 201) {
         setImages([])
-        toast.success(res.message+" 🥳");
         queryClient.invalidateQueries('posts'); 
+        toast.success(res.message+" 🥳");
       }
       else
       {
