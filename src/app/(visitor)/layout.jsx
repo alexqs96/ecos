@@ -39,9 +39,9 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className={inter.className + " bg-white dark:bg-black"}>
+      <body className={inter.className+" max-w-screen-xl mx-auto"}>
         <Providers>
-          <main className="max-w-screen-xl mx-auto px-[1%] flex">
+          <main>
             {children}
           </main>
         </Providers>
