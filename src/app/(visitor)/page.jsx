@@ -7,7 +7,7 @@ export default function Landing() {
 
   return (
     <>
-    <div className="flex flex-col justify-center items-center mx-auto w-fit gap-2">
+    <div className="flex flex-col justify-center items-center mx-auto">
       <HeaderLanding/>
       <BodyLanding/>
     </div>
