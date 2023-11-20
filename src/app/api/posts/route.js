@@ -1,7 +1,7 @@
 import Post from "@/lib/models/Post";
 import Comment from "@/lib/models/Comment";
 import { UploadImages } from "@/lib/cloudinaryUpload";
-import { MISSING_FIELDS, POST_ADDED, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
+import { MISSING_FIELDS, POST_ADDED, POST_REMOVED, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../auth/[...nextauth]/route";
@@ -85,12 +85,7 @@ export async function POST(req) {
       category: categoryValue
     });
 
-    const postCreated = await newPost.save();
-
-    await User.findByIdAndUpdate(session.user._id,{
-      $push: { posts: postCreated._id },
-    },
-    { new: true },)
+    await newPost.save();
 
     return NextResponse.json(
       {
@@ -162,21 +157,17 @@ export async function DELETE(req) {
 
     await Post.findByIdAndDelete(post);
 
-    await User.findByIdAndUpdate(session.user._id, {
-      $pull: { posts: post },
-    });
-
     await Comment.deleteMany({
       post
     })
 
     return NextResponse.json(
       {
-        message: "Post borrado",
+        message: POST_REMOVED,
       },
       {
         status: 201,
-        statusText: "Post borrado",
+        statusText: POST_REMOVED,
       },
     );
   } catch (error) {

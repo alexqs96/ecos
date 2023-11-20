@@ -1,37 +1,49 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 mongoose.connect(process.env.MONGO_URI);
 mongoose.Promise = global.Promise;
 
 const chatSchema = new Schema(
   {
-    receiver: {
+    userOne: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    sender: {
+    userTwo: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    lastMessage: {
-      type: String
+    participants: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    hide: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    you: {
+      type: Boolean,
+      default: false,
     },
     seen: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    messages: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Message",
-    }],
+    lastMessage: {
+      type: String,
+    },
   },
   {
     timestamps: true,
   },
 );
 
-const Chat = mongoose.models.Chat || mongoose.model("Chat", chatSchema)
+const Chat = mongoose.models.Chat || mongoose.model("Chat", chatSchema);
 
-export default Chat
+export default Chat;

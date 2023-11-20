@@ -26,8 +26,8 @@ export default function Comments({data, you}){
     onSuccess: async (result) => {
       const res = await result.json()
       if (result.status === 201) {
-        toast.success(res.message+" 🥳");
         queryClient.invalidateQueries('posts');
+        toast.success(res.message+" 🥳");
       }
       else
       {
