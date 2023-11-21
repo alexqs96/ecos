@@ -5,28 +5,27 @@ mongoose.Promise = global.Promise;
 
 const chatSchema = new Schema(
   {
-    userOne: {
+    chatId: {
+      type: String,
+      required: true
+    },
+    owner: {
+      type: String,
+      required: true
+    },
+    receiver:{
+      type: String,
+      required: true
+    },
+    profile: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    userTwo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    hide: {
+      type: Boolean,
+      default: false
     },
-    participants: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
-    hide: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
     you: {
       type: Boolean,
       default: false,

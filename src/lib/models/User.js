@@ -53,7 +53,10 @@ const userSchema = new Schema(
     }],
     badges: [{
       type: String
-    }]
+    }],
+    socketId: {
+      type: String
+    }
   },
   {
     timestamps: true,
