@@ -23,13 +23,12 @@ export async function GET(req, { params }) {
     }
 
     const chatId = await Chat.findOne({
-      participants: {
-        $all: [session.user.username, username]
-      }
-    }).select('_id');
+      owner: session?.user?._id,
+      receiver: username
+    })
 
-    if (chatId?._id) {
-      const data = await Message.find({chatId: chatId._id}).populate('sender').lean()
+    if (chatId?.chatId) {
+      const data = await Message.find({chatId: chatId.chatId}).populate('sender', "username name surname photo socketId").lean()
 
       return NextResponse.json(data, {
         status: 200,
@@ -58,8 +57,9 @@ export async function POST(req, { params }) {
     const session = await getServerSession(AuthOptions)
     const { message, images } = await req.json();
     const { username } = params
+    const chatId = crypto.randomUUID();
     let imagesUploaded = []
-    let chatUpdated = null
+
     if (!session?.user || !username || (!images && !message)) {
       return NextResponse.json(
         {},
@@ -70,50 +70,108 @@ export async function POST(req, { params }) {
       );
     }
 
-    imagesUploaded = await UploadImages(images)
+    const otherId = await User.findOne({username}).select("_id")
 
-    const chatExist = await Chat.findOne({
-      participants: {
-        $all: [session.user.username, username]
-      }
+    if (!otherId?._id) {
+      return NextResponse.json(
+        {},
+        {
+          status: 404,
+          statusText: MISSING_FIELDS,
+        },
+      );
+    }
+
+    // Validamos si los chats existen
+
+    let yourChat = await Chat.findOne({
+      owner: session?.user?._id,
+      receiver: username
     })
 
-    if (!chatExist) {
-      chatUpdated = new Chat({
-        sender: session.user._id,
-        lastMessage: message,
-        participants: [
-          session.user.username,
-          username
-        ]
+    let otherChat = await Chat.findOne({
+      owner: otherId._id,
+      receiver: session?.user?.username
+    })
+
+    // Creamos o Actualizamos segun corresponda
+
+    // Tu Chat
+
+    if (!yourChat) {
+      yourChat = new Chat({
+        chatId: otherChat?.chatId || chatId,
+        owner: session?.user?._id,
+        receiver: username,
+        profile: otherId._id,
+        you: true,
+        lastMessage: message || "Nuevo Mensaje"
       })
 
-      await chatUpdated.save()
+      await yourChat.save()
     }
     else
     {
-      chatUpdated = await Chat.findOneAndUpdate({
-        participants: {
-          $all: [session.user.username, username]
-        }
+
+      yourChat = await Chat.findOneAndUpdate({
+        owner: session?.user?._id,
+        receiver: username,
       },{
-        sender: session.user._id,
-        lastMessage: message,
+        hide: false,
+        you: true,
         seen: false,
-        $pull: { hide: username }
+        lastMessage: message
       },{
         new: true
       })
     }
 
+    // Chat de la otra persona
+
+    if (!otherChat) {
+      otherChat = new Chat({
+        chatId: yourChat?.chatId || chatId,
+        owner: otherId._id,
+        receiver: session?.user?.username,
+        profile: session?.user?._id,
+        you: false,
+        lastMessage: message || "Nuevo Mensaje"
+      })
+
+      await otherChat.save()
+    }
+    else
+    {
+
+      otherChat = await Chat.findOneAndUpdate({
+        owner: otherId._id,
+        receiver: session?.user?.username,
+      },{
+        hide: false,
+        you: false,
+        seen: false,
+        lastMessage: message
+      },{
+        new: true
+      })
+    }
+
+    // Guardamos Mensaje
+
+    imagesUploaded = await UploadImages(images)
+
     const newMessage = new Message({
-      chatId: chatUpdated._id,
+      chatId: otherChat.chatId || yourChat.chatId,
       sender: session.user._id,
       message,
       images: imagesUploaded
     })
 
-    const savedMessage = await newMessage.save()
+    const findMessage = await newMessage.save()
+
+    const savedMessage = await Message.findOne({
+      _id: findMessage._id
+    }).populate('sender', "username name surname photo socketId")
 
     return NextResponse.json(savedMessage, {
       status: 200,

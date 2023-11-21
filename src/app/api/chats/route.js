@@ -19,9 +19,8 @@ export async function GET(req) {
     }
 
     const data = await Chat.find({
-      participants: session.user.username,
-      hide: { $nin: [session.user.username] },
-    }).populate('userOne', "username name surname photo").populate('userTwo', "username name surname photo").sort({ updatedAt: -1 });
+      owner: session.user._id,
+    }).populate('profile', "username name surname photo").sort({ updatedAt: -1 });
 
     return NextResponse.json(data, {
       status: 200,

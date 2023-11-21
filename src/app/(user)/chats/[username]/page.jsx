@@ -1,55 +1,58 @@
 'use client'
 
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
+import * as io from "socket.io-client";
 
-async function getMessages(username){
-  console.log(username);
-
-  if (!username) return null
-
-  const data = await fetch(`/api/chats/${username}`).then(res => res.json()).catch(err => {
-    console.error(err);
-
-    return []
-  })
-  return data
-}
-
-async function sendMessage(message, images, username){
-  console.log(message);
-  console.log(username);
-  try {
-    await fetch(`/api/chats/${username}`, {
-      method: "POST",
-      body: JSON.stringify({
-        message,
-        images: []
-      })
-    }).then(res => res.json())
-  } catch (error) {
-    console.log("Error API Send Message: "+error);
-    return null
-  }
-}
+const socket = io.connect(process.env.NEXT_PUBLIC_SERVER_URL, {
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000,
+});
 
 function ChatPage({params}) {
-  const [loading, setLoading] = useState(true)
-  const [messages, setMessages] = useState([])
-  const message = useRef('')
+  const { data: session } = useSession();
+  const {data: messages, isLoading} = useQuery({
+    queryKey: ['messages'],
+    queryFn: async () => {
+      if (params?.username) {
+        return await fetch(`/api/chats/${params?.username}`).then(res => res.json()).catch(() => [])
+      }
+      return []
+    }
+  })
+  const queryClient = useQueryClient();
+  const messageInput = useRef('')
+
+  async function sendMessage(msg, images, username){
+    try {
+      await fetch(`/api/chats/${username}`, {
+        method: "POST",
+        body: JSON.stringify({
+          message: msg,
+          images: []
+        })
+      }).then(res => res.json())
+
+      socket.emit("sendMessage", params.username)
+      queryClient.invalidateQueries('messages');
+    } catch (error) {
+      console.log("Error API Send Message: "+error);
+      return null
+    }
+  }
 
   useEffect(() => {
-    if (params?.username) {
-      async function fetchMessages(){
-        const data = await getMessages(params.username)
-
-        setMessages(data)
-        setLoading(false)
-      }
-
-      fetchMessages()
+    if (session && session.user) {
+      socket.emit("connectToChat", session.user.username); 
     }
-  }, [params])
-  
+    
+    socket.on("newMessage", () => {
+      queryClient.invalidateQueries('messages');
+    });
+
+  }, [queryClient, session])
 
   return (
     <div className='w-full max-w-[80%] mx-auto border-x'>
@@ -58,7 +61,7 @@ function ChatPage({params}) {
       </div>
       <div className='flex flex-col gap-5 w-full p-5 pt-24'>
         {
-          loading?
+          isLoading?
           <strong>Cargandooo.....</strong>
           :
           messages?.map(e => (
@@ -71,8 +74,10 @@ function ChatPage({params}) {
       </div>
 
       <div className='sticky bottom-0 inset-x-0 flex w-full bg-white mx-auto border'>
-        <textarea ref={message} className='h-[64px] w-full outline-none'></textarea>
-        <button type='button' onClick={() => sendMessage(message.current.value, [], params?.username)}>
+        <textarea ref={messageInput} className='h-[64px] w-full outline-none'></textarea>
+        <button type='button' onClick={() => {
+          sendMessage(messageInput.current.value, [], params?.username)
+        }}>
           Enviar
         </button>
       </div>
