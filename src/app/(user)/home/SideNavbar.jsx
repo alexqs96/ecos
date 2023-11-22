@@ -26,7 +26,7 @@ const SIDEBAR_NAV_LINKS = [
   },
   {
     icon: "/message.svg",
-    href: "/message",
+    href: "/chats",
     label: "Mensajes",
   },
   {

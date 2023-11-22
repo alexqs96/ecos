@@ -53,21 +53,22 @@ export function SignInForm({ callbackUrl }) {
 
   return (
     <>
+    <section className="flex items-center w-3/4 ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-2 max-w-xs w-[95%] h-fit p-8 rounded-2xl dark:bg-white/10 mt-5 shadow-xl mx-auto"
+        className="flex flex-col gap-2 max-w-xs w-[100%] h-fit p-8 rounded-2xl dark:bg-white/10 mt-5 shadow-xl mx-auto"
       >
         <div className="flex flex-col items-center gap-1 font-semibold text-sm mb-4">
-          <EcosLogo size={64} />
-          <i>{'"Ecos conectando raices"'}</i>
+          {/* <EcosLogo size={64} />
+          {/* <i>{'"Ecos conectando raices"'}</i> */}
+          <h2 className="text-lg text-[#0C3712]">Iniciar sesión en <strong className="font-size text-[#2DD246]">ECOS</strong></h2>
         </div>
-
         <div className="flex flex-col w-full">
           <label className="font-medium">Usuario</label>
           <input
             {...register("username")}
             type="text"
-            className="border rounded-md py-1 px-2 w-full"
+            className="border rounded-md py-1 px-2 w-full focus:outline-none focus:border-[#D642C0] focus:ring-1 focus:ring-[#D642C0] "
           />
           {errors.username ? (
             <span className="bg-red-100 text-red-500 py-0.5 px-2 rounded-md text-sm mt-1.5 w-fit">
@@ -82,7 +83,7 @@ export function SignInForm({ callbackUrl }) {
             <input
               {...register("password")}
               type={showPassword ? "text" : "password"}
-              className="border rounded-md py-1 pl-2 pr-8 w-full"
+              className="border rounded-md py-1 pl-2 pr-8 w-full focus:outline-none focus:border-[#D642C0] focus:ring-1 focus:ring-[#D642C0]"
             />
             <button
               className="absolute right-2 inset-y-0"
@@ -90,9 +91,9 @@ export function SignInForm({ callbackUrl }) {
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
-                <AiFillEye size={20} />
+                <AiFillEye className="fill-[#D642C0]" size={20} />
               ) : (
-                <AiFillEyeInvisible size={20} />
+                <AiFillEyeInvisible className="fill-[#C4C4C4]"  size={20} />
               )}
             </button>
           </div>
@@ -106,26 +107,27 @@ export function SignInForm({ callbackUrl }) {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="bg-black text-white dark:bg-white dark:text-black py-1.5 px-3.5 mt-2 rounded-md"
+          className="bg-[#D642C0] text-white dark:bg-white dark:text-black lg:py-3 md:py-1.5 px-3.5 mt-2 rounded-full"
         >
           {isSubmitting ? "Ingresando.." : "Ingresar"}
         </button>
 
         <Link
           href="/signup"
-          className="block text-sm font-medium -tracking-wide mt-4 opacity-90 w-fit"
+          className="block py-4 text-sm font-medium -tracking-wide mt-4 opacity-90 w-fit "
         >
-          ¿No tienes cuenta? Regístrate aqui.
+          ¿No tienes cuenta? <strong className="underline text-[#D642C0]">Regístrate aqui.</strong>
         </Link>
       </form>
 
-      <button
+      {/* <button
         type="button"
         className="border p-2 rounded-md block h-fit mt-auto"
         onClick={() => InvitedMode()}
       >
         Ingresar como Invitado
-      </button>
+      </button> */}
+      </section>
     </>
   );
 }
@@ -167,20 +169,22 @@ export function SignUpForm() {
 
   return (
     <>
+    <section className="flex items-center w-3/4 ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-2 max-w-xs w-[95%] h-fit p-8 rounded-2xl dark:bg-white/10 mt-5 shadow-xl mx-auto"
+        className="flex flex-col gap-2 max-w-xs w-[100%] h-fit p-8 rounded-2xl dark:bg-white/10 mt-5 shadow-xl mx-auto"
       >
         <div className="flex flex-col items-center gap-1 font-semibold text-sm mb-4">
-          <EcosLogo size={64} />
-          <i>{'"Ecos conectando raices"'}</i>
+          {/* <EcosLogo size={64} />
+          {/* <i>{'"Ecos conectando raices"'}</i> */}
+          <h2 className="text-lg text-[#0C3712]">Iniciar sesión en <strong className="font-size text-[#2DD246]">ECOS</strong></h2>
         </div>
         <div className={"flex-col w-full" + (!nextPage ? " flex" : " hidden")}>
           <label className="font-medium">Nombre</label>
           <input
             {...register("name")}
             type="text"
-            className="border rounded-md py-1 px-2 w-full"
+            className="border rounded-md py-1 pl-2 pr-8 w-full focus:outline-none focus:border-[#D642C0] focus:ring-1 focus:ring-[#D642C0]"
           />
           {errors.name ? (
             <span className="bg-red-100 text-red-500 py-0.5 px-2 rounded-md text-sm mt-1.5 w-fit">
@@ -194,7 +198,7 @@ export function SignUpForm() {
           <input
             {...register("surname")}
             type="text"
-            className="border rounded-md py-1 px-2 w-full"
+            className="border rounded-md py-1 pl-2 pr-8 w-full focus:outline-none focus:border-[#D642C0] focus:ring-1 focus:ring-[#D642C0]"
           />
           {errors.surname ? (
             <span className="bg-red-100 text-red-500 py-0.5 px-2 rounded-md text-sm mt-1.5 w-fit">
@@ -208,7 +212,7 @@ export function SignUpForm() {
           <input
             {...register("email")}
             type="email"
-            className="border rounded-md py-1 px-2 w-full"
+            className="border rounded-md py-1 pl-2 pr-8 w-full focus:outline-none focus:border-[#D642C0] focus:ring-1 focus:ring-[#D642C0]"
           />
           {errors.email ? (
             <span className="bg-red-100 text-red-500 py-0.5 px-2 rounded-md text-sm mt-1.5 w-fit">
@@ -222,7 +226,7 @@ export function SignUpForm() {
           <input
             {...register("username")}
             type="text"
-            className="border rounded-md py-1 px-2 w-full"
+            className="border rounded-md py-1 pl-2 pr-8 w-full focus:outline-none focus:border-[#D642C0] focus:ring-1 focus:ring-[#D642C0]"
           />
           {errors.username ? (
             <span className="bg-red-100 text-red-500 py-0.5 px-2 rounded-md text-sm mt-1.5 w-fit">
@@ -237,7 +241,7 @@ export function SignUpForm() {
             <input
               {...register("password")}
               type={showPassword ? "text" : "password"}
-              className="border rounded-md py-1 pl-2 pr-8 w-full"
+              className="border rounded-md py-1 pl-2 pr-8 w-full focus:outline-none focus:border-[#D642C0] focus:ring-1 focus:ring-[#D642C0]"
             />
             <button
               className="absolute right-2 inset-y-0"
@@ -245,9 +249,9 @@ export function SignUpForm() {
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
-                <AiFillEye size={20} />
+                <AiFillEye className="fill-[#D642C0]"  size={20} />
               ) : (
-                <AiFillEyeInvisible size={20} />
+                <AiFillEyeInvisible className="fill-[#C4C4C4]"  size={20} />
               )}
             </button>
           </div>
@@ -262,7 +266,7 @@ export function SignUpForm() {
           disabled={isSubmitting}
           type="submit"
           className={
-            "bg-black text-white dark:bg-white dark:text-black py-1.5 px-3.5 mt-2 rounded-md" +
+            "/ bg-[#D642C0] text-white dark:bg-white dark:text-black lg:py-3 md:py-1.5 px-3.5 mt-2 rounded-full" +
             (!nextPage ? " hidden" : "")
           }
         >
@@ -273,9 +277,9 @@ export function SignUpForm() {
           type="button"
           onClick={() => setNextPage(!nextPage)}
           className={
-            "h-[36px] grid place-content-center py-1.5 px-3.5 rounded-md" +
+            "border border-[#D642C0] text-[#D642C0] hover:bg-[#D642C0] hover:text-white dark:text-black lg:py-3 md:py-1.5 px-3.5 mt-2 rounded-full " +
             (!nextPage
-              ? " bg-black text-white dark:bg-white dark:text-black mt-2"
+              ? " border border-[#D642C0] text-[#D642C0] hover:bg-[#D642C0] hover:text-white dark:bg-white dark:text-black mt-2"
               : " border text-black dark:border-white dark:text-white")
           }
         >
@@ -285,9 +289,10 @@ export function SignUpForm() {
           href="/signin"
           className="block text-sm font-medium -tracking-wide mt-4 opacity-90 w-fit"
         >
-          ¿Tenes cuenta? Ingresa desde aca.
+          ¿Tenes cuenta?<strong className="underline text-[#D642C0]"> Ingresa desde aca.</strong>
         </Link>
       </form>
+      </section>
     </>
   );
 }

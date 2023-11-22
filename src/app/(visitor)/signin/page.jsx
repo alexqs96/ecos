@@ -1,4 +1,5 @@
 import { SignInForm } from "@/components/Forms/AuthForms";
+import { LeftPanel } from "@/components/ui/LeftPanel";
 import { Toaster } from "react-hot-toast";
 
 /*
@@ -8,8 +9,11 @@ import { Toaster } from "react-hot-toast";
 export default function SignIn(searchParams) {
   return (
     <>
+      <section className="flex h-[100dvh]">
       <Toaster />
+      <LeftPanel/>
       <SignInForm callbackUrl={searchParams.callbackUrl} />
+      </section>
     </>
   )
 }

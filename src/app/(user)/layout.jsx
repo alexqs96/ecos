@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className + " bg-white dark:bg-black"}>
         <Providers>
           <Header />
-          <main className="max-w-screen-xl mx-auto px-[1%] flex">
+          <main className=" flex">
             {children}
           </main>
         </Providers>

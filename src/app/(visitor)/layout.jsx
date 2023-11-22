@@ -1,10 +1,10 @@
 import Header from "@/components/Header";
 import "@/globals.css";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import Providers from "@/components/Providers";
 import { loadTheme } from "@/utils/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({ subsets: ["latin"], weight:['100','300','400','700'] });
 
 export const metadata = {
   title: "Ecos",
@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className={inter.className+" max-w-screen-xl mx-auto"}>
+      <body className={roboto.className+" w-full mx-auto"}>
         <Providers>
           <main>
             {children}
