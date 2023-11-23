@@ -54,8 +54,9 @@ const userSchema = new Schema(
     badges: [{
       type: String
     }],
-    socketId: {
-      type: String
+    socketId:{
+      type: String,
+      default: ""
     }
   },
   {
