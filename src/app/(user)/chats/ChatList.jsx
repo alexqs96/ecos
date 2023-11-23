@@ -21,9 +21,9 @@ export default function ChatList({searchParams}){
   const search = useRef(null)
   const queryClient = useQueryClient();
   const {data: chats, isLoading} = useQuery({
-    queryKey: ['chats'],
+    queryKey: ['chats', searchParams.view],
     queryFn: async () => {
-      return await fetch("/api/chats").then(res => res.json())
+      return await fetch(`/api/chats?view=${searchParams.view || "friends"}`).then(res => res.json())
     }
   })
 
@@ -40,8 +40,9 @@ export default function ChatList({searchParams}){
   }, [session, socket])
 
   return (
-    <section className="flex flex-col gap-2 w-full p-5">
-      <h1 className="text-3xl font-semibold flex items-center gap-2"><MailIcon /> Mensajes</h1>
+    <main className="flex flex-col gap-2 w-full p-5">
+      <h1 className="text-3xl font-semibold flex items-center gap-2 text-[#27b53C] mb-3"><MailIcon size={"1.2em"} className={"fill-[#27b53C]"} /> Mensajes</h1>
+      <hr className="border-b border-t-0" />
 
       <section className="grid h-fit place-items-center w-full gap-5 border-b mt-5 pb-2">
         <div className="flex items-center w-full max-w-xs overflow-hidden border-2 rounded-2xl bg-white/5 focus-within:border-green-600">
@@ -52,8 +53,20 @@ export default function ChatList({searchParams}){
         </div>
 
         <div className="grid grid-cols-2 items-center text-center w-full">
-          <Link href="?view=friends" className="block group"><span className={"border-b-4 pb-1.5 transition duration-150 group-hover:border-b-green-600"+(searchParams.view === "friends" || !searchParams.view? " border-b-green-600 font-medium" : " border-transparent")}>Amigos</span></Link>
-          <Link href="?view=trades" className="block group"><span className={"border-b-4 pb-1.5 transition duration-150 group-hover:border-b-green-600"+(searchParams.view === "trades"? " border-b-green-600 font-medium" : " border-transparent")}>Intercambios</span></Link>
+          <Link href="?view=friends" className="block group" onClick={() => {
+            queryClient.invalidateQueries('chats')
+          }}>
+            <span className={"border-b-4 pb-1.5 transition duration-150 group-hover:border-b-green-600"+(searchParams.view === "friends" || !searchParams.view? " border-b-green-600 font-medium" : " border-transparent")}>
+              Amigos
+            </span>
+          </Link>
+          <Link href="?view=trades" className="block group" onClick={() => {
+            queryClient.invalidateQueries('chats')
+          }}>
+            <span className={"border-b-4 pb-1.5 transition duration-150 group-hover:border-b-green-600"+(searchParams.view === "trades"? " border-b-green-600 font-medium" : " border-transparent")}>
+              Intercambios
+            </span>
+          </Link>
         </div>
       </section>
 
@@ -92,6 +105,6 @@ export default function ChatList({searchParams}){
         ))
       }
 
-    </section>
+    </main>
   )
 }

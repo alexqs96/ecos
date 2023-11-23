@@ -6,6 +6,9 @@ import { getServerSession } from "next-auth";
 
 export async function GET(req) {
   try {
+    const {searchParams} = new URL(req.url)
+    const filterOption = searchParams.get('view') || "friends"
+
     const session = await getServerSession(AuthOptions)
 
     if (!session.user) {
@@ -20,6 +23,7 @@ export async function GET(req) {
 
     const data = await Chat.find({
       owner: session.user._id,
+      type: filterOption
     }).populate('profile', "username name surname photo").sort({ updatedAt: -1 });
 
     return NextResponse.json(data, {
