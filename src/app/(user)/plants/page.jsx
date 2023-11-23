@@ -7,6 +7,7 @@ export default function PlantsPage() {
     queryKey: ['plants'],
     queryFn: async () => {
       return await fetch("/api/info").then(res => res.json())
+      console.log(plants)
     }
   })
 
@@ -19,7 +20,9 @@ export default function PlantsPage() {
         plants?.map(e => (
           <p key={e._id}>{e?.kind}</p>
         ))
+        
       }
+      
     </main>
   )
 }
