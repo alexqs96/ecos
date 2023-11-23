@@ -1,4 +1,3 @@
-import { SERVER_ERROR } from "@/lib/consts";
 import Vegetable from "@/lib/models/Vegetables";
 import { NextResponse } from "next/server";
 
@@ -7,23 +6,18 @@ export async function GET() {
 
     const data = await Vegetable.find().lean();
 
-    return NextResponse.json({
-      message: "Lista de Verduras",
-      data
-    }, {
+    return NextResponse.json(
+      data, {
       status: 200,
       statusText: "Lista de Verduras",
     });
   } catch (error) {
     console.log("Error /garden "+error);
     return NextResponse.json(
-      {
-        message: SERVER_ERROR,
-        data: []
-      },
+      [],
       {
         status: 500,
-        statusText: "Error Verduras",
+        statusText: SERVER_ERROR,
       },
     );
   }

@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className={inter.className + " bg-white dark:bg-black"}>
+      <body className={inter.className + " bg-white dark:bg-black max-w-screen-[1920px] mx-auto"}>
         <Providers>
           <section className="flex">
           <SideNavbar />

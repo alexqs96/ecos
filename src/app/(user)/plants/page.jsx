@@ -6,7 +6,7 @@ export default function PlantsPage() {
   const {data: plants, isLoading} = useQuery({
     queryKey: ['plants'],
     queryFn: async () => {
-      return await fetch("/api/info").then(res => res.json())
+      return await fetch("/api/garden").then(res => res.json())
     }
   })
 
@@ -17,7 +17,7 @@ export default function PlantsPage() {
         <p>Cargando Plantas</p>
         :
         plants?.map(e => (
-          <p key={e._id}>{e?.kind}</p>
+          <p key={e._id}>{e?.slug}</p>
         ))
       }
     </main>

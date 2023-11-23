@@ -28,3 +28,12 @@ export const SignUpSchema = z.object({
 export const PostFormSchema = z.object({
   content: z.string(),
 });
+
+export const GardenFormSchema = z.object({
+  name: z.string().min(1),
+  width: z.number().min(1),
+  height: z.number().min(1),
+  vegetables: z.array(z.string()).refine(data => data.length > 0, {
+    message: "Elegi como minimo 1 verdura/fruta.",
+  })
+});

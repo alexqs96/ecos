@@ -20,7 +20,7 @@ export default function Profile({username}) {
   }
 
   return (
-    <>
+    <main>
       <section>
         {
           session?.user?.username === username?
@@ -43,6 +43,6 @@ export default function Profile({username}) {
           null
         }
       </section>
-    </>
+    </main>
   )
 }

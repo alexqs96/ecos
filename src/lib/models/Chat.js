@@ -37,6 +37,10 @@ const chatSchema = new Schema(
     lastMessage: {
       type: String,
     },
+    type:{
+      type: String,
+      default: "friends"
+    }
   },
   {
     timestamps: true,
