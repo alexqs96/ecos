@@ -1,36 +1,37 @@
 'use client'
+import { GardenIcon, HeartIcon, LogoutIcon, MessageIcon, PlantIcon, ProfileIcon, TradeIcon } from "@/components/Icons";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const SIDEBAR_NAV_LINKS = [
   {
-    icon: "/profile.svg",
+    icon: <ProfileIcon  size={24} className="fill-white" />,
     href: "/profile",
     label: "Perfil",
   },
   {
-    icon: "/trade.svg",
+    icon: <TradeIcon   size={24} className="fill-white" />,
     href: "/trade",
     label: "Intercambios",
   },
   {
-    icon: "/plants.svg",
+    icon: <PlantIcon  size={24} className="fill-white" />,
     href: "/plants",
     label: "Plantas",
   },
   {
-    icon: "/garden.svg",
+    icon: <GardenIcon size={24} className="fill-white"/>,
     href: "/garden",
     label: "Mi huerta",
   },
   {
-    icon: "/message.svg",
+    icon: <MessageIcon  size={24} className="fill-white" />,
     href: "/chats",
     label: "Mensajes",
   },
   {
-    icon: "/heart.svg",
+    icon: <HeartIcon  size={24} className="fill-white"/>,
     href: "/favorites",
     label: "Mis favoritos",
   }
@@ -73,15 +74,8 @@ const SideNavbar = () => {
                 } pl-[12.5%]`}
               >
                 <Link href={link.href} className="flex gap-4 items-center p-4">
-                  <img
-                    src={link.icon}
-                    width={28}
-                    height={28}
-                    alt={link.label}
-                    className={`group-hover:invert-black fill-white ${
-                      isActive && "invert-green"
-                    }`}
-                  />
+                  
+                  {link.icon}
                   {link.label}
                 </Link>
               </li>
@@ -93,7 +87,7 @@ const SideNavbar = () => {
         onClick={() => signOut()}
         className="flex gap-3 items-center pl-[17%] py-12"
       >
-        <img height={28} width={28} src="/logout.svg" alt="logout" className="fill-white"/>
+        <LogoutIcon size={24} className="fill-white"/>
         <p className="font-regular text-white">Salir</p>
       </button>
     </nav>
