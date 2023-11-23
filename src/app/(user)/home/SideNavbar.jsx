@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 const SIDEBAR_NAV_LINKS = [
   {
-    icon: <ProfileIcon  size={24} className="fill-white" />,
+    icon: <ProfileIcon  size={24} className={`fill-white `}  />,
     href: "/profile",
     label: "Perfil",
   },
@@ -72,9 +72,9 @@ const SideNavbar = () => {
             return (
               <li
                 key={link.label}
-                className={`leftsidebar-link group ${
+                className={` group hover:bg-white rounded-full  ${
                   isActive && "bg-white text-[#27b53C]"
-                } pl-[12.5%]`}
+                } pl-[12.5%] `}
               >
                 <Link href={link.href === "/profile"? "/"+session?.user?.username : link.href} className="flex gap-4 items-center p-4">
                   {link.icon}
