@@ -5,34 +5,35 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+
 const SIDEBAR_NAV_LINKS = [
   {
-    icon: <ProfileIcon  size={24} className={`fill-white `}  />,
+    icon: <ProfileIcon  size={28} className="fill-white group-hover:fill-[#27b53C]"   />,
     href: "/profile",
     label: "Perfil",
   },
   {
-    icon: <TradeIcon   size={24} className="fill-white" />,
+    icon: <TradeIcon   size={28} className="fill-white group-hover:fill-[#27b53C]" />,
     href: "/trade",
     label: "Intercambios",
   },
   {
-    icon: <PlantIcon  size={24} className="fill-white" />,
+    icon: <PlantIcon  size={28} className="fill-white group-hover:fill-[#27b53C]" />,
     href: "/plants",
     label: "Plantas",
   },
   {
-    icon: <GardenIcon size={24} className="fill-white"/>,
+    icon: <GardenIcon size={28} className="fill-white group-hover:fill-[#27b53C] "/>,
     href: "/garden",
     label: "Mi huerta",
   },
   {
-    icon: <MessageIcon  size={24} className="fill-white" />,
+    icon: <MessageIcon  size={28} className="fill-white group-hover:fill-[#27b53C]" />,
     href: "/chats",
     label: "Mensajes",
   },
   {
-    icon: <HeartIcon  size={24} className="fill-white"/>,
+    icon: <HeartIcon  size={28} className="fill-white group-hover:fill-[#27b53C]"/>,
     href: "/favorites",
     label: "Mis favoritos",
   }
@@ -72,12 +73,12 @@ const SideNavbar = () => {
             return (
               <li
                 key={link.label}
-                className={` group hover:bg-white rounded-full  ${
-                  isActive && "bg-white text-[#27b53C]"
+                className={` group hover:bg-white hover:text-[#27b53C] rounded-full  ${
+                  isActive && "bg-white text-[#27b53C] fillIcon"
                 } pl-[12.5%] `}
               >
-                <Link href={link.href === "/profile"? "/"+session?.user?.username : link.href} className="flex gap-4 items-center p-4">
-                  {link.icon}
+                <Link href={link.href === "/profile"? "/"+session?.user?.username : link.href} className=" flex gap-4 items-center p-4">
+                  {link.icon} 
                   {link.label}
                 </Link>
               </li>
