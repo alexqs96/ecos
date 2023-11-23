@@ -43,7 +43,7 @@ const SideNavbar = () => {
 
   return (
     <nav className="max-sm:hidden md:min-w-[300px] lg:max-w-[353px] py-5 bg-[#27b53C]">
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 fixed top-0">
         <Link href={`/profile`} className="flex gap-3 items-center pl-[14%]">
           <img
             // src={`${session?.user?.image} || "/avatar.svg"`}
