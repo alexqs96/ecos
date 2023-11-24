@@ -4,6 +4,8 @@ import { Posts } from '@/components/Posts/Posts';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 
+import ProfileHead from './profileComponents/ProfileHead';
+
 export default function Profile({username}) {
   const { data: session, status } = useSession();
   const { data, isPending, error } = useQuery({
@@ -20,11 +22,13 @@ export default function Profile({username}) {
   }
 
   return (
-    <main>
+    <main className='border-2 border-blue-500'>
       <section>
+        <ProfileHead data={ data }/>
+
         {
           session?.user?.username === username?
-          <p>Es tu perfil</p>
+          <p>Es tu perfil. Bienvenido {data.username}</p>
           :
           null
         }
@@ -34,8 +38,9 @@ export default function Profile({username}) {
           :
           <p>usuario no existe</p>
         }
+
       </section>
-      <section className='flex flex-col gap-5'>
+      <section className='flex flex-col gap-5 w-8/12'>
         {
           username?
           <Posts query={`username=${username}`} />
