@@ -12,6 +12,10 @@ const vegetablesSchema = new Schema({
     type: String,
     required: true,
   },
+  icon: {
+    type: String,
+    required: true,
+  },
   depth: {
     type: String,
     required: true,
@@ -33,11 +37,12 @@ const vegetablesSchema = new Schema({
     required: true,
   },
   cool: {
-    type: String,
+    type: Boolean,
     required: true,
+    default: false
   },
   space: {
-    type: String,
+    type: Number,
     required: true,
   },
   harvest: {
