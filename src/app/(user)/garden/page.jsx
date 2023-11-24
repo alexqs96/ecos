@@ -1,36 +1,102 @@
 'use client'
 
 import { FilterIcon, GardenIcon, LightBulbIcon } from "@/components/Icons"
-import { VegetablesData } from "@/components/VegetablesIcons"
 import { GardenFormSchema } from "@/lib/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { FiChevronLeft, FiSearch } from "react-icons/fi"
+import { useQuery } from "@tanstack/react-query"
+import { VegetablesIcons } from "@/components/VegetablesIcons"
 
 function GardenPage() {
   const data = []
-  const loading = false
+  const {data: vegetables, isLoading: isLoadingVegs} = useQuery({
+    queryKey: ['vegetables'],
+    queryFn: async () => {
+      return await fetch("/api/garden").then(res => res.json())
+    }
+  })
   const [page, setPage] = useState(0)
+  const [storeVegs, setStoreVegs] = useState([])
   const search = useRef(null)
   const {
     register,
     handleSubmit,
     setValue,
+    getValues,
     watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
       width: 0,
       height: 0,
-      vegetables: [""]
+      vegetables: [{
+        slug: "",
+        quantity: 1,
+        space: 1
+      }]
     },
     resolver: zodResolver(GardenFormSchema),
   });
 
+  const goBack = () => {
+    setPage(1)
+    setStoreVegs(getValues('vegetables'))
+    setValue('vegetables', [{
+      slug: "",
+      quantity: 1,
+      space: 1
+    }])
+  }
+
+  const addItems = (slug, space) => {
+    let data = getValues('vegetables').filter(e => e.slug !== "");
+  
+    const itemIndex = data.findIndex(item => item.slug === slug);
+  
+    if (itemIndex !== -1) {
+      console.log("Sacaste " + slug);
+      data = [...data.slice(0, itemIndex), ...data.slice(itemIndex + 1)];
+    } else {
+      console.log("Agregaste " + slug);
+      const newItem = { slug, quantity: 1, space }; // Establece la cantidad inicial a 1 o cualquier otro valor predeterminado
+      data = [...data, newItem];
+    }
+  
+    setValue('vegetables', data);
+    console.log(data);
+  };
+
+  const incrementQuantity = (slug) => {
+    const data = getValues('vegetables').map(item =>
+      item.slug === slug ? { ...item, quantity: item.quantity + 1 } : item
+    );
+
+    setValue('vegetables', data);
+    console.log(data);
+  };
+
+  const decrementQuantity = (slug) => {
+    const data = getValues('vegetables').map(item =>
+      item.slug === slug ? { ...item, quantity: Math.max(0, item.quantity - 1) } : item
+    );
+
+    setValue('vegetables', data);
+    console.log(data);
+  };
+
   const onSubmit = async (data) => {
-    setPage(2)
-    setValue('vegetables', [])
+    if (page === 1) {
+      setValue('vegetables', [])
+    }
+    if (page === 2) {
+      setPage(3)
+    }
+    else
+    {
+      setPage(2)
+    }
     console.log(data);
   };
 
@@ -38,7 +104,7 @@ function GardenPage() {
     <main className="flex flex-col gap-2 w-full p-5">
       <h1 className="text-3xl font-semibold flex items-center gap-2 text-[#27b53C] mb-3">
         <GardenIcon size={"1.2em"} className={"fill-[#27b53C]"} />
-        Mi Huerta {page}
+        Mi Huerta {watch('name')? "/ "+watch('name') : ""}
       </h1>
       <div className="flex">
         <p onClick={() => setPage(0)}>0</p>
@@ -51,7 +117,7 @@ function GardenPage() {
 
       <section className="flex gap-10">
         {
-          loading ?
+            isLoadingVegs ?
             <span>Cargando...</span>
             :
             !data.length && page === 0 ?
@@ -139,10 +205,17 @@ function GardenPage() {
                             ) : null}
                           </div>
                         </div>
-                        {errors.vegetables ? errors.vegetables.message : null}
+                        {errors.vegetables ? "Elegi una verdura" : null}
                         <div className="flex justify-between gap-5 mt-3">
                           <button type="button" onClick={() => setPage(0)} className="py-1.5 px-3 bg-green-300 font-medium rounded-xl text-green-800">Cancelar</button>
-                          <button disabled={isSubmitting} type="submit" className="py-1.5 px-3 bg-green-600 font-medium rounded-xl text-white">Continuar</button>
+                          <button
+                            onClick={() => storeVegs.length > 0? setValue('vegetables', storeVegs) : null}
+                            disabled={isSubmitting}
+                            type="submit"
+                            className="py-1.5 px-3 bg-green-600 font-medium rounded-xl text-white"
+                          >
+                          Continuar
+                          </button>
                         </div>
 
                       </section>
@@ -150,7 +223,7 @@ function GardenPage() {
                       page === 2 ?
                         <section className="flex flex-col w-full gap-5">
                           <div className="w-full flex justify-between gap-10 items-center bg-green-400/20 p-5 rounded-2xl text-lg">
-                            <button type="button" onClick={() => setPage(1)}>
+                            <button type="button" onClick={() => goBack()}>
                               <FiChevronLeft size={"1.5em"} />
                             </button>
 
@@ -170,23 +243,56 @@ function GardenPage() {
                             </button>
 
                           </div>
-
-                          <div className="flex items-center gap-5 text-lg max-w-md font-medium opacity-80 rounded-3xl border p-3.5 mx-auto">
-                            <LightBulbIcon size={"3em"} />
-                            <p>Elegi las frutas o verduras que deseas cultivar.</p>
-                          </div>
+                          {
+                            watch('vegetables').length > 0?
+                            <div className="flex flex-col">
+                              <span>Ancho: {watch('width')} Metros</span>
+                              <span>Altura: {watch('height')} Metros</span>
+                              <p>Elegiste {watch('vegetables').length}</p>
+                            </div>
+                            :
+                            <div className="flex items-center gap-5 text-lg max-w-md font-medium opacity-80 rounded-3xl border p-3.5 mx-auto">
+                              <LightBulbIcon size={"3em"} />
+                              <p>Elegi las frutas o verduras que deseas cultivar.</p>
+                            </div>
+                          }
 
                           {errors.vegetables ? "Elegi Verduras" : null}
                           <button disabled={isSubmitting} type="submit" className="py-1.5 px-3 bg-green-600 font-medium rounded-xl text-white">Continuar</button>
 
                           <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
                             {
-                              VegetablesData.map(e => (
-                                <button key={e.slug} type="button" className="w-full aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
-                                  <input type="checkbox" className="ml-auto mr-4 w-5 h-5 -mb-5" />
-                                  {e.icon}
+                              vegetables.map(e => (
+                                <div
+                                  key={e.slug}
+                                  className="w-full aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
+                                >
+                                  {VegetablesIcons[e.icon]}
                                   <span className="font-medium">{e.name}</span>
-                                </button>
+                                  <div className={"grid grid-cols-[30%_40%_30%] text-center w-[70%] mx-auto border rounded-lg overflow-hidden -my-3"+(watch("vegetables").find(item => item.slug === e.slug)? "" : " opacity-30")}>
+                                    <button
+                                      onClick={() => decrementQuantity(e.slug)}
+                                      type="button"
+                                    >
+                                      -
+                                    </button>
+                                    <span className="border-x block w-full">{watch("vegetables").find(item => item.slug === e.slug)?.quantity || "0"}</span>
+                                    <button
+                                      className="w-full text-center"
+                                      onClick={() => incrementQuantity(e.slug)}
+                                      type="button"
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => addItems(e.slug, e.space)}
+                                    className={"font-medium py-1.5 px-3 rounded-lg w-[70%] "+(watch("vegetables").find(item => item.slug === e.slug)? "danger" : "bg-green-500 text-white")}
+                                  >
+                                  {watch("vegetables").find(item => item.slug === e.slug)? "Quitar" : "Agregar"}
+                                  </button>
+                                </div>
                               ))
                             }
                           </div>
@@ -194,7 +300,9 @@ function GardenPage() {
                         </section>
                         :
                         <section className="flex flex-col w-full">
-                          pagina 3
+                          
+                          {JSON.stringify(watch("width"))+" Metros"}
+                          {JSON.stringify(watch("vegetables"))}
                         </section>
                   }
                 </form>

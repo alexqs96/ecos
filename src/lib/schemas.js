@@ -33,7 +33,9 @@ export const GardenFormSchema = z.object({
   name: z.string().min(1),
   width: z.number().min(1),
   height: z.number().min(1),
-  vegetables: z.array(z.string()).refine(data => data.length > 0, {
-    message: "Elegi como minimo 1 verdura/fruta.",
-  })
+  vegetables: z.array(z.object({
+    slug: z.string(),
+    quantity: z.number().min(1),
+    space: z.number().min(0)
+  }))
 });
