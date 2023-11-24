@@ -68,12 +68,21 @@ function GardenPage() {
     console.log(data);
   };
 
+  const calculateTotal = () => {
+    const data = getValues('vegetables');
+    const total = data.reduce((acc, item) => acc + (item.quantity * item.space), 0);
+    return Math.ceil(total);
+  };
+
   const incrementQuantity = (slug) => {
     const data = getValues('vegetables').map(item =>
       item.slug === slug ? { ...item, quantity: item.quantity + 1 } : item
     );
 
-    setValue('vegetables', data);
+    const newTotal = calculateTotal();
+    if (newTotal < (watch('width')+watch('height'))) {
+      setValue('vegetables', data);
+    }
     console.log(data);
   };
 
@@ -82,7 +91,10 @@ function GardenPage() {
       item.slug === slug ? { ...item, quantity: Math.max(0, item.quantity - 1) } : item
     );
 
-    setValue('vegetables', data);
+    const newTotal = calculateTotal();
+    if (newTotal <= (watch('width')+watch('height'))) {
+      setValue('vegetables', data);
+    }
     console.log(data);
   };
 
@@ -248,7 +260,7 @@ function GardenPage() {
                             <div className="flex flex-col">
                               <span>Ancho: {watch('width')} Metros</span>
                               <span>Altura: {watch('height')} Metros</span>
-                              <p>Elegiste {watch('vegetables').length}</p>
+                              <p>Espacio Ocupado: {calculateTotal()} de {watch('width') + watch('height')}</p>
                             </div>
                             :
                             <div className="flex items-center gap-5 text-lg max-w-md font-medium opacity-80 rounded-3xl border p-3.5 mx-auto">
