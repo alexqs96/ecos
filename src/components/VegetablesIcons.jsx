@@ -1290,190 +1290,42 @@ export function ZucciniIcon({ size, props }) {
   )
 }
 
-export const VegetablesData = [
-  {
-    "icon": <AcelgaIcon />,
-    "slug": "acelga",
-    "name": "Acelga"
-  },
-  {
-    "icon": <AjoIcon />,
-    "slug": "ajo",
-    "name": "Ajo"
-  },
-  {
-    "icon": <AlbahacaIcon />,
-    "slug": "albahaca",
-    "name": "Albahaca"
-  },
-  {
-    "icon": <ApioIcon />,
-    "slug": "apio",
-    "name": "Apio"
-  },
-  {
-    "icon": <ArvejaIcon />,
-    "slug": "arveja",
-    "name": "Arveja"
-  },
-  {
-    "icon": <BerenjenaIcon />,
-    "slug": "berenjena",
-    "name": "Berenjena"
-  },
-  {
-    "icon": <BrocoliIcon />,
-    "slug": "brocoli",
-    "name": "Brocoli"
-  },
-  {
-    "icon": <CayoteIcon />,
-    "slug": "cayote",
-    "name": "Cayote"
-  },
-  {
-    "icon": <CebollaIcon />,
-    "slug": "cebolla",
-    "name": "Cebolla"
-  },
-  {
-    "icon": <CebollaDeVerdeoIcon />,
-    "slug": "cebolla-de-verdeo",
-    "name": "Cebolla de Verdeo"
-  },
-  {
-    "icon": <ChauchaIcon />,
-    "slug": "chaucha",
-    "name": "Chaucha"
-  },
-  {
-    "icon": <ChauchaDeRamaIcon />,
-    "slug": "chaucha-de-rama",
-    "name": "Chaucha de Rama"
-  },
-  {
-    "icon": <ChocloIcon />,
-    "slug": "choclo",
-    "name": "Choclo"
-  },
-  {
-    "icon": <ColiflorIcon />,
-    "slug": "coliflor",
-    "name": "Coliflor"
-  },
-  {
-    "icon": <LechugaEscarolaIcon />,
-    "slug": "escarola",
-    "name": "Lechuga Escarola"
-  },
-  {
-    "icon": <EsparragoIcon />,
-    "slug": "esparrago",
-    "name": "Esparrago"
-  },
-  {
-    "icon": <EspinacaIcon />,
-    "slug": "espinaca",
-    "name": "Espinaca"
-  },
-  {
-    "icon": <FrutillaIcon />,
-    "slug": "frutilla",
-    "name": "Frutilla"
-  },
-  {
-    "icon": <HabaIcon />,
-    "slug": "haba",
-    "name": "Haba"
-  },
-  {
-    "icon": <HinojoIcon />,
-    "slug": "hinojo",
-    "name": "Hinojo"
-  },
-  {
-    "icon": <LechugaIcon />,
-    "slug": "lechuga",
-    "name": "Lechuga"
-  },
-  {
-    "icon": <MelonIcon />,
-    "slug": "melon",
-    "name": "Melon"
-  },
-  {
-    "icon": <PapaIcon />,
-    "slug": "papa",
-    "name": "Papa"
-  },
-  {
-    "icon": <PerejilIcon />,
-    "slug": "perejil",
-    "name": "Perejil"
-  },
-  {
-    "icon": <MorronIcon />,
-    "slug": "pimiento",
-    "name": "Pimiento"
-  },
-  {
-    "icon": <PuerroIcon />,
-    "slug": "puerro",
-    "name": "Puerro"
-  },
-  {
-    "icon": <RabanitoIcon />,
-    "slug": "rabanito",
-    "name": "Rabanito"
-  },
-  {
-    "icon": <RadichetaIcon />,
-    "slug": "radicheta",
-    "name": "Radicheta"
-  },
-  {
-    "icon": <RemolachaIcon />,
-    "slug": "remolacha",
-    "name": "Remolacha"
-  },
-  {
-    "icon": <RepolloIcon />,
-    "slug": "repollo",
-    "name": "Repollo"
-  },
-  {
-    "icon": <RuculaIcon />,
-    "slug": "rucula",
-    "name": "Rucula"
-  },
-  {
-    "icon": <SandiaIcon />,
-    "slug": "sandia",
-    "name": "Sandia"
-  },
-  {
-    "icon": <TomateIcon />,
-    "slug": "tomate",
-    "name": "Tomate"
-  },
-  {
-    "icon": <ZanahoriaIcon />,
-    "slug": "zanahoria",
-    "name": "Zanahoria"
-  },
-  {
-    "icon": <ZapallitoIcon />,
-    "slug": "zapallito",
-    "name": "Zapallito"
-  },
-  {
-    "icon": <ZapalloIcon />,
-    "slug": "zapallo",
-    "name": "Zapallo"
-  },
-  {
-    "icon": <ZucciniIcon />,
-    "slug": "zuccini",
-    "name": "Zuccini"
-  }
-]
+export const VegetablesIcons = {
+  AcelgaIcon: <AcelgaIcon />,
+  AjoIcon: <AjoIcon />,
+  AlbahacaIcon: <AlbahacaIcon />,
+  ApioIcon: <ApioIcon />,
+  ArvejaIcon: <ArvejaIcon />,
+  BerenjenaIcon: <BerenjenaIcon />,
+  BrocoliIcon: <BrocoliIcon />,
+  CayoteIcon: <CayoteIcon />,
+  CebollaIcon: <CebollaIcon />,
+  CebollaDeVerdeoIcon: <CebollaDeVerdeoIcon />,
+  ChauchaIcon: <ChauchaIcon />,
+  ChauchaDeRamaIcon: <ChauchaDeRamaIcon />,
+  ChocloIcon: <ChocloIcon />,
+  ColiflorIcon: <ColiflorIcon />,
+  LechugaEscarolaIcon: <LechugaEscarolaIcon />,
+  EsparragoIcon: <EsparragoIcon />,
+  EspinacaIcon: <EspinacaIcon />,
+  FrutillaIcon: <FrutillaIcon />,
+  HabaIcon: <HabaIcon />,
+  HinojoIcon: <HinojoIcon />,
+  LechugaIcon: <LechugaIcon />,
+  MelonIcon: <MelonIcon />,
+  PapaIcon: <PapaIcon />,
+  PerejilIcon: <PerejilIcon />,
+  MorronIcon: <MorronIcon />,
+  PuerroIcon: <PuerroIcon />,
+  RabanitoIcon: <RabanitoIcon />,
+  RadichetaIcon: <RadichetaIcon />,
+  RemolachaIcon: <RemolachaIcon />,
+  RepolloIcon: <RepolloIcon />,
+  RuculaIcon: <RuculaIcon />,
+  SandiaIcon: <SandiaIcon />,
+  TomateIcon: <TomateIcon />,
+  ZanahoriaIcon: <ZanahoriaIcon />,
+  ZapallitoIcon: <ZapallitoIcon />,
+  ZapalloIcon: <ZapalloIcon />,
+  ZucciniIcon: <ZucciniIcon />,
+};
