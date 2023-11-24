@@ -16,6 +16,12 @@ const vegetablesSchema = new Schema({
     type: String,
     required: true,
   },
+  images: [
+    {
+      type: String,
+      default: ""
+    }
+  ],
   depth: {
     type: String,
     required: true,
