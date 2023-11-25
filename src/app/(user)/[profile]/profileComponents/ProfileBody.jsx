@@ -6,10 +6,10 @@ function ProfileBody({ data }) {
         <div className=''>
             <div className="relative w-full h-64">
                 <Image
-                    src={"/img/BannerDefault.png"}
+                    src={data.banner ? data.banner : "/img/BannerDefault.png"}
                     layout="fill"
                     objectFit="cover"
-                    alt="Default Banner"
+                    alt={data.banner ? "User Banner" : "Default Banner"}
                     unoptimized
                 />
             </div>

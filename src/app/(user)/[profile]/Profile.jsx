@@ -25,7 +25,7 @@ export default function Profile({username}) {
 
   return (
     <main className='border-2 border-blue-500 bg-white text-black h-full w-full flex'>
-      <div className='w-8/12 flex flex-col'>
+      <div className='w-3/5 flex flex-col'>
         <section className='h-1/2 flex flex-col'>
           <ProfileHead data={data} />
 
@@ -43,7 +43,7 @@ export default function Profile({username}) {
         </section>
       </div>
 
-      <div className='w-4/12 border-2 border-red-500'>
+      <div className='w-2/5 h-screen sticky top-0'>
         <ProfileSide/>
       </div>
 
