@@ -24,26 +24,29 @@ export default function Profile({username}) {
   }
 
   return (
-    <main className='border-2 border-blue-500 bg-white text-black h-full w-full flex'>
-      <div className='w-3/5 flex flex-col'>
-        <section className='h-1/2 flex flex-col'>
+    <main className='bg-white text-black h-full w-full flex'>
+      <div className='h-full w-2/3 flex flex-col'>
+        <section className='h-4/5 flex flex-col'>
           <ProfileHead data={data} />
 
           <div className='h-full border'>
             <ProfileBody data={data} />
-            {session?.user?.username === username ? (
+
+{/*             {session?.user?.username === username ? (
               <p>Es tu perfil. Bienvenido {data.username}</p>
             ) : null}
-            {data.username ? JSON.stringify(data, null, 2) : <p>usuario no existe</p>}
+            {data.username ? JSON.stringify(data, null, 2) : <p>usuario no existe</p>} */}
+
           </div>
         </section>
 
         <section className='flex flex-col gap-5 bg-white text-black'>
+          <p>Publicaciones</p>
           {username ? <Posts query={`username=${username}`} /> : null}
         </section>
       </div>
 
-      <div className='w-2/5 h-screen sticky top-0'>
+      <div className='w-1/3 h-screen sticky top-0'>
         <ProfileSide/>
       </div>
 
