@@ -5,9 +5,8 @@ import Image from 'next/image';
 export default function ProfileHead({ data }) {
 
     return (
-        <div className='h-15vh flex bg-white text-black border border-gray-500'>
-            <div className=' p-2 flex'> 
-                <div className='w-1/12 flex place-items-center'>
+        <div className='h-15vh flex bg-white text-black border-b p-2'>
+                <div className='w-2/12 flex place-items-center'>
                     <Link href="/home" className="border-none">
                         <Image
                             src={"/img/arrow-left.png"}
@@ -22,7 +21,6 @@ export default function ProfileHead({ data }) {
                     <p className='text-2xl font-bold text-green-500'> {data.name} {data.surname} </p>
                     <p className='text-xl'>{data.posts.length} posts </p>
                 </div>
-            </div>
         </div>
     )
 }
