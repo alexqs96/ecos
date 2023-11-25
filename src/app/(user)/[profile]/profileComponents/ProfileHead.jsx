@@ -1,20 +1,22 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ProfileHead({ data }) {
-    console.log(data)
 
     return (
         <div className='h-15vh flex bg-white text-black border border-gray-500'>
             <div className='w-8/12 border-r border-gray-500 p-2 flex'> 
                 <div className='w-1/12 flex place-items-center'>
-                    <Image
-                        src={"/img/arrow-left.png"}
-                        width={40}
-                        height={40}
-                        alt="Arrow Icon"
-                        unoptimized
-                    />
+                    <Link href="/home" className="border-none">
+                        <Image
+                            src={"/img/arrow-left.png"}
+                            width={40}
+                            height={40}
+                            alt="Arrow Icon"
+                            unoptimized
+                        />
+                    </Link>
                 </div>
                 <div className='pl-8'>
                     <p className='text-2xl font-bold text-green-500'> {data.name} {data.surname} </p>
