@@ -19,9 +19,9 @@ function ProfileSide() {
             />
         </div>
 
-        <div className='border-t text-xl font-bold text-green-500 text-center h-4/5'>
-            <p className='p-5 h-1/5'>Medallas</p>
-            <div className='bg-green-100 h-4/5'>
+        <div className='border-t text-xl font-bold text-green-500 text-center h-4/5 flex flex-col'>
+            <p className='p-5'>Medallas</p>
+            <div className='bg-green-100 rounded-2xl h-4/5'>
             {/* Contenido de Medallas */}
             </div>
         </div>
