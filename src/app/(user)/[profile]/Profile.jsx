@@ -22,7 +22,7 @@ export default function Profile({username}) {
   }
 
   return (
-    <main className='border-2 border-blue-500'>
+    <main className='border-2 border-blue-500 bg-white text-black'>
       <section>
         <ProfileHead data={ data }/>
 
@@ -40,7 +40,7 @@ export default function Profile({username}) {
         }
 
       </section>
-      <section className='flex flex-col gap-5 w-8/12'>
+      <section className='flex flex-col gap-5 w-8/12 bg-white text-black'>
         {
           username?
           <Posts query={`username=${username}`} />
