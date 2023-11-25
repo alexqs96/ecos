@@ -41,7 +41,6 @@ export default function Profile({username}) {
         </section>
 
         <section className='flex flex-col gap-5 bg-white text-black'>
-          <p>Publicaciones</p>
           {username ? <Posts query={`username=${username}`} /> : null}
         </section>
       </div>

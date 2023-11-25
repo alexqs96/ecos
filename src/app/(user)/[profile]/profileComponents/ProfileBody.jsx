@@ -26,7 +26,7 @@ function ProfileBody({ data }) {
                 </div>
             </div>
 
-            <div className='flex flex-col mt-2'>
+            <div className='flex flex-col mt-5'>
                 <div className='flex justify-between'>
                     <div className='w-2/3 pl-5'>
                         <div>
@@ -50,6 +50,10 @@ function ProfileBody({ data }) {
                         unoptimized
                         />
                     <p>Ingresado en {data.createdAt}</p>
+                </div>
+
+                <div className='border-b-2 text-center text-xl font-bold underline decoration-2'>
+                    <p>Publicaciones</p>
                 </div>
             </div>
         </div>
