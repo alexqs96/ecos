@@ -49,11 +49,7 @@ function ProfileBody({ data }) {
                         alt={"Calendar Icon"}
                         unoptimized
                         />
-                    <p>Ingresado en {data.createdAt}</p>
-                </div>
-
-                <div className='border-b-2 text-center text-xl font-bold underline decoration-2'>
-                    <p>Publicaciones</p>
+                    <p>Ingresado en {data.createdAt.slice(0, 4)}</p>
                 </div>
             </div>
         </div>
