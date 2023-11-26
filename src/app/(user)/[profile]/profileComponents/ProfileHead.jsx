@@ -1,26 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { FiChevronLeft } from 'react-icons/fi';
 
 export default function ProfileHead({ data }) {
 
     return (
-        <div className='h-15vh flex bg-white text-black border-b p-2'>
-                <div className='w-2/12 flex place-items-center'>
-                    <Link href="/home" className="border-none">
-                        <Image
-                            src={"/img/arrow-left.png"}
-                            width={40}
-                            height={40}
-                            alt="Arrow Icon"
-                            unoptimized
-                        />
-                    </Link>
-                </div>
-                <div className='pl-8'>
-                    <p className='text-2xl font-bold text-green-500'> {data.name} {data.surname} </p>
-                    <p className='text-xl'>{data.posts.length} posts </p>
-                </div>
+        <div className='h-15vh flex items-center gap-5 bg-white text-black border-b p-2 sticky top-0 z-50'>
+            <Link href="/home">
+                <FiChevronLeft size={"2.5em"} className='stroke-green-500' />
+            </Link>
+            <div className='truncate'>
+                <p className='text-2xl font-bold text-green-500 truncate'> {data.name} {data.surname} </p>
+                <span>{data.posts?.length} Publicaciones </span>
+            </div>
         </div>
     )
 }

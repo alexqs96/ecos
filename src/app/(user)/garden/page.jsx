@@ -284,6 +284,7 @@ function GardenPage() {
                             </button>
 
                           </div>
+                          
                           {
                             watch('vegetables').length > 0?
                             <div className="flex flex-col bg-white sticky top-0 py-4 z-30 -my-3">

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Posts } from '@/components/Posts/Posts';
 
 const Publicaciones = ({ username }) => (
-    <section className='flex flex-col gap-5 bg-white text-black'>
+    <section className='flex flex-col gap-5 p-5 bg-white text-black'>
         {username ? <Posts query={`username=${username}`} /> : null}
     </section>
     );
@@ -20,17 +20,23 @@ const Publicaciones = ({ username }) => (
     const [seccionActiva, setSeccionActiva] = useState('Publicaciones');
 
     return (
-        <section className='h-4/5 flex flex-col'>
-        <div className='border-b-2 text-center text-xl font-bold flex justify-evenly'>
-            <p className={seccionActiva === 'Publicaciones' ? 'underline' : ''} onClick={() => setSeccionActiva('Publicaciones')}>
-            Publicaciones
-            </p>
-            <p className={`lg:hidden ${seccionActiva === 'Medallas' ? 'underline' : ''}`} onClick={() => setSeccionActiva('Medallas')}>
-            Medallas
-            </p>
-            <p className={`md:hidden ${seccionActiva === 'Intercambios' ? 'underline' : ''}`} onClick={() => setSeccionActiva('Intercambios')}>
-            Intercambios
-            </p>
+        <section className='flex flex-col'>
+        <div className='border-b py-2 text-center px-3 flex items-center overflow-x-scroll gap-5 hideScrollbar w-full'>
+            <button className='w-full' onClick={() => setSeccionActiva('Publicaciones')}>
+                <span className={"w-fit mx-auto border-b-4 py-2 transition duration-150 group-hover:border-b-green-600 "+(seccionActiva === 'Publicaciones' ? 'border-b-green-600 font-bold' : 'border-transparent')}>
+                    Publicaciones
+                </span>
+            </button>
+            <button className='w-full' onClick={() => setSeccionActiva('Medallas')}>
+                <span className={"w-fit mx-auto border-b-4 py-2 transition duration-150 group-hover:border-b-green-600 "+(seccionActiva === 'Medallas' ? 'border-b-green-600 font-bold' : 'border-transparent')}>
+                    Medallas
+                </span>
+            </button>
+            <button className='w-full' onClick={() => setSeccionActiva('Intercambios')}>
+                <span className={"w-fit mx-auto border-b-4 py-2 transition duration-150 group-hover:border-b-green-600 "+(seccionActiva === 'Intercambios' ? 'border-b-green-600 font-bold' : 'border-transparent')}>
+                    Intercambios
+                </span>
+            </button>
         </div>
 
         {seccionActiva === 'Publicaciones' && <Publicaciones username={username} />}

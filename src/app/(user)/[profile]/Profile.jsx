@@ -24,13 +24,17 @@ export default function Profile({username}) {
     return <p>Hubo un Error al cargar el perfil</p>
   }
 
+  if (!data) {
+    return <p>Usuario no existe</p>
+  }
+
   return (
     <main className='bg-white text-black h-full w-full flex'>
       <div className='h-full w-full lg:w-2/3 flex flex-col'>
         <section className='h-4/5 flex flex-col'>
           <ProfileHead data={data} />
 
-          <div className='h-full border'>
+          <div className='h-full'>
             <ProfileBody data={data} />
 
 {/*             {session?.user?.username === username ? (
