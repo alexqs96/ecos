@@ -46,22 +46,20 @@ const SideNavbar = () => {
 
   return (
     <aside className={"max-sm:hidden w-full sm:max-w-xs transition duration-300 "+(status === 'loading'? "opacity-0" : "opacity-100")}>
-      <div className="flex flex-col gap-5 bg-[#27b53C] bg-gradient-to-tr from-green-700 to-green-500 fixed h-[100dvh] px-5 pt-5 w-full max-w-xs">
+      <div className="flex flex-col gap-5 bg-[#27b53C] bg-gradient-to-tr from-green-700 to-green-500 fixed h-[100dvh] px-5 py-5 w-full max-w-xs overflow-y-scroll hideScrollbar">
         
         <div className="flex flex-col text-center text-white pr-8 select-none">
-          <span className="flex items-center gap-1 text-3xl font-semibold mx-auto">
+          <span className="flex items-center gap-1.5 text-3xl font-semibold mx-auto">
             <EcosLogo size={"1.3em"} className={"-mt-0.5 fill-white"} />
             Ecos
           </span>
         </div>
 
-        <hr className="border-white/30" />
-
-        <Link href={`/${session?.user?.username}`} className="flex gap-3 items-center pl-6">
+        <Link href={`/${session?.user?.username}`} className="flex gap-3 items-center pl-7 mt-3">
           <Image
             src={session?.user?.image || "/img/profile_default.webp"}
             alt="profile"
-            className="h-14 w-14 rounded-full"
+            className="h-12 w-12 rounded-full"
             width={100}
             height={100}
             unoptimized
@@ -75,8 +73,6 @@ const SideNavbar = () => {
             </span>
           </div>
         </Link>
-
-        <hr className="border-white/30" />
 
         <ul className="flex flex-col gap-3 font-semibold text-white text-lg">
           {SIDEBAR_NAV_LINKS.map((link) => {
