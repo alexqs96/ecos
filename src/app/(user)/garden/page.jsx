@@ -6,16 +6,23 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Children, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { FiChevronLeft, FiSearch } from "react-icons/fi"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { VegetablesIcons } from "@/components/VegetablesIcons"
 import toast, { Toaster } from "react-hot-toast"
+import Link from "next/link"
 
 function GardenPage() {
   const search = useRef(null)
+  const queryClient = useQueryClient();
   const [gardenPlants, setGardenPlants] = useState([])
   const [vegsFiltered, setVegsFiltered] = useState(false)
-  const data = [] //aca va los jardines del usuario
-  const {data: vegetables, isLoading: isLoadingVegs} = useQuery({
+  const {data: gardens, isFetching: isLoadingGardens} = useQuery({
+    queryKey: ['gardens'],
+    queryFn: async () => {
+      return await fetch("/api/users/garden").then(res => res.json())
+    }
+  })
+  const {data: vegetables, isFetching: isLoadingVegs} = useQuery({
     queryKey: ['vegetables'],
     queryFn: async () => {
       return await fetch("/api/garden").then(res => res.json())
@@ -30,6 +37,7 @@ function GardenPage() {
     setValue,
     getValues,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -138,7 +146,32 @@ function GardenPage() {
     {
       setPage(2)
     }
-    console.log(data);
+    if (page === 3) {
+      const vegs = data.vegetables.map(e => ({
+        data: e.id,
+        quantity: e.quantity
+      }));
+
+      console.log(vegs);
+
+      const res = await fetch('/api/users/garden', {
+        method: "POST",
+        body: JSON.stringify({
+          name: data.name,
+          width: data.width,
+          height: data.height,
+          vegetables: vegs
+        })
+      })
+
+      console.log(res.status);
+
+      if (res.status === 200) {
+        queryClient.invalidateQueries('gardens');
+        reset()
+        setPage(0)
+      }
+    }
   };
 
   return (
@@ -147,21 +180,15 @@ function GardenPage() {
     <main className="flex flex-col gap-2 w-full p-5">
       <h1 className="text-3xl font-semibold flex items-center gap-2 text-[#27b53C] mb-3">
         <GardenIcon size={"1.2em"} className={"fill-[#27b53C]"} />
-        Mi Huerta {watch('name')? "/ "+watch('name') : ""}
+        Mi Huerta {watch('name')? "/ "+watch('name') : null}
       </h1>
-      <div className="flex">
-        <p onClick={() => setPage(0)}>0</p>
-        <p onClick={() => setPage(1)}>1</p>
-        <p onClick={() => setPage(2)}>2</p>
-        <p onClick={() => setPage(3)}>3</p>
-      </div>
 
       <section className="flex gap-5">
         {
-            isLoadingVegs ?
+            isLoadingVegs || isLoadingGardens ?
             <span className="w-full">Cargando...</span>
             :
-            !data.length && page === 0 ?
+            !gardens.length && page === 0 ?
               <section className="h-[40dvh] flex flex-col mt-16 w-full">
                 <div className="text-center">
                   <h2 className="text-5xl font-semibold mb-3">¡Aún no hay Jardines!</h2>
@@ -177,8 +204,21 @@ function GardenPage() {
               </section>
               :
               page === 0 ?
-                <section className="flex flex-col w-full">
-                  tus jardines
+                <section className="flex flex-col w-full gap-5">
+                  <div className="grid grid-cols-3 gap-5">
+                  {
+                    gardens.map(e => (
+                      <Link
+                        href={"/garden/"+e.slug}
+                        key={e._id}
+                        className="w-full aspect-square flex flex-col items-center justify-center border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
+                      >
+                        <span>{e.name}</span>
+                        <span>{e.width} x {e.height} Mts</span>
+                      </Link>
+                    ))
+                  }
+                  </div>
 
                   <button
                     onClick={() => setPage(1)}
@@ -248,7 +288,7 @@ function GardenPage() {
                         </div>
                         {errors.vegetables ? "Elegi una verdura" : null}
                         <div className="flex justify-between gap-5 mt-3">
-                          <button type="button" onClick={() => setPage(0)} className="py-1.5 px-3 bg-green-300 font-medium rounded-xl text-green-800">Cancelar</button>
+                          <button type="button" onClick={() => {setPage(0), reset()}} className="py-1.5 px-3  font-medium rounded-xl danger">Cancelar</button>
                           <button
                             onClick={() => storeVegs.length > 0? setValue('vegetables', storeVegs) : null}
                             disabled={isSubmitting}
@@ -349,13 +389,24 @@ function GardenPage() {
                         </section>
                         :
                         <section className="flex flex-col w-full gap-5">
-                          <button
-                            className="w-fit"
-                            type="button"
-                            onClick={() => setPage(2)}
-                          >
-                            <FiChevronLeft size={"1.5em"} />
-                          </button>
+                          <div className="flex items-center gap-5 justify-between">
+                            <button
+                              className="w-fit"
+                              type="button"
+                              onClick={() => setPage(2)}
+                            >
+                              <FiChevronLeft size={"1.5em"} />
+                            </button>
+
+                            <button
+                              onClick={() => {errors.vegetables ? toast.error("Elegi Verduras") : null}}
+                              disabled={isSubmitting || calculateTotal() < 1}
+                              type="submit"
+                              className={"ml-auto mt-5 w-fit py-1.5 px-3 bg-green-600 font-medium rounded-xl text-white"+(calculateTotal() > 0.1? "" : " opacity-30")}
+                            >
+                              Guardar Jardin
+                            </button>
+                          </div>
 
                           <div className="flex flex-col">
                             <span className="font-semibold">Espacio de tu Jardin</span>
@@ -384,12 +435,13 @@ function GardenPage() {
                                 >
                                   {VegetablesIcons[e.icon]}
                                   <span className="font-medium">{e.name}</span>
-                                  {e.space} metros
+                                  <small className="font-medium -mt-4">{e.space} Metros</small>
                                 </button>
                               ))
                             )
                           }
                           </div>
+
                         </section>
                   }
                 </form>

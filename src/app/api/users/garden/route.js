@@ -3,6 +3,7 @@ import Garden from "@/lib/models/Garden";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { AuthOptions } from "../../auth/[...nextauth]/route";
+import slugify from "slugify";
 
 export async function GET(req){
   try {
@@ -69,6 +70,7 @@ export async function POST(req){
 
     const newGarden = new Garden({
       owner: session?.user?._id,
+      slug: slugify(name.toLowerCase()),
       name,
       width,
       height,

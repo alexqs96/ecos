@@ -3,6 +3,7 @@ import { MISSING_FIELDS, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import Garden from "@/lib/models/Garden";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import Vegetable from "@/lib/models/Vegetables";
 
 export async function GET(req, {params}){
   try {
@@ -36,8 +37,8 @@ export async function GET(req, {params}){
 
     const data = await Garden.findOne({
       owner: session?.user?._id,
-      _id: id
-    })
+      slug: id
+    }).populate("vegetables.data")
 
     return NextResponse.json(data, {
       status: 200,

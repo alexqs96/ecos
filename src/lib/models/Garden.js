@@ -9,6 +9,10 @@ const GardenSchema = new Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
