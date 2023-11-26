@@ -20,11 +20,6 @@ const SIDEBAR_NAV_LINKS = [
     label: "Perfil",
   },
   {
-    icon: <CommunityIcon size={28} className="fill-white group-hover:fill-[#27b53C]" />,
-    href: "/home",
-    label: "Inicio",
-  },
-  {
     icon: <TradeIcon size={28} className="fill-white group-hover:fill-[#27b53C]" />,
     href: "/trade",
     label: "Intercambios",

@@ -47,7 +47,7 @@ function GardenPage() {
     resolver: zodResolver(GardenFormSchema),
   });
 
-  const filterVegetables = () => {
+ const filterVegetables = () => {
     const data = vegetables.filter(e => e.name.toLowerCase().includes(search.current.value.toLowerCase()))
 
     setVegsFiltered(data)
