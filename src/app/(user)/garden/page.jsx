@@ -349,6 +349,14 @@ function GardenPage() {
                         </section>
                         :
                         <section className="flex flex-col w-full gap-5">
+                          <button
+                            className="w-fit"
+                            type="button"
+                            onClick={() => setPage(2)}
+                          >
+                            <FiChevronLeft size={"1.5em"} />
+                          </button>
+
                           <div className="flex flex-col">
                             <span className="font-semibold">Espacio de tu Jardin</span>
                             <span>{watch('width')} Mts Ancho</span>
