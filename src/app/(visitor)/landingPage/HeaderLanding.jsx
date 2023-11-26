@@ -10,7 +10,7 @@ export default function HeaderLanding() {
 
     return (
         <header className="bg-green-500 h-10vh w-screen flex justify-center py-2">
-        <div className="flex w-10/12 flex justify-between">
+        <div className="flex w-10/12 justify-between">
             <div className="md:hidden">
             <MenuLanding />
             </div>
