@@ -1,19 +1,14 @@
 'use client'
 
-import { CommunityIcon, EcosLogo, GardenIcon, HeartIcon, LogoutIcon, MessageIcon, PlantIcon, ProfileIcon, TradeIcon } from "@/components/Icons";
+import { CommunityIcon, EcosLogo, GardenIcon, LogoutIcon, MessageIcon, PlantIcon, ProfileIcon, TradeIcon } from "@/components/Icons";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PiHouseFill, PiSignIn } from "react-icons/pi";
+import { PiSignIn } from "react-icons/pi";
 
 
 const SIDEBAR_NAV_LINKS = [
-  {
-    icon: <PiHouseFill size={28} className="fill-white group-hover:fill-[#27b53C]" />,
-    href: "/home",
-    label: "Inicio",
-  },
   {
     icon: <ProfileIcon size={28} className="fill-white group-hover:fill-[#27b53C]" />,
     href: "/profile",
@@ -81,7 +76,7 @@ const SideNavbar = () => {
 
               <ul className="flex flex-col gap-3 font-semibold text-white text-lg w-fit mx-auto">
                 {SIDEBAR_NAV_LINKS.map((link) => {
-                  const isActive = link.href === pathname || "/"+session?.user?.username === pathname && link.href === "/profile";
+                  const isActive = (pathname).includes(link.href) || "/"+session?.user?.username === pathname && link.href === "/profile";
 
                   return (
                     <li
