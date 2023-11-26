@@ -1,5 +1,6 @@
 'use client'
-import { CommunityIcon, EcosLogo, GardenIcon, LogoutIcon, MessageIcon, PlantIcon, ProfileIcon, TradeIcon } from "@/components/Icons";
+
+import { CommunityIcon, EcosLogo, GardenIcon, HeartIcon, LogoutIcon, MessageIcon, PlantIcon, ProfileIcon, TradeIcon } from "@/components/Icons";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +18,11 @@ const SIDEBAR_NAV_LINKS = [
     icon: <ProfileIcon size={28} className="fill-white group-hover:fill-[#27b53C]" />,
     href: "/profile",
     label: "Perfil",
+  },
+  {
+    icon: <CommunityIcon size={28} className="fill-white group-hover:fill-[#27b53C]" />,
+    href: "/home",
+    label: "Inicio",
   },
   {
     icon: <TradeIcon size={28} className="fill-white group-hover:fill-[#27b53C]" />,
@@ -37,7 +43,7 @@ const SIDEBAR_NAV_LINKS = [
     icon: <MessageIcon size={28} className="fill-white group-hover:fill-[#27b53C]" />,
     href: "/chats",
     label: "Mensajes",
-  }
+  },
 ];
 
 
