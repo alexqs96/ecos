@@ -4,7 +4,7 @@ import { Carrousel1, Carrousel2, Carrousel3, Home1 } from '@/components/Images';
 
 export default function BodyLanding() {
     return (
-        <div className="bg-white h-90vh w-screen flex flex-col items-center gap-y-14 pb-10">
+        <div className="bg-white h-90vh w-full flex flex-col items-center gap-y-14 pb-10">
 
             <div className='w-10/12 flex space-around py-10'>
                 <div className="w-full md:w-7/12 content-items-center">

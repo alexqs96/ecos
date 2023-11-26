@@ -9,7 +9,7 @@ export default function HeaderLanding() {
     const { data: session, status } = useSession();
 
     return (
-        <header className="bg-green-500 h-10vh w-screen flex justify-center py-2">
+        <header className="bg-green-500 h-10vh w-full flex justify-center py-2">
         <div className="flex w-10/12 justify-between">
             <div className="md:hidden">
             <MenuLanding />

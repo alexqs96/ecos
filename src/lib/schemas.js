@@ -34,7 +34,10 @@ export const GardenFormSchema = z.object({
   width: z.number().min(1),
   height: z.number().min(1),
   vegetables: z.array(z.object({
+    id: z.string(),
     slug: z.string(),
+    name: z.string(),
+    icon: z.string(),
     quantity: z.number().min(1),
     space: z.number().min(0)
   }))

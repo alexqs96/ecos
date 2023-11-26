@@ -3,23 +3,27 @@
 import { FilterIcon, GardenIcon, LightBulbIcon } from "@/components/Icons"
 import { GardenFormSchema } from "@/lib/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useRef, useState } from "react"
+import { Children, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { FiChevronLeft, FiSearch } from "react-icons/fi"
 import { useQuery } from "@tanstack/react-query"
 import { VegetablesIcons } from "@/components/VegetablesIcons"
+import toast, { Toaster } from "react-hot-toast"
 
 function GardenPage() {
-  const data = []
+  const search = useRef(null)
+  const [gardenPlants, setGardenPlants] = useState([])
+  const [vegsFiltered, setVegsFiltered] = useState(false)
+  const data = [] //aca va los jardines del usuario
   const {data: vegetables, isLoading: isLoadingVegs} = useQuery({
     queryKey: ['vegetables'],
     queryFn: async () => {
       return await fetch("/api/garden").then(res => res.json())
     }
   })
+  //guarda la pagina y hace un backup de los vegs seleccionados en caso de que se quiera cambiar el nombre del jardin
   const [page, setPage] = useState(0)
   const [storeVegs, setStoreVegs] = useState([])
-  const search = useRef(null)
   const {
     register,
     handleSubmit,
@@ -32,25 +36,49 @@ function GardenPage() {
       width: 0,
       height: 0,
       vegetables: [{
+        id: "",
         slug: "",
+        name: "",
+        icon: "",
         quantity: 1,
-        space: 1
+        space:1
       }]
     },
     resolver: zodResolver(GardenFormSchema),
   });
 
+  const filterVegetables = () => {
+    const data = vegetables.filter(e => e.name.toLowerCase().includes(search.current.value.toLowerCase()))
+
+    setVegsFiltered(data)
+  }
+
+  function generatePlants(arr) {
+    const data = arr.flatMap(e => {
+      return Array.from({ length: e.quantity }, () => ({
+        ...e,
+        quantity: 1
+      }));
+    });
+
+    setGardenPlants(data)
+  }
+  
+
   const goBack = () => {
     setPage(1)
     setStoreVegs(getValues('vegetables'))
     setValue('vegetables', [{
+      id: "",
       slug: "",
+      name: "",
+      icon: "",
       quantity: 1,
       space: 1
     }])
   }
 
-  const addItems = (slug, space) => {
+  const addItems = (id, slug, name, icon, space) => {
     let data = getValues('vegetables').filter(e => e.slug !== "");
   
     const itemIndex = data.findIndex(item => item.slug === slug);
@@ -60,7 +88,7 @@ function GardenPage() {
       data = [...data.slice(0, itemIndex), ...data.slice(itemIndex + 1)];
     } else {
       console.log("Agregaste " + slug);
-      const newItem = { slug, quantity: 1, space }; // Establece la cantidad inicial a 1 o cualquier otro valor predeterminado
+      const newItem = { id, slug, name, icon, quantity: 1, space }; // Establece la cantidad inicial a 1 o cualquier otro valor predeterminado
       data = [...data, newItem];
     }
   
@@ -103,6 +131,7 @@ function GardenPage() {
       setValue('vegetables', [])
     }
     if (page === 2) {
+      generatePlants(watch('vegetables'))
       setPage(3)
     }
     else
@@ -113,6 +142,8 @@ function GardenPage() {
   };
 
   return (
+    <>
+    <Toaster />
     <main className="flex flex-col gap-2 w-full p-5">
       <h1 className="text-3xl font-semibold flex items-center gap-2 text-[#27b53C] mb-3">
         <GardenIcon size={"1.2em"} className={"fill-[#27b53C]"} />
@@ -125,12 +156,10 @@ function GardenPage() {
         <p onClick={() => setPage(3)}>3</p>
       </div>
 
-      <hr className="border-b border-t-0" />
-
-      <section className="flex gap-10">
+      <section className="flex gap-5">
         {
             isLoadingVegs ?
-            <span>Cargando...</span>
+            <span className="w-full">Cargando...</span>
             :
             !data.length && page === 0 ?
               <section className="h-[40dvh] flex flex-col mt-16 w-full">
@@ -161,7 +190,7 @@ function GardenPage() {
                 :
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="w-full"
+                  className="w-full relative"
                 >
                   {
                     page === 1 ?
@@ -234,7 +263,7 @@ function GardenPage() {
                       :
                       page === 2 ?
                         <section className="flex flex-col w-full gap-5">
-                          <div className="w-full flex justify-between gap-10 items-center bg-green-400/20 p-5 rounded-2xl text-lg">
+                          <div className="w-full flex justify-between gap-4 xl:gap-10 items-center bg-green-300/20 p-5 rounded-3xl">
                             <button type="button" onClick={() => goBack()}>
                               <FiChevronLeft size={"1.5em"} />
                             </button>
@@ -243,7 +272,7 @@ function GardenPage() {
                               <button type="button" className="px-2">
                                 <FiSearch size={"1.2em"} />
                               </button>
-                              <input ref={search} type="text" className="py-1 pr-3 outline-none w-full" />
+                              <input ref={search} type="text" onChange={() => filterVegetables()} onKeyDown={e => e.key === "Enter"? null : null} className="py-1 pr-3 outline-none w-full" />
                             </div>
 
                             <button
@@ -255,12 +284,23 @@ function GardenPage() {
                             </button>
 
                           </div>
+                          
                           {
                             watch('vegetables').length > 0?
-                            <div className="flex flex-col">
-                              <span>Ancho: {watch('width')} Metros</span>
-                              <span>Altura: {watch('height')} Metros</span>
-                              <p>Espacio Ocupado: {calculateTotal()} de {watch('width') + watch('height')}</p>
+                            <div className="flex flex-col bg-white sticky top-0 py-4 z-30 -my-3">
+                              <small className="-mb-3 font-semibold">Espacio Restante: </small>
+                              <div className="w-full relative mt-4 rounded-lg overflow-hidden border">
+                                <div className="bg-green-500 text-transparent py-0.5" style={{width: ((calculateTotal() / (watch('width') + watch('height'))) * 100)+"%"}}>-</div>
+                                <small className="absolute inset-0 flex items-center justify-center font-medium">{calculateTotal()} Metros / {watch('width') + watch('height')} Metros</small>
+                              </div>
+                              <button
+                                onClick={() => {errors.vegetables ? toast.error("Elegi Verduras") : null}}
+                                disabled={isSubmitting || calculateTotal() < 1}
+                                type="submit"
+                                className={"ml-auto mt-5 w-fit py-1.5 px-3 bg-green-600 font-medium rounded-xl text-white"+(calculateTotal() > 0.1? "" : " opacity-30")}
+                              >
+                                Continuar
+                              </button>
                             </div>
                             :
                             <div className="flex items-center gap-5 text-lg max-w-md font-medium opacity-80 rounded-3xl border p-3.5 mx-auto">
@@ -269,14 +309,11 @@ function GardenPage() {
                             </div>
                           }
 
-                          {errors.vegetables ? "Elegi Verduras" : null}
-                          <button disabled={isSubmitting} type="submit" className="py-1.5 px-3 bg-green-600 font-medium rounded-xl text-white">Continuar</button>
-
                           <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
                             {
-                              vegetables.map(e => (
+                              (vegsFiltered.length > 0? vegsFiltered : vegetables).map(e => (
                                 <div
-                                  key={e.slug}
+                                  key={e._id}
                                   className="w-full aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
                                 >
                                   {VegetablesIcons[e.icon]}
@@ -299,7 +336,7 @@ function GardenPage() {
                                   </div>
                                   <button
                                     type="button"
-                                    onClick={() => addItems(e.slug, e.space)}
+                                    onClick={() => addItems(e._id, e.slug, e.name, e.icon, e.space)}
                                     className={"font-medium py-1.5 px-3 rounded-lg w-[70%] "+(watch("vegetables").find(item => item.slug === e.slug)? "danger" : "bg-green-500 text-white")}
                                   >
                                   {watch("vegetables").find(item => item.slug === e.slug)? "Quitar" : "Agregar"}
@@ -311,18 +348,48 @@ function GardenPage() {
 
                         </section>
                         :
-                        <section className="flex flex-col w-full">
+                        <section className="flex flex-col w-full gap-5">
+                          <div className="flex flex-col">
+                            <span className="font-semibold">Espacio de tu Jardin</span>
+                            <span>{watch('width')} Mts Ancho</span>
+                            <span>{watch('height')} Mts Altura</span>
+                          </div>
+
+                          <div className="flex flex-col">
+                            <span className="font-semibold">Semillas necesarias</span>
+                            {
+                              watch('vegetables').map((e, index) => (
+                                <span key={index+e.slug}>{e.name}</span>
+                              ))
+                            }
+                          </div>
                           
-                          {JSON.stringify(watch("width"))+" Metros"}
-                          {JSON.stringify(watch("vegetables"))}
+                          <span className="font-semibold">Tus Plantas</span>
+
+                          <div className="grid grid-cols-2 xl:grid-cols-4 gap-5 w-full">
+                          {
+                            Children.toArray(
+                              gardenPlants.map((e) => (
+                                <button
+                                  type="button"
+                                  className="w-full aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
+                                >
+                                  {VegetablesIcons[e.icon]}
+                                  <span className="font-medium">{e.name}</span>
+                                  {e.space} metros
+                                </button>
+                              ))
+                            )
+                          }
+                          </div>
                         </section>
                   }
                 </form>
         }
 
         <aside className="max-w-xs w-full">
-          <div className="fixed w-full max-w-xs h-[100dvh] border-l px-5">
-            <span className="text-[#27b53C] text-2xl font-medium block text-center my-3">Medallas</span>
+          <div className="fixed w-full max-w-xs h-[100dvh] px-5 top-0">
+            <span className="text-[#27b53C] text-3xl font-semibold block text-center my-3">Medallas</span>
             <div className="bg-green-100 px-10 py-20 rounded-3xl">
 
             </div>
@@ -330,6 +397,7 @@ function GardenPage() {
         </aside>
       </section>
     </main>
+    </>
   )
 }
 

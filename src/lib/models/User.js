@@ -48,9 +48,6 @@ const userSchema = new Schema(
         default: ""
       }
     },
-    trades: [{
-      type: String
-    }],
     badges: [{
       type: String
     }],
