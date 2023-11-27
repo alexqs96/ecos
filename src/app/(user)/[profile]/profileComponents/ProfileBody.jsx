@@ -1,8 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
 import { CalendarIcon } from '@/components/Icons';
+import Link from 'next/link';
 
-function ProfileBody({ data }) {
+function ProfileBody({ data, username }) {
+
+    const addFriend = async () => {
+        
+    }
 
     return (
         <div className='relative'>
@@ -11,23 +16,49 @@ function ProfileBody({ data }) {
                     width={1024}
                     height={256}
                     className='h-64 w-full object-cover'
-                    src={data.banner ? data.banner : "/img/BannerDefault.webp"}
+                    src={data.banner || "/img/BannerDefault.webp"}
                     alt={data.banner ? "User Banner" : "Default Banner"}
                     unoptimized
                 />
 
-                <div className='w-full -mt-[4rem] flex flex-wrap gap-5 px-5'>
+                <div className='w-full -mt-[4rem] flex flex-wrap gap-5 px-5 justify-between'>
                     <Image
-                        src={data.photo ? data.photo : "/img/profile_default.webp"}
+                        src={data.photo || "/img/profile_default.webp"}
                         width={125}
                         height={125}
                         alt={data.photo ? "User photo" : "Default photo"}
                         className='border-4 border-white rounded-full'
                         unoptimized
                     />
-                    <button className='border h-fit mt-auto border-[#27b53C] rounded-2xl text-[#27b53C] font-semibold px-3.5 py-2 w-fit ml-auto'>
-                        Editar perfil
-                    </button>
+
+                    <div className='flex items-center gap-5'>
+                        {
+                            data.username !== username ?
+                            <>
+                            <button
+                                onClick={() => addFriend()}
+                                type='button'
+                                className='border h-fit mt-auto border-[#27b53C] rounded-2xl text-[#27b53C] font-semibold px-3.5 py-2 w-fit ml-auto'
+                            >
+                                Agregar a amigos
+                            </button>
+                            
+                            <Link href={"/trade/"+data.username}  className='border h-fit mt-auto border-[#27b53C] bg-[#27b53C] text-white rounded-2xl  font-semibold px-3.5 py-2 w-fit ml-auto'>
+                                Intercambiar
+                            </Link>
+                            </>
+                            :
+                            null
+                        }
+                        {
+                            data.username === username ?
+                            <Link href="/edit" className='border h-fit mt-auto border-[#27b53C] rounded-2xl text-[#27b53C] font-semibold px-3.5 py-2 w-fit ml-auto'>
+                                Editar perfil
+                            </Link>
+                            :
+                            null
+                        }
+                    </div>
                 </div>
             </div>
 

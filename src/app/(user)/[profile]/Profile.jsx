@@ -7,8 +7,11 @@ import ProfileBody from './profileComponents/ProfileBody';
 import SeccionesAlternas from './profileComponents/SeccionesAlternas';
 import ContactsSidebar from '@/components/ContactsSidebar';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function Profile({ username }) {
+  const {data:session} = useSession()
+
   const { data, isFetching, error } = useQuery({
     queryKey: ['user'],
     queryFn: async () => await fetch(`/api/users/${username}`).then(res => res.json())
@@ -42,7 +45,7 @@ export default function Profile({ username }) {
                     <ProfileHead data={data} />
 
                     <div className='h-full'>
-                      <ProfileBody data={data} />
+                      <ProfileBody data={data} username={session?.user?.username || null} />
 
                     </div>
                   </section>
