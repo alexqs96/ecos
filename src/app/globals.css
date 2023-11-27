@@ -76,3 +76,33 @@ html{
     }
   }
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  75% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.appear {
+  transition: transform .5s linear;
+  animation: fadeIn 0.35s linear;
+  animation-fill-mode: both;
+  will-change: opacity;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #000;
+  transition: background-color 5000s ease-in-out 0s;
+}

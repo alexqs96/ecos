@@ -8,6 +8,7 @@ import ProfileHead from './profileComponents/ProfileHead';
 import ProfileBody from './profileComponents/ProfileBody';
 import ProfileSide from './profileComponents/ProfileSide';
 import SeccionesAlternas from './profileComponents/SeccionesAlternas';
+import ContactsSidebar from '@/components/ContactsSidebar';
 
 export default function Profile({username}) {
   const { data: session, status } = useSession();
@@ -30,7 +31,7 @@ export default function Profile({username}) {
 
   return (
     <main className='bg-white text-black h-full w-full flex'>
-      <div className='h-full w-full lg:w-2/3 flex flex-col'>
+      <div className='h-full w-full flex flex-col'>
         <section className='h-4/5 flex flex-col'>
           <ProfileHead data={data} />
 
@@ -49,9 +50,7 @@ export default function Profile({username}) {
 
       </div>
 
-      <div className='hidden lg:block w-1/3 h-screen sticky top-0'>
-        <ProfileSide/>
-      </div>
+      <ContactsSidebar />
 
     </main>
   );

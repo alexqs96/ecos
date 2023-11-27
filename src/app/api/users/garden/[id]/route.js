@@ -54,7 +54,7 @@ export async function GET(req, {params}){
   }
 }
 
-export async function UPDATE(req, {params}){
+export async function PUT(req, {params}){
   try {
     const { id } = params;
     const session = await getServerSession(AuthOptions)
@@ -72,7 +72,7 @@ export async function UPDATE(req, {params}){
       );
     }
 
-    if (!id || !name || !width || !height || !vegetables) {
+    if (!id) {
       return NextResponse.json(
         {
           message: MISSING_FIELDS

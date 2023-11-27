@@ -10,6 +10,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { VegetablesIcons } from "@/components/VegetablesIcons"
 import toast, { Toaster } from "react-hot-toast"
 import Link from "next/link"
+import ContactsSidebar from "@/components/ContactsSidebar"
 
 function GardenPage() {
   const search = useRef(null)
@@ -207,11 +208,12 @@ function GardenPage() {
                 <section className="flex flex-col w-full gap-5">
                   <div className="grid grid-cols-3 gap-5">
                   {
-                    gardens.map(e => (
+                    gardens.map((e, index) => (
                       <Link
+                        style={{ animationDelay: `${index * 0.15}s` }}
                         href={"/garden/"+e.slug}
                         key={e._id}
-                        className="w-full aspect-square flex flex-col items-center justify-center border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
+                        className="w-full appear aspect-square flex flex-col items-center justify-center border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
                       >
                         <span>{e.name}</span>
                         <span>{e.width} x {e.height} Mts</span>
@@ -316,7 +318,7 @@ function GardenPage() {
                             </div>
 
                             <button
-                              className="flex border items-center gap-0.5 py-1.5 px-4 rounded-2xl bg-white font-medium"
+                              className="flex border items-center gap-0.5 py-1.5 px-4 rounded-2xl bg-white font-medium opacity-50"
                               type="button"
                             >
                               Filtrar
@@ -351,10 +353,11 @@ function GardenPage() {
 
                           <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
                             {
-                              (vegsFiltered.length > 0? vegsFiltered : vegetables).map(e => (
+                              (vegsFiltered.length > 0? vegsFiltered : vegetables).map((e, index) => (
                                 <div
+                                  style={{ animationDelay: `${index * 0.15}s` }}
                                   key={e._id}
-                                  className="w-full aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
+                                  className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
                                 >
                                   {VegetablesIcons[e.icon]}
                                   <span className="font-medium">{e.name}</span>
@@ -446,17 +449,9 @@ function GardenPage() {
                   }
                 </form>
         }
-
-        <aside className="max-w-xs w-full">
-          <div className="fixed w-full max-w-xs h-[100dvh] px-5 top-0">
-            <span className="text-[#27b53C] text-3xl font-semibold block text-center my-3">Medallas</span>
-            <div className="bg-green-100 px-10 py-20 rounded-3xl">
-
-            </div>
-          </div>
-        </aside>
       </section>
     </main>
+    <ContactsSidebar />
     </>
   )
 }

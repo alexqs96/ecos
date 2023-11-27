@@ -16,6 +16,10 @@ export async function POST(req) {
   try {
     const pageRoutes = [
       "home",
+      "garden",
+      "trade",
+      "chats",
+      "plants",
       "settings",
       "signin",
       "signup",
@@ -73,7 +77,7 @@ export async function POST(req) {
     }
 
     const newUser = new User({
-      username: username.toLowerCase(),
+      username: (username).replace(/\//g, '').toLowerCase(),
       password: await hashPassword(password),
       email,
       name: capitalize(name),

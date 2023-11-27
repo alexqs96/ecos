@@ -29,6 +29,10 @@ const GardenSchema = new Schema(
           type: Number,
           default: 1,
         },
+        harvested:{
+          type: Boolean,
+          default: false
+        }
       },
     ],
     width: {

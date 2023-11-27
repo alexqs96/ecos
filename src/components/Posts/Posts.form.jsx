@@ -70,9 +70,7 @@ export function PostForm() {
   return (
     <>
       {status === "loading" ? (
-        <section className="grid place-content-center py-10">
-          <AiOutlineLoading size={24} className="animate-spin" />
-        </section>
+        null
       ) : session && session.user ? (
         <section className="flex gap-3 mt-2 h-fit p-5 border dark:border-white/20 rounded-xl">
           <Image

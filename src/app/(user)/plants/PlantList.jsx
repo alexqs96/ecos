@@ -43,14 +43,15 @@ export default function PlantList() {
           className="py-1 pr-3 outline-none w-full"
         />
       </div>
-      <div className="grid grid-cols-2 xl:grid-cols-6 p-10 gap-5">
+      <div className="grid grid-cols-2 xl:grid-cols-4 p-5 gap-5">
       {isLoading ? (
         <p>Cargando Plantas</p>
       ) : (
-        (vegsFiltered.length > 0? vegsFiltered : plants).map((e) => (
+        (vegsFiltered.length > 0? vegsFiltered : plants).map((e, index) => (
             <div
+              style={{ animationDelay: `${index * 0.15}s` }}
               key={e._id}
-              className="w-full aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
+              className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
             >
               {VegetablesIcons[e.icon]}
               <span className="font-medium">{e.name}</span>

@@ -52,8 +52,9 @@ export function Posts({query}){
     <>
     {
       status === 'pending'?
-      <section className="grid place-content-center py-10">
+      <section className="grid place-content-center place-items-center font-semibold py-10 gap-5">
         <AiOutlineLoading size={24} className="animate-spin" />
+        Cargando Publicaciones
       </section>
       :
       <>
