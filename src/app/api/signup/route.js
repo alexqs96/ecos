@@ -20,9 +20,10 @@ export async function POST(req) {
       "trade",
       "chats",
       "plants",
-      "settings",
+      "edit",
       "signin",
       "signup",
+      "api",
       "/"
     ]
 

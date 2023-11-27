@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 import { AuthOptions } from "../auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req) {
   try {
     const {searchParams} = new URL(req.url)

@@ -1,9 +1,9 @@
 import { MISSING_FIELDS, SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { AuthOptions } from "../../auth/[...nextauth]/route";
 import Trade from "@/lib/models/Trade";
 import User from "@/lib/models/User";
+import { AuthOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function GET(req, { params }) {
   try {

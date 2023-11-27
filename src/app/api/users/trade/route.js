@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 import { AuthOptions } from "../../auth/[...nextauth]/route";
 import Trade from "@/lib/models/Trade";
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req){
   try {
     const session = await getServerSession(AuthOptions);

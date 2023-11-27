@@ -4,6 +4,8 @@ import Garden from "@/lib/models/Garden";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req) {
   try {
     const session = await getServerSession(AuthOptions);
@@ -34,7 +36,7 @@ export async function GET(req) {
       statusText: "Items disponibles para intercambiar",
     });
   } catch (error) {
-    console.log("/users/trade/you error: " + error);
+    console.log("/users/trade/harvest error: " + error);
     return NextResponse.json([], {
       status: 500,
       statusText: SERVER_ERROR,
