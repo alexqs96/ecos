@@ -49,7 +49,7 @@ export async function GET(req, { params }) {
 export async function POST(req, { params }) {
   try {
     const { username } = params;
-    const { yourVegetables, otherVegetables } = await req.json();
+    const { yourVegetables, otherVegetables, accept } = await req.json();
     const session = await getServerSession(AuthOptions);
 
     if (!session?.user) {
@@ -82,7 +82,7 @@ export async function POST(req, { params }) {
 
     const findTrade = await Trade.findOne({
       participants: [session?.user?.username, username],
-    });
+    }).populate('from.user').populate('to.user');
 
     if (!findTrade) {
       const newTrade = new Trade({
@@ -111,19 +111,38 @@ export async function POST(req, { params }) {
       );
     }
 
+    const accepted = {}
+
+    if (findTrade.from.user.username === session?.user?.username) {
+      accepted.you = accept || false
+    }
+    else
+    {
+      accept.other = accept || false
+    }
+
     const updateTrade = await Trade.findOneAndUpdate(
       {
         participants: [session?.user?.username, username],
       },
       {
         from: {
-          
-        }
+          user: findTrade.from.user.username === session?.user?.username? session?.user?._id : otherUser._id,
+          vegetables: findTrade.from.user.username === session?.user?.username? yourVegetables : otherVegetables,
+        },
+        to: {
+          user: findTrade.from.user.username === session?.user?.username? session?.user?._id : otherUser._id,
+          vegetables: findTrade.from.user.username === session?.user?.username? yourVegetables : otherVegetables,
+        },
+        accepted,
+        decline
       },
       {
         new: true,
       },
     );
+
+    
   } catch (error) {
     console.log("/users/trade error: " + error);
     return NextResponse.json([], {
