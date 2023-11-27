@@ -11,6 +11,7 @@ import { VegetablesIcons } from "@/components/VegetablesIcons"
 import toast, { Toaster } from "react-hot-toast"
 import Link from "next/link"
 import ContactsSidebar from "@/components/ContactsSidebar"
+import Image from "next/image"
 
 function GardenPage() {
   const search = useRef(null)
@@ -206,17 +207,27 @@ function GardenPage() {
               :
               page === 0 ?
                 <section className="flex flex-col w-full gap-5">
-                  <div className="grid grid-cols-3 gap-5">
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 h-fit">
                   {
                     gardens.map((e, index) => (
                       <Link
                         style={{ animationDelay: `${index * 0.15}s` }}
                         href={"/garden/"+e.slug}
                         key={e._id}
-                        className="w-full appear aspect-square flex flex-col items-center justify-center border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
+                        className="w-full appear max-h-[256px] flex flex-col overflow-hidden border rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
                       >
-                        <span>{e.name}</span>
-                        <span>{e.width} x {e.height} Mts</span>
+                        <Image
+                          className="w-full h-full aspect-video"
+                          src={e.image || "/img/gardenPreview.webp"}
+                          width={256}
+                          height={128}
+                          alt={"Foto de "+e.name}
+                          unoptimized
+                        />
+                        <div className="flex flex-col px-4 py-2.5 w-full">
+                          <span className="text-xl font-semibold truncate">{e.name}</span>
+                          <span className="font-medium truncate">{e.width} x {e.height} Metros</span>
+                        </div>
                       </Link>
                     ))
                   }

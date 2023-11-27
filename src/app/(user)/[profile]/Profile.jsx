@@ -1,57 +1,60 @@
 'use client'
 
-import { Posts } from '@/components/Posts/Posts';
 import { useQuery } from '@tanstack/react-query';
-import { useSession } from 'next-auth/react';
 
 import ProfileHead from './profileComponents/ProfileHead';
 import ProfileBody from './profileComponents/ProfileBody';
-import ProfileSide from './profileComponents/ProfileSide';
 import SeccionesAlternas from './profileComponents/SeccionesAlternas';
 import ContactsSidebar from '@/components/ContactsSidebar';
+import Link from 'next/link';
 
-export default function Profile({username}) {
-  const { data: session, status } = useSession();
-  const { data, isPending, error } = useQuery({
+export default function Profile({ username }) {
+  const { data, isFetching, error } = useQuery({
     queryKey: ['user'],
     queryFn: async () => await fetch(`/api/users/${username}`).then(res => res.json())
   })
 
-  if (status === "loading" || isPending) {
-    return <p>Cargando...</p>
-  }
-
-  if (error) {
-    return <p>Hubo un Error al cargar el perfil</p>
-  }
-
-  if (!data) {
-    return <p>Usuario no existe</p>
-  }
-
   return (
-    <main className='bg-white text-black h-full w-full flex'>
-      <div className='h-full w-full flex flex-col'>
-        <section className='h-4/5 flex flex-col'>
-          <ProfileHead data={data} />
+    <>
+      {
+        error ?
+          <p>Hubo un error al cargar el perfil</p>
+          :
+          isFetching ?
+            <div className='w-full animate-pulse bg-slate-50'>
+            </div>
+            :
+            !data ?
+              <div className='w-full grid place-content-center place-items-center items-center text-3xl font-semibold h-[40dvh] gap-5'>
+                <h1>Este usuario no existe</h1>
 
-          <div className='h-full'>
-            <ProfileBody data={data} />
+                <Link
+                  className="block shadow-transparent hover:shadow-2xl hover:shadow-green-700/20 font-medium py-1.5 px-3.5 rounded-lg bg-[#27b53C] text-white text-lg transition-all duration-200 active:scale-95"
+                  href="/home"
+                >
+                  Volver al Inicio
+                </Link>
+              </div>
+              :
+              <main className='bg-white text-black h-full w-full flex'>
+                <div className='h-full w-full flex flex-col'>
+                  <section className='h-4/5 flex flex-col'>
+                    <ProfileHead data={data} />
 
-{/*             {session?.user?.username === username ? (
-              <p>Es tu perfil. Bienvenido {data.username}</p>
-            ) : null}
-            {data.username ? JSON.stringify(data, null, 2) : <p>usuario no existe</p>} */}
+                    <div className='h-full'>
+                      <ProfileBody data={data} />
 
-          </div>
-        </section>
+                    </div>
+                  </section>
 
-        <SeccionesAlternas username={username} />
+                  <SeccionesAlternas username={username} />
 
-      </div>
+                </div>
 
-      <ContactsSidebar />
+                <ContactsSidebar />
 
-    </main>
+              </main>
+      }
+    </>
   );
 }

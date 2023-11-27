@@ -11,7 +11,7 @@ function ProfileBody({ data }) {
                     width={1024}
                     height={256}
                     className='h-64 w-full object-cover'
-                    src={data.banner ? data.banner : "/img/BannerDefault.png"}
+                    src={data.banner ? data.banner : "/img/BannerDefault.webp"}
                     alt={data.banner ? "User Banner" : "Default Banner"}
                     unoptimized
                 />

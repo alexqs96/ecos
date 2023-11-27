@@ -48,7 +48,7 @@ const SideNavbar = () => {
 
   return (
     <aside className={"max-sm:hidden w-full sm:max-w-[290px] transition duration-300 " + (status === 'loading' ? "opacity-0" : "opacity-100")}>
-      <div className="flex flex-col gap-5 bg-[#27b53C] bg-gradient-to-tr from-green-700 to-green-500 fixed h-[100dvh] px-5 py-5 w-full max-w-[290px] overflow-y-scroll hideScrollbar">
+      <div className="flex flex-col gap-5 bg-[#27b53C] bg-gradient-to-tr from-[#147b3c] to-green-500 fixed h-[100dvh] px-5 py-5 w-full max-w-[290px] overflow-y-scroll hideScrollbar">
 
         <div className="flex flex-col text-center text-white select-none">
           <span className="flex items-center gap-1.5 text-3xl font-semibold mx-auto">
@@ -70,10 +70,10 @@ const SideNavbar = () => {
                   unoptimized
                 />
                 <div className="flex flex-col w-full truncate">
-                  <span className="font-bold text-white truncate w-[13ch]">
+                  <span className="text-lg font-bold text-white truncate w-[12ch]">
                     {session?.user?.name}
                   </span>
-                  <span className="text-sm font-medium text-white truncate opacity-50 w-[13ch]">
+                  <span className="text-sm font-medium text-white truncate opacity-70 w-[12ch]">
                     @{session?.user?.username}
                   </span>
                 </div>
@@ -86,7 +86,7 @@ const SideNavbar = () => {
                   return (
                     <li
                       key={link.label}
-                      className={`group active:scale-95 hover:bg-white hover:text-[#27b53C] rounded-full transition duration-150  ${isActive && "bg-white text-[#27b53C] fillIcon"}`}
+                      className={`group active:scale-95 hover:bg-white hover:text-[#27b53C] rounded-full transition duration-150  ${isActive && "bg-white text-[#27b53C] fillIcon shadow-md"}`}
                     >
                       <Link href={link.href === "/profile" ? "/" + session?.user?.username : link.href} className=" flex gap-3 items-center px-5 py-4">
                         {link.icon}

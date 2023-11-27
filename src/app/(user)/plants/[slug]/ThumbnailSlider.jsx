@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import Image from "next/image";
 
 const ThumbnailSlider = ({images, name}) => {
   const mainRef = useRef(null);
@@ -29,23 +30,29 @@ const ThumbnailSlider = ({images, name}) => {
       >
         {images?.map((img, i) => (
           <SplideSlide key={i}>
-            <img
+            <Image
+              width={1024}
+              height={400}
               className="w-full h-[400px] object-cover"
               src={img}
               alt={"Foto "+(i+1)+" de "+name || "imagen"}
+              unoptimized
             />
           </SplideSlide>
         ))}
       </Splide>
 
-      <ul className="flex justify-center items-center list-none">
+      <ul className="flex justify-center items-center list-none gap-3">
         {images?.map((thumbnail, index) => (
           <li key={thumbnail}>
             <button onClick={() => handleThumbs(index)}>
-              <img
+              <Image
+                width={256}
+                height={256}
                 src={thumbnail}
                 alt="product thumbnail"
-                className="w-[70px] h-[70px] overflow-hidden list-none m-[0, 0.2rem] cursor-pointer"
+                className="w-[70px] h-[70px] object-cover overflow-hidden list-none cursor-pointer rounded-2xl"
+                unoptimized
               />
             </button>
           </li>

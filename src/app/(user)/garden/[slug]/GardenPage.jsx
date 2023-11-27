@@ -3,6 +3,7 @@
 import { EcosLogo } from "@/components/Icons"
 import { VegetablesIcons } from "@/components/VegetablesIcons"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
+import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { FiChevronLeft } from "react-icons/fi"
@@ -78,6 +79,15 @@ function GardenPage({ slug }) {
               </Link>
               <h1 className="text-2xl font-semibold">{data?.name}</h1>
             </div>
+
+            <Image
+              className="w-full h-full aspect-video max-h-[356px] object-cover rounded-xl"
+              src={data.image || "/img/gardenPreview.webp"}
+              width={256}
+              height={128}
+              alt={"Foto de "+data.name}
+              unoptimized
+            />
 
             <div className="flex flex-col">
               <h2 className="font-semibold">Detalles</h2>
