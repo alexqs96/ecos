@@ -3,6 +3,7 @@ import { SERVER_ERROR, USER_NOT_LOGGED_IN } from "@/lib/consts";
 import Garden from "@/lib/models/Garden";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import Vegetable from "@/lib/models/Vegetables";
 
 export const dynamic = 'force-dynamic'
 
