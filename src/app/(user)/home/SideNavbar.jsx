@@ -5,10 +5,15 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PiSignIn } from "react-icons/pi";
+import { PiHouseFill, PiSignIn } from "react-icons/pi";
 
 
 const SIDEBAR_NAV_LINKS = [
+  {
+    icon: <PiHouseFill size={28} className="fill-white group-hover:fill-[#27b53C]" />,
+    href: "/home",
+    label: "Inicio",
+  },
   {
     icon: <ProfileIcon size={28} className="fill-white group-hover:fill-[#27b53C]" />,
     href: "/profile",

@@ -16,8 +16,8 @@ const PlantItem = ({ slug }) => {
         <div> Cargando... </div>
       ) : (
         <div>
-          <div>{plantItem.data.name}</div>
-          <div>{plantItem.data.harvest}</div>
+          <div>{plantItem.name}</div>
+          <div>{plantItem.harvest}</div>
         </div>
       )}
     </main>

@@ -9,6 +9,10 @@ const DatabaseSchema = new Schema(
       type: String,
       default: "Otro"
     },
+    slug: {
+      type: String,
+      default: "otro"
+    },
     botany: {
       seedsPerGram: {
         type: String,
