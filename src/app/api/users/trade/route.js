@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../../auth/[...nextauth]/route";
 import Trade from "@/lib/models/Trade";
+import User from "@/lib/models/User";
 
 export const dynamic = 'force-dynamic'
 
@@ -23,12 +24,9 @@ export async function GET(req){
     }
 
     const data = await Trade.find({
-      participants: [
-        session?.user?.username
-      ]
+      participants: { $in: [session?.user?.username] }
+
     }).populate("from.user").populate("to.user")
-    
-    console.log(data);
 
     return NextResponse.json(data, {
       status: 200,

@@ -82,7 +82,7 @@ export default function ChatList({searchParams}){
         <span className="text-3xl font-semibold mx-auto w-fit block my-20">!Aca apareceran tus mensajes!</span>
         :
         chats?.map(e => (
-          <Link href={"/chats/"+e.profile.username} key={e._id} className="flex text-left items-center gap-3 duration-150 transition hover:bg-green-500/10 px-4 py-2 rounded-2xl">
+          <Link href={"/chats/"+e.profile.username+(searchParams.view === "trades"? "?view=trades" : "")} key={e._id} className="flex text-left items-center gap-3 duration-150 transition hover:bg-green-500/10 px-4 py-2 rounded-2xl">
             <Image
               className="block w-[48px] mb-auto aspect-square object-cover rounded-full overflow-hidden"
               width={48.1}

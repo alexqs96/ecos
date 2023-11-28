@@ -9,6 +9,8 @@ import { UploadImages } from "@/lib/cloudinaryUpload";
 
 export async function GET(req, { params }) {
   try {
+    const {searchParams} = new URL(req.url)
+    const filterOption = searchParams.get('view') || "friends"
     const session = await getServerSession(AuthOptions)
     const { username } = params;
 
@@ -24,7 +26,8 @@ export async function GET(req, { params }) {
 
     const chatId = await Chat.findOne({
       owner: session?.user?._id,
-      receiver: username
+      receiver: username,
+      type: filterOption
     })
 
     if (chatId?.chatId) {
@@ -54,6 +57,8 @@ export async function GET(req, { params }) {
 
 export async function POST(req, { params }) {
   try {
+    const {searchParams} = new URL(req.url)
+    const filterOption = searchParams.get('view') || "friends"
     const session = await getServerSession(AuthOptions)
     const { message, images } = await req.json();
     const { username } = params
@@ -86,12 +91,14 @@ export async function POST(req, { params }) {
 
     let yourChat = await Chat.findOne({
       owner: session?.user?._id,
-      receiver: username
+      receiver: username,
+      type: filterOption
     })
 
     let otherChat = await Chat.findOne({
       owner: otherId._id,
-      receiver: session?.user?.username
+      receiver: session?.user?.username,
+      type: filterOption
     })
 
     // Creamos o Actualizamos segun corresponda
@@ -105,7 +112,8 @@ export async function POST(req, { params }) {
         receiver: username,
         profile: otherId._id,
         you: true,
-        lastMessage: message || "Nuevo Mensaje"
+        lastMessage: message || "Nuevo Mensaje",
+        type: filterOption
       })
 
       await yourChat.save()
@@ -116,6 +124,7 @@ export async function POST(req, { params }) {
       yourChat = await Chat.findOneAndUpdate({
         owner: session?.user?._id,
         receiver: username,
+        type: filterOption
       },{
         hide: false,
         you: true,
@@ -135,7 +144,8 @@ export async function POST(req, { params }) {
         receiver: session?.user?.username,
         profile: session?.user?._id,
         you: false,
-        lastMessage: message || "Nuevo Mensaje"
+        lastMessage: message || "Nuevo Mensaje",
+        type: filterOption
       })
 
       await otherChat.save()
@@ -146,6 +156,7 @@ export async function POST(req, { params }) {
       otherChat = await Chat.findOneAndUpdate({
         owner: otherId._id,
         receiver: session?.user?.username,
+        type: filterOption
       },{
         hide: false,
         you: false,
