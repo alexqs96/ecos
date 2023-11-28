@@ -13,9 +13,8 @@ const TradeSchema = new Schema(
       },
       vegetables: [
         {
-          name: {
+          data: {
             type: String,
-            default: "Otro",
           },
           quantity: {
             type: Number,
@@ -32,9 +31,8 @@ const TradeSchema = new Schema(
       },
       vegetables: [
         {
-          name: {
+          data: {
             type: String,
-            default: "Otro",
           },
           quantity: {
             type: Number,
