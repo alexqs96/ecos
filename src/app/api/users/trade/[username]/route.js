@@ -77,7 +77,7 @@ export async function GET(req, { params }) {
 export async function POST(req, { params }) {
   try {
     const { username } = params;
-    const { yourVegetables, otherVegetables, accept } = await req.json();
+    const { yourVegetables, otherVegetables, accept, decline } = await req.json();
     const session = await getServerSession(AuthOptions);
 
     if (!session?.user) {

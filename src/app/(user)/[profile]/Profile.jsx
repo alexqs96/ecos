@@ -27,7 +27,7 @@ export default function Profile({ username }) {
             <div className='w-full animate-pulse bg-slate-50'>
             </div>
             :
-            !data ?
+            !data.username ?
               <div className='w-full grid place-content-center place-items-center items-center text-3xl font-semibold h-[40dvh] gap-5'>
                 <h1>Este usuario no existe</h1>
 

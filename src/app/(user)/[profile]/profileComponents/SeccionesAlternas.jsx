@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Posts } from '@/components/Posts/Posts';
 
 const Publicaciones = ({ username }) => (
-    <section className='flex flex-col gap-5 p-5 bg-white text-black'>
+    <section className='flex flex-col gap-5 p-5 pb-10 bg-white text-black'>
         {username ? <Posts query={`username=${username}`} /> : null}
     </section>
     );
