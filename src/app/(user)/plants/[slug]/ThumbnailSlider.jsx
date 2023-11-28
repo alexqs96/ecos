@@ -17,7 +17,7 @@ const ThumbnailSlider = ({images, name}) => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col">
       <Splide options={{
           type: "loop",
           perPage: 1,
