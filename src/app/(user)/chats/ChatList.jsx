@@ -42,28 +42,27 @@ export default function ChatList({searchParams}){
   return (
     <main className="flex flex-col gap-2 w-full p-5">
       <h1 className="text-3xl font-semibold flex items-center gap-2 text-[#27b53C] mb-3"><MailIcon size={"1.2em"} className={"fill-[#27b53C]"} /> Mensajes</h1>
-      <hr className="border-b border-t-0" />
 
-      <section className="grid h-fit place-items-center w-full gap-5 border-b mt-5 pb-2">
-        <div className="flex items-center w-full max-w-xs overflow-hidden border-2 rounded-2xl bg-white/5 focus-within:border-green-600">
+      <section className="grid h-fit place-items-center w-full gap-5 border-b pb-3">
+        <div className="text-xl flex items-center w-full max-w-xs overflow-hidden border-2 rounded-2xl bg-white/5 focus-within:border-green-600">
           <button type="button" className="px-2">
-          <FiSearch size={20} />
+          <FiSearch size={"1.2em"} />
           </button>
           <input ref={search} type="text" className="py-1 pr-3 outline-none w-full" />
         </div>
 
-        <div className="grid grid-cols-2 items-center text-center w-full">
+        <div className="grid grid-cols-2 items-center text-center w-full text-xl">
           <Link href="?view=friends" className="block group" onClick={() => {
             queryClient.invalidateQueries('chats')
           }}>
-            <span className={"border-b-4 pb-1.5 transition duration-150 group-hover:border-b-green-600"+(searchParams.view === "friends" || !searchParams.view? " border-b-green-600 font-medium" : " border-transparent")}>
+            <span className={"border-b-4 pb-2.5 transition duration-150 group-hover:border-b-green-600"+(searchParams.view === "friends" || !searchParams.view? " border-b-green-600 font-medium" : " border-transparent")}>
               Amigos
             </span>
           </Link>
           <Link href="?view=trades" className="block group" onClick={() => {
             queryClient.invalidateQueries('chats')
           }}>
-            <span className={"border-b-4 pb-1.5 transition duration-150 group-hover:border-b-green-600"+(searchParams.view === "trades"? " border-b-green-600 font-medium" : " border-transparent")}>
+            <span className={"border-b-4 pb-2.5 transition duration-150 group-hover:border-b-green-600"+(searchParams.view === "trades"? " border-b-green-600 font-medium" : " border-transparent")}>
               Intercambios
             </span>
           </Link>
