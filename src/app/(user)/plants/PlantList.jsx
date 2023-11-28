@@ -31,8 +31,9 @@ export default function PlantList() {
         <h1 className=" text-4xl text-[#27b53C] font-semibold">Plantas</h1>
       </header>
       <hr className="border-b border-t-0 w-full" />
-      <div className="flex items-center w-full max-w-xs overflow-hidden border-2 rounded-2xl bg-white focus-within:border-green-600">
-        <button type="button" className="px-2">
+      <section className="flex justify-center py-8 w-full">
+      <div className=" flex items-center max-w-xs p-2  overflow-hidden border-2 rounded-2xl bg-white focus-within:border-green-600">
+        <button type="button" className="px-8">
           <FiSearch size={"1.2em"} />
         </button>
         <input
@@ -41,8 +42,10 @@ export default function PlantList() {
           onChange={() => filterVegetables()}
           onKeyDown={(e) => (e.key === "Enter" ? null : null)}
           className="py-1 pr-3 outline-none w-full"
+          placeholder="Coliflor, Tomate, etc."
         />
       </div>
+      </section>
       <div className="grid grid-cols-2 xl:grid-cols-4 p-5 gap-5">
       {isLoading ? (
         <p>Cargando Plantas</p>
