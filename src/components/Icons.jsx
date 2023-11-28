@@ -215,6 +215,20 @@ export function ArrowLeft({ size, className }) {
   );
 }
 
+export function ChevronIcon({ size, className }) {
+  return (
+    <svg
+      width={size || "1em"}
+      height={size || "1em"}
+      viewBox="0 0 16 11"
+      className={className || undefined}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M1.88 0.439941L8 6.55994L14.12 0.439941L16 2.33327L8 10.3333L0 2.33327L1.88 0.439941Z" fill="black"/>
+    </svg>
+  );
+}
+
 export function TomateIcon({ size, props }) {
   return (
     <svg

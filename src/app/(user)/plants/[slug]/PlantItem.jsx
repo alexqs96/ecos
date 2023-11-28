@@ -12,6 +12,8 @@ import {
   ThermometerIcon,
   WaterIcon,
 } from "@/components/Posts/QuickInfoIcons";
+import { Disclosure } from "@headlessui/react";
+import { MyDisclosure } from "./MyDisclosure";
 
 const PlantItem = ({ slug }) => {
   const {
@@ -79,7 +81,7 @@ const PlantItem = ({ slug }) => {
                 Información rápida
               </h2>
             </header>
-            <div className="grid grid-cols-2 xl:grid-cols-6 p-5 gap-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-5 gap-5">
               <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
                 <span className="font-medium">Espacio</span>
                 <SquareIcon />
@@ -127,108 +129,154 @@ const PlantItem = ({ slug }) => {
               <div> Cargando... </div>
             ) : plantInfo ? (
               <>
-                <strong>botany</strong>
+                <div className="py-4">
+                  <strong className=" text-2xl text-[#27b53C] font-semibold p-6">
+                    Botánica:
+                  </strong>
+                  <div className="w-full">
+                    <MyDisclosure
+                      title={"Semillas por gramo:"}
+                      text={plantInfo.botany.seedsPerGram}
+                    />
+                  </div>
+                  <div>
+                    <MyDisclosure
+                      title={"Familia:"}
+                      text={plantInfo.botany.family}
+                    />
+                  </div>
+                  <div>
+                    <MyDisclosure
+                      title={"Características específicas:"}
+                      text={plantInfo.botany.family}
+                    />
+                  </div>
+                </div>
+                <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
+                  Diseño de la huerta:
+                </strong>
                 <div>
-                  <strong>seedsPerGram:</strong>{" "}
-                  <span>{plantInfo.botany.seedsPerGram}</span>
+                  <MyDisclosure
+                    title={"Ubicación en la huerta:"}
+                    text={plantInfo.gardenDesign.gardenLocation}
+                  />
                 </div>
                 <div>
-                  <strong>family:</strong>{" "}
-                  <span>{plantInfo.botany.family}</span>
+                  <MyDisclosure
+                    title={"Distancia entre planta (centímetros):"}
+                    text={plantInfo.gardenDesign.plantsDistance}
+                  />
                 </div>
                 <div>
-                  <strong>specificCharacteristics:</strong>{" "}
-                  <span>{plantInfo.botany.specificCharacteristics}</span>
-                </div>
-
-                <strong>gardenDesign</strong>
-                <div>
-                  <strong>gardenLocation:</strong>{" "}
-                  <span>{plantInfo.gardenDesign.gardenLocation}</span>
+                  <MyDisclosure
+                    title={"Asociar con:"}
+                    text={plantInfo.gardenDesign.asociateWith}
+                  />
                 </div>
                 <div>
-                  <strong>plantsDistance:</strong>{" "}
-                  <span>{plantInfo.gardenDesign.plantsDistance}</span>
+                  <MyDisclosure
+                    title={"Rotar con:"}
+                    text={plantInfo.gardenDesign.rotateWith}
+                  />
                 </div>
                 <div>
-                  <strong>asociateWith:</strong>{" "}
-                  <span>{plantInfo.gardenDesign.asociateWith}</span>
+                  <MyDisclosure
+                    title={"Espacio Ocupado:"}
+                    text={plantInfo.gardenDesign.spaceNeeded}
+                  />
                 </div>
                 <div>
-                  <strong>rotateWith:</strong>{" "}
-                  <span>{plantInfo.gardenDesign.rotateWith}</span>
+                  <MyDisclosure
+                    title={"Tolencia a la sombra:"}
+                    text={plantInfo.gardenDesign.shadowTolerance ? "Si" : "No"}
+                  />
                 </div>
                 <div>
-                  <strong>spaceNeeded:</strong>{" "}
-                  <span>{plantInfo.gardenDesign.spaceNeeded}</span>
+                  <MyDisclosure
+                    title={"Cultivo en recipiente:"}
+                    text={plantInfo.gardenDesign.bowlCultivation ? "Si" : "No"}
+                  />
+                </div>
+                <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
+                  Labores de cultivo:
+                </strong>
+                <div>
+                  <MyDisclosure
+                    title={"Tareas especiales:"}
+                    text={plantInfo.cultivationWork.specialTasks}
+                  />
                 </div>
                 <div>
-                  <strong>shadowTolerance:</strong>{" "}
-                  <span>
-                    {plantInfo.gardenDesign.shadowTolerance ? "Si" : "No"}
-                  </span>
-                </div>
-                <div>
-                  <strong>bowlCultivation:</strong>{" "}
-                  <span>
-                    {plantInfo.gardenDesign.bowlCultivation ? "Si" : "No"}
-                  </span>
-                </div>
-
-                <strong>cultivationWork</strong>
-                <div>
-                  <strong>specialTasks:</strong>{" "}
-                  <span>{plantInfo.cultivationWork.specialTasks}</span>
-                </div>
-                <div>
-                  <strong>difficulty:</strong>{" "}
-                  <span>{plantInfo.cultivationWork.difficulty}</span>
-                </div>
-
-                <strong>planning</strong>
-                <div>
-                  <strong>sowingSeason:</strong>{" "}
-                  <span>{plantInfo.planning.sowingSeason}</span>
-                </div>
-                <div>
-                  <strong>stagingRecomendation:</strong>{" "}
-                  <span>{plantInfo.planning.stagingRecomendation}</span>
-                </div>
-                <div>
-                  <strong>greenFertilizer:</strong>{" "}
-                  <span>{plantInfo.planning.greenFertilizer}</span>
-                </div>
-
-                <strong>productHarvest</strong>
-                <div>
-                  <strong>harvestPerformance:</strong>{" "}
-                  <span>{plantInfo.productHarvest.harvestPerformance}</span>
-                </div>
-                <div>
-                  <strong>possibleHarvest:</strong>{" "}
-                  <span>{plantInfo.productHarvest.possibleHarvest}</span>
-                </div>
-                <div>
-                  <strong>recommendedHarvest:</strong>{" "}
-                  <span>{plantInfo.productHarvest.recommendedHarvest}</span>
+                  <MyDisclosure
+                    title={"Dificultad de cultivo:"}
+                    text={plantInfo.cultivationWork.difficulty}
+                  />
                 </div>
 
-                <strong>seedsHarvest</strong>
+                <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
+                  Planificación de siembra:
+                </strong>
                 <div>
-                  <strong>germinativeYears:</strong>{" "}
-                  <span>{plantInfo.seedsHarvest.germinativeYears}</span>
+                  <MyDisclosure
+                    title={"Fecha de siembra:"}
+                    text={plantInfo.planning.sowingSeason}
+                  />
                 </div>
                 <div>
-                  <strong>kindOfFertilization:</strong>{" "}
-                  <span>{plantInfo.seedsHarvest.kindOfFertilization}</span>
+                  <MyDisclosure
+                    title={"Escalonamiento recomendado:"}
+                    text={plantInfo.planning.stagingRecomendation}
+                  />
                 </div>
                 <div>
-                  <strong>howToHarvest:</strong>{" "}
-                  <span>{plantInfo.seedsHarvest.howToHarvest}</span>
+                  <MyDisclosure
+                    title={"Abono verde:"}
+                    text={plantInfo.planning.greenFertilizer}
+                  />
                 </div>
 
+                <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
+                  Cosecha de productos
+                </strong>
                 <div>
-                  <strong>kind:</strong> <span>{plantInfo.kind}</span>
+                  <MyDisclosure
+                    title={"Rendimiento de cosecha:"}
+                    text={plantInfo.productHarvest.harvestPerformance}
+                  />
+                </div>
+                <div>
+                  <MyDisclosure
+                    title={"Periodo posible de cosecha:"}
+                    text={plantInfo.productHarvest.possibleHarvest}
+                  />
+                </div>
+                <div>
+                  <MyDisclosure
+                    title={"Recomendación de cosecha:"}
+                    text={plantInfo.productHarvest.recommendedHarvest}
+                  />
+                </div>
+
+                <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
+                  Cosecha de semillas:
+                </strong>
+                <div>
+                  <MyDisclosure
+                    title={"Años con buen poder germinativo:"}
+                    text={plantInfo.seedsHarvest.germinativeYears}
+                  />
+                </div>
+                <div>
+                  <MyDisclosure
+                    title={"Tiempo de Fecundación:"}
+                    text={plantInfo.seedsHarvest.kindOfFertilization}
+                  />
+                </div>
+                <div>
+                  <MyDisclosure
+                    title={"¿Cómo cosecho las semillas?:"}
+                    text={plantInfo.seedsHarvest.howToHarvest}
+                  />
                 </div>
               </>
             ) : (
