@@ -48,9 +48,7 @@ const PlantItem = ({ slug }) => {
       ) : (
         <section>
           <header className="flex p-5 col gap-3 items-center w-full text-4xl sticky top-0 bg-white z-30">
-            <Link
-              href="/plants"
-            >
+            <Link href="/plants">
               <svg
                 width="1em"
                 height="1em"
@@ -86,43 +84,43 @@ const PlantItem = ({ slug }) => {
                 Información rápida
               </h2>
             </header>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-5 gap-5">
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2  p-5 ">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border  py-5  ">
                 <span className="font-medium">Espacio</span>
                 <SquareIcon />
                 {plantItem.space}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border  py-5 ">
                 <span className="font-medium">Temporada</span>
                 <ThermometerIcon />
                 {plantItem.season}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 ">
                 <span className="font-medium">Frio</span>
                 <SnowflakeIcon />
                 {plantItem.cool ? "Tolerante" : "No Tolerante"}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 ">
                 <span className="font-medium">Agua</span>
                 <WaterIcon />
                 {plantItem.water}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5">
                 <span className="font-medium">Germinación</span>
                 <SproutIcon />
                 {plantItem.germination}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 ">
                 <span className="font-medium">Profundidad</span>
                 <ShovelIcon />
                 {plantItem.depth}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border  py-5 ">
                 <span className="font-medium">Sol</span>
                 <SunIcon />
                 {plantItem.sun}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5">
                 <span className="font-medium">Cosecha</span>
                 <HarvestIcon />
                 {plantItem.harvest}
@@ -135,7 +133,7 @@ const PlantItem = ({ slug }) => {
             ) : plantInfo ? (
               <>
                 <div className="py-4">
-                  <strong className=" text-2xl text-[#27b53C] font-semibold p-6">
+                  <strong className=" text-2xl text-[#27b53C] font-semibold p-y p-6">
                     Botánica:
                   </strong>
                   <div className="w-full">
@@ -157,51 +155,58 @@ const PlantItem = ({ slug }) => {
                     />
                   </div>
                 </div>
-                <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
-                  Diseño de la huerta:
-                </strong>
-                <div>
-                  <MyDisclosure
-                    title={"Ubicación en la huerta:"}
-                    text={plantInfo.gardenDesign.gardenLocation}
-                  />
+                <div className="py-4">
+                  <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
+                    Diseño de la huerta:
+                  </strong>
+                  <div>
+                    <MyDisclosure
+                      title={"Ubicación en la huerta:"}
+                      text={plantInfo.gardenDesign.gardenLocation}
+                    />
+                  </div>
+                  <div>
+                    <MyDisclosure
+                      title={"Distancia entre planta (centímetros):"}
+                      text={plantInfo.gardenDesign.plantsDistance}
+                    />
+                  </div>
+                  <div>
+                    <MyDisclosure
+                      title={"Asociar con:"}
+                      text={plantInfo.gardenDesign.asociateWith}
+                    />
+                  </div>
+                  <div>
+                    <MyDisclosure
+                      title={"Rotar con:"}
+                      text={plantInfo.gardenDesign.rotateWith}
+                    />
+                  </div>
+                  <div>
+                    <MyDisclosure
+                      title={"Espacio Ocupado:"}
+                      text={plantInfo.gardenDesign.spaceNeeded}
+                    />
+                  </div>
+                  <div>
+                    <MyDisclosure
+                      title={"Tolencia a la sombra:"}
+                      text={
+                        plantInfo.gardenDesign.shadowTolerance ? "Si" : "No"
+                      }
+                    />
+                  </div>
+                  <div>
+                    <MyDisclosure
+                      title={"Cultivo en recipiente:"}
+                      text={
+                        plantInfo.gardenDesign.bowlCultivation ? "Si" : "No"
+                      }
+                    />
+                  </div>
                 </div>
-                <div>
-                  <MyDisclosure
-                    title={"Distancia entre planta (centímetros):"}
-                    text={plantInfo.gardenDesign.plantsDistance}
-                  />
-                </div>
-                <div>
-                  <MyDisclosure
-                    title={"Asociar con:"}
-                    text={plantInfo.gardenDesign.asociateWith}
-                  />
-                </div>
-                <div>
-                  <MyDisclosure
-                    title={"Rotar con:"}
-                    text={plantInfo.gardenDesign.rotateWith}
-                  />
-                </div>
-                <div>
-                  <MyDisclosure
-                    title={"Espacio Ocupado:"}
-                    text={plantInfo.gardenDesign.spaceNeeded}
-                  />
-                </div>
-                <div>
-                  <MyDisclosure
-                    title={"Tolencia a la sombra:"}
-                    text={plantInfo.gardenDesign.shadowTolerance ? "Si" : "No"}
-                  />
-                </div>
-                <div>
-                  <MyDisclosure
-                    title={"Cultivo en recipiente:"}
-                    text={plantInfo.gardenDesign.bowlCultivation ? "Si" : "No"}
-                  />
-                </div>
+                <div className="py-4">
                 <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
                   Labores de cultivo:
                 </strong>
@@ -217,7 +222,8 @@ const PlantItem = ({ slug }) => {
                     text={plantInfo.cultivationWork.difficulty}
                   />
                 </div>
-
+                </div>
+                <div className="py-4">
                 <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
                   Planificación de siembra:
                 </strong>
@@ -239,7 +245,8 @@ const PlantItem = ({ slug }) => {
                     text={plantInfo.planning.greenFertilizer}
                   />
                 </div>
-
+                </div>
+                <div className="py-4">
                 <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
                   Cosecha de productos
                 </strong>
@@ -261,7 +268,8 @@ const PlantItem = ({ slug }) => {
                     text={plantInfo.productHarvest.recommendedHarvest}
                   />
                 </div>
-
+                </div>
+                <div className="py-4">
                 <strong className=" text-2xl text-[#27b53C] font-semibold py-14 p-6">
                   Cosecha de semillas:
                 </strong>
@@ -282,6 +290,7 @@ const PlantItem = ({ slug }) => {
                     title={"¿Cómo cosecho las semillas?:"}
                     text={plantInfo.seedsHarvest.howToHarvest}
                   />
+                </div>
                 </div>
               </>
             ) : (
