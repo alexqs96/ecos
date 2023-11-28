@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function PostShare({photo, username, createdAt, content, images}){
   return (
     <>
-    <div className="border dark:border-white/20 p-3 max-sm:py-2 rounded-xl flex flex-col gap-4">
+    <div className="border dark:border-white/20 p-3 max-sm:py-2 rounded-xl flex flex-col gap-4 my-2">
       <div className="flex flex-col">
       <Link
         href={"/"+username}

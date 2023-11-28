@@ -115,6 +115,7 @@ function ChatView({ params, type }) {
       <div className='flex my-2 w-[98%] mx-auto gap-2'>
         <textarea
           ref={messageInput}
+          onKeyDownCapture={e => e.key === "Enter" && !e.shiftKey && sendMessage(messageInput.current.value, [], params?.username)}
           placeholder="Aa"
           className='h-[64px] bg-slate-50 p-2.5 w-full outline-none resize-none rounded-2xl border'
         />

@@ -88,7 +88,10 @@ const SideNavbar = () => {
                       key={link.label}
                       className={`group active:scale-95 hover:bg-white hover:text-[#27b53C] rounded-full transition duration-150  ${isActive && "bg-white text-[#27b53C] fillIcon shadow-md"}`}
                     >
-                      <Link href={link.href === "/profile" ? "/" + session?.user?.username : link.href} className=" flex gap-3 items-center px-5 py-4">
+                      <Link
+                        href={link.href === "/profile" ? "/" + session?.user?.username : link.href}
+                        className=" flex gap-3 items-center px-5 py-4"
+                      >
                         {link.icon}
                         <span className="w-[13ch]">{link.label}</span>
                       </Link>

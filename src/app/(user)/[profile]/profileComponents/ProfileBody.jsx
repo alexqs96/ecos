@@ -31,7 +31,7 @@ function ProfileBody({ data, username }) {
                         unoptimized
                     />
 
-                    <div className='flex items-center gap-5'>
+                    <div className='flex items-center gap-3'>
                         {
                             data.username !== username ?
                             <>
@@ -45,6 +45,10 @@ function ProfileBody({ data, username }) {
                             
                             <Link href={"/trade/"+data.username}  className='border h-fit mt-auto border-[#27b53C] bg-[#27b53C] text-white rounded-2xl  font-semibold px-3.5 py-2 w-fit ml-auto'>
                                 Intercambiar
+                            </Link>
+
+                            <Link href={"/chats/"+data.username}  className='border h-fit mt-auto border-[#27b53C] bg-[#27b53C] text-white rounded-2xl  font-semibold px-3.5 py-2 w-fit ml-auto'>
+                                Chatear
                             </Link>
                             </>
                             :

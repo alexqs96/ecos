@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react'
 
 export default function HomePage() {
   const { data: session, status } = useSession()
-
+  
   return (
     <>
       <Toaster />
@@ -22,7 +22,12 @@ export default function HomePage() {
                 Comunidad
               </h1>
               <PostForm />
-              <Posts endpoint={"/api/posts"} />
+              {
+                status === "loading"?
+                null
+                :
+                <Posts endpoint={"/api/posts"} />
+              }
             </>
             :
             null
