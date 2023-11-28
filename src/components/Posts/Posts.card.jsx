@@ -12,6 +12,8 @@ import toast from "react-hot-toast";
 import {ModalMessage} from "../Modal";
 import { useState } from "react";
 import {FaTrashAlt} from 'react-icons/fa'
+import Image from "next/image";
+import Link from "next/link";
 
 export function PostCard({ data, session}) {
 
@@ -56,7 +58,27 @@ export function PostCard({ data, session}) {
       <ModalMessage show={show} setShow={setShow} text={"¿Estas seguro que queres borrar este Post?"} action={handleDelete} status={deletePost.status === "pending"} />
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
-          <span>@{data.creator.username}</span>
+          <Link
+            href={"/"+data.creator.username}
+            className="flex items-center gap-2 mb-2"
+          >
+            <Image
+              className="object-cover rounded-full h-fit"
+              width={38}
+              height={38}
+              src={data.creator.photo || "/img/profile_default.webp"}
+              unoptimized
+              alt={"Foto de perfil de @"+data.creator.username}
+            />
+            <div className="flex flex-col w-full relative">
+              <span className="hover:underline">@{data.creator.username}</span>
+              <small className="block font-medium opacity-80 group cursor-pointer transition duration-200 hover:underline w-full">
+                {formatDate(data.createdAt).short}
+                <small className="py-1 px-1.5 rounded-md bg-black dark:bg-white text-white dark:text-black hidden group-hover:block absolute -bottom-6 left-0 w-fit whitespace-pre">{formatDate(data.createdAt).long}</small>
+              </small>
+            </div>
+
+          </Link>
           {
             data.creator.username === session?.username?
             <button
@@ -70,14 +92,11 @@ export function PostCard({ data, session}) {
             null
           }
         </div>
-        <small className="font-medium opacity-80 group relative cursor-pointer transition duration-200 hover:underline">
-          {formatDate(data.createdAt).short}
-          <small className="py-1 px-1.5 rounded-md bg-black dark:bg-white text-white dark:text-black hidden group-hover:block absolute -bottom-6 left-0">{formatDate(data.createdAt).long}</small>
-        </small>
+        
         {data.content ? <p>{data.content}</p> : null}
         {
           data.repost?.username?
-          <PostShare username={data.repost.username} createdAt={data.repost.createdAt} content={data.repost.content} images={data.images} />
+          <PostShare photo={data.repost.photo} username={data.repost.username} createdAt={data.repost.createdAt} content={data.repost.content} images={data.images} />
           :
           data?.images?.length > 0 ?
           <ImagesLayout images={data.images} creator={data.creator.username} />

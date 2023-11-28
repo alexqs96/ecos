@@ -206,14 +206,14 @@ function GardenPage() {
                 :
                 page === 0 ?
                   <section className="flex flex-col w-full gap-5">
-                    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 h-fit">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 h-full">
                       {
                         gardens.map((e, index) => (
                           <Link
                             style={{ animationDelay: `${index * 0.15}s` }}
                             href={"/garden/" + e.slug}
                             key={e._id}
-                            className="w-full appear grid grid-rows-[65%_35%] overflow-hidden border rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
+                            className="w-full appear grid grid-rows-[63%_37%] overflow-hidden border rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
                           >
                             <Image
                               className="w-full h-full aspect-video"

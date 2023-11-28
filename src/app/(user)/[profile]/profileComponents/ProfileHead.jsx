@@ -11,7 +11,7 @@ export default function ProfileHead({ data }) {
             </Link>
             <div className='truncate'>
                 <p className='text-2xl font-bold text-green-500 truncate'> {data.name} {data.surname} </p>
-                <span>{data.posts?.length} Publicaciones </span>
+                <span>@{data.username}</span>
             </div>
         </div>
     )

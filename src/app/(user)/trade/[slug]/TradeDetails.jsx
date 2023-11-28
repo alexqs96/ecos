@@ -3,9 +3,11 @@
 import { TradeIcon } from "@/components/Icons"
 import { VegetablesIcons } from "@/components/VegetablesIcons"
 import { useQuery } from "@tanstack/react-query"
+import { useRouter } from 'next/navigation';
 import { useState } from "react"
 
 export default function TradeDetails({ slug }) {
+  const { push } = useRouter();
   const [loading, setLoading] = useState(false)
   const [myVegs, setMyVegs] = useState([])
   const [otherVegs, setOtherVegs] = useState([])
@@ -27,9 +29,12 @@ export default function TradeDetails({ slug }) {
             yourVegetables: myVegs,
             otherVegetables: otherVegs
           })
-        }).then(res => res.json())
-  
-        console.log(res?.message); 
+        })
+
+        if (res.status === 200) {
+          push("/chats/"+slug+"?view=trades")
+        }
+
       }
     } catch (error) {
       console.log(error);
@@ -124,10 +129,6 @@ export default function TradeDetails({ slug }) {
     }
   };
   
-  
-
-  console.dir(myVegs);
-
   return (
     <>
       <main className="w-full p-5 flex flex-col gap-5">
