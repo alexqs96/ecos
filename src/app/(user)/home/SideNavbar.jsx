@@ -51,7 +51,7 @@ const SideNavbar = () => {
       <div className="flex flex-col gap-5 bg-[#27b53C] bg-gradient-to-tr from-[#147b3c] to-green-500 fixed h-[100dvh] px-5 py-5 w-full max-w-[290px] overflow-y-scroll hideScrollbar">
 
         <div className="flex flex-col text-center text-white select-none">
-          <span className="flex items-center gap-1.5 text-3xl font-semibold mx-auto">
+          <span className="flex items-center gap-1.5 text-4xl font-semibold ml-6 mr-auto">
             <EcosLogo size={"1.3em"} className={"-mt-0.5 fill-white"} />
             Ecos
           </span>
@@ -60,7 +60,7 @@ const SideNavbar = () => {
         {
           session?.user ?
             <>
-              <Link href={`/${session?.user?.username}`} className="flex gap-3 items-center mx-auto mt-3">
+              <Link href={`/${session?.user?.username}`} className="flex gap-3 items-center mx-auto mt-2">
                 <Image
                   src={session?.user?.image || "/img/profile_default.webp"}
                   alt="profile"

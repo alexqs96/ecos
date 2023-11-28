@@ -149,7 +149,7 @@ export async function POST(req, { params }) {
       accept.other = accept || false;
     }
 
-    const updateTrade = await Trade.findOneAndUpdate(
+    await Trade.findOneAndUpdate(
       {
         participants: [session?.user?.username, username],
       },
@@ -179,6 +179,16 @@ export async function POST(req, { params }) {
       },
       {
         new: true,
+      },
+    );
+
+    return NextResponse.json(
+      {
+        message: "Intercambio Actualizado"
+      },
+      {
+        status: 200,
+        statusText: "Items actualizados para intercambiar entre los usuarios",
       },
     );
   } catch (error) {

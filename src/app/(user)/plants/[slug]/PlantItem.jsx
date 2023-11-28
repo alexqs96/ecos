@@ -14,6 +14,7 @@ import {
 } from "@/components/Posts/QuickInfoIcons";
 import { Disclosure } from "@headlessui/react";
 import { MyDisclosure } from "./MyDisclosure";
+import Link from "next/link";
 
 const PlantItem = ({ slug }) => {
   const {
@@ -39,28 +40,32 @@ const PlantItem = ({ slug }) => {
   });
 
   return (
-    <main className="w-full flex-column">
+    <main className="w-full flex-column pb-10">
       {plantItemError ? (
         <p>Hubo un error al cargar info sobre esta planta</p>
       ) : plantItemLoading ? (
         <div> Cargando... </div>
       ) : (
         <section>
-          <header className="flex p-5 col gap-3 items-center w-full ">
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+          <header className="flex p-5 col gap-3 items-center w-full text-4xl sticky top-0 bg-white z-30">
+            <Link
+              href="/plants"
             >
-              <path
-                d="M26.6669 14.6667V17.3333H10.6669L18.0002 24.6667L16.1069 26.56L5.54688 16L16.1069 5.44L18.0002 7.33334L10.6669 14.6667H26.6669Z"
-                fill="#27B53C"
-              />
-            </svg>
+              <svg
+                width="1em"
+                height="1em"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M26.6669 14.6667V17.3333H10.6669L18.0002 24.6667L16.1069 26.56L5.54688 16L16.1069 5.44L18.0002 7.33334L10.6669 14.6667H26.6669Z"
+                  fill="#27B53C"
+                />
+              </svg>
+            </Link>
 
-            <h1 className=" text-4xl text-[#27b53C] font-semibold px-8">
+            <h1 className="text-[#27b53C] font-semibold px-8">
               {plantItem.name}
             </h1>
           </header>

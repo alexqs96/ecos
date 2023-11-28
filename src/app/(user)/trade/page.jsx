@@ -4,8 +4,11 @@ import ContactsSidebar from "@/components/ContactsSidebar"
 import { TradeIcon } from "@/components/Icons"
 import { VegetablesIcons } from "@/components/VegetablesIcons"
 import { useQuery } from "@tanstack/react-query"
+import { useSession } from "next-auth/react"
+import Link from "next/link"
 
 function TradePage() {
+  const {data: session } = useSession()
   const { data: yourItems, error: yourItemsError, isLoading: yourItemsLoading } = useQuery({
     queryKey: ['tradeMine'],
     queryFn: async () => {
@@ -39,7 +42,7 @@ function TradePage() {
                 yourItemsLoading ?
                   <span className="text-lg font-medium animate-pulse">Cargando tus plantas cosechadas...</span>
                   :
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-2.5">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 mt-2.5">
                     {
                       yourItems.length > 0 ?
                         yourItems?.map((e, index) => (
@@ -77,28 +80,30 @@ function TradePage() {
                     {
                       yourTrades.length > 0 ?
                         yourTrades?.map((e, index) => (
-                          <div
+                          <Link
+                            href={"/chats/"+(e.from?.user?.username === session?.user?.username? e.to?.user?.username : e.from?.user?.username)+"?view=trades"}
                             style={{ animationDelay: `${index * 0.15}s` }}
                             key={e._id}
-                            className="w-full appear flex flex-col items-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
+                            className="w-full appear flex justify-between items-center gap-5 border p-5 rounded-xl transition-shadow duration-200 shadow-transparent hover:shadow-md"
                           >
-                            <div>
-                              <span className="text-lg font-medium">De {e.from?.user?.username}</span>
-                              <span className="text-lg font-medium">Hacia {e.to?.user?.username}</span>
+                            <div className="flex items-center gap-3">
+                              <small className="font-medium">De {e.from?.user?.username === session?.user?.username? "Vos" : e.from?.user?.username}</small>
+                              {"->"}
+                              <small className="font-medium">Hacia {e.to?.user?.username === session?.user?.username? "Vos" : e.to?.user?.username}</small>
                             </div>
 
                             <div>
                               {
                                 e.decline?
-                                <span>Cancelado</span>
+                                <span className="py-1 px-2.5 rounded-md danger">Cancelado</span>
                                 :
                                 e.accepted.you && e.accepted.other?
-                                <span>Finalizado</span>
+                                <span className="py-1 px-2.5 rounded-md bg-green-200 text-green-700">Finalizado</span>
                                 :
-                                <span>Pendiente</span>
+                                <span className="py-1 px-2.5 rounded-md bg-yellow-200 text-yellow-700">Pendiente</span>
                               }
                             </div>
-                          </div>
+                          </Link>
                         ))
                         :
                         <fieldset className="py-2 px-3.5 rounded-lg border shadow-lg w-fit">
