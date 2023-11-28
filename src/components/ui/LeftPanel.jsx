@@ -2,14 +2,13 @@ import React from "react";
 
 export const LeftPanel = () => {
   return (
-    <div className="flex h-full w-1/2 flex-col py-20 items-center  bg-[#2DD246]">
+    <div className="flex h-full w-1/2 flex-col xl:py-20 md:py-18 sm:py-[100px] items-center  bg-[#2DD246] max-sm:hidden">
         <div className="flex flex-col justify-center">
-      <header className="content-center text-center py-20 text-bold text-white">
-        <h1 className="text-5xl font-bold">Comienza el cambio</h1>
+      <header className="content-center text-center py-20 md:py-18 sm:py-20 text-bold text-white">
+        <h1 className=" xl:text-5xl md:text-[40px] sm:text-[36px] font-bold">Comienza el cambio</h1>
       </header>
       <svg
-        width="640"
-        height="428"
+        className="xl:w-[640px] xl:h-[428px] md:w-[480px] md:h-[300px] sm:w-[360px] sm:h-[260px]"
         viewBox="0 0 640 428"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
