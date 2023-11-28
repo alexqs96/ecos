@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Carrousel1, Carrousel2, Carrousel3, Home1 } from '@/components/Images';
+import { Carrousel1, Carrousel2, Carrousel3, Home1, Home2, Home3 } from '@/components/Images';
 
 export default function BodyLanding() {
     return (
@@ -35,20 +35,14 @@ export default function BodyLanding() {
                 <div className='w-full md:w-6/12 mb-8 md:mb-0 md:flex md:flex-col md:items-center'>
                     <h2 className='text-black m-8 text-4xl font-semibold'>Cultiva e intercambia</h2>
                     <p className=' m-8 text-2xl text-gray-500'>¡Convierte tu pasión por la jardinería en conexiones reales! Comparte, intercambia y crece junto a otros amantes de las plantas en nuestra comunidad. Comienza hoy a intercambiar tus plantas, frutas y verduras favoritas.</p>
-                    <div className='hidden md:inline flex flex-col justify-center items-center'>
+                    <div className=' md:inline flex flex-col justify-center items-center'>
                         <button className="gap-8 flex-shrink-0 rounded-full bg-green-500 text-xl p-4">
                             <p>¡Comienza a intercambiar!</p>
                         </button>
                     </div>
                 </div>
                 <div className='md:w-6/12 p-4 flex flex-col place-items-center gap-5'>
-                    <Image
-                        src="/img/Landing5.png"
-                        width={500}
-                        height={500}
-                        alt="Picture of the plant"
-                        unoptimized
-                    />
+                    <Home2 size={400} />
                     <div className='md:hidden flex flex-col justify-center items-center '>
                         <button className="gap-8 flex-shrink-0 rounded-full bg-green-500 text-xl p-4">
                             <p>¡Comienza a intercambiar!</p>
@@ -60,20 +54,14 @@ export default function BodyLanding() {
 
             <div className='w-10/12 flex flex-col md:flex-row space-around'>
 
-            <div className='hidden md:inline w-6/12 p-4 flex flex-col place-items-center gap-5'>
-                    <Image
-                        src="/img/Landing6.png"
-                        width={400}
-                        height={400}
-                        alt="Picture of the plant"
-                        unoptimized
-                    />
+            <div className=' md:inline w-6/12 p-4 flex flex-col place-items-center gap-5'>
+                    <Home3 size={400} />
                 </div>
 
                 <div className='w-full md:w-6/12 mb-8 md:mb-0 md:flex md:flex-col md:items-center'>
-                    <h2 className='text-black m-8 text-4xl font-semibold'>Infórmate y diviértete cultivando</h2>
-                    <p className='text-black m-8 text-2xl text-gray-500'>Descubre un mundo de diversión y aprendizaje en tu jardín virtual. Sumérgete en la magia de la agricultura, comparte tus experiencias y descubre nuevos trucos. Cultivar nunca fue tan emocionante. ¡Únete a la comunidad hoy!</p>
-                    <div className='hidden md:inline flex flex-col justify-center items-center'>
+                    <h2 className=' m-8 text-4xl font-semibold'>Infórmate y diviértete cultivando</h2>
+                    <p className=' m-8 text-2xl text-gray-500'>Descubre un mundo de diversión y aprendizaje en tu jardín virtual. Sumérgete en la magia de la agricultura, comparte tus experiencias y descubre nuevos trucos. Cultivar nunca fue tan emocionante. ¡Únete a la comunidad hoy!</p>
+                    <div className=' md:inline flex flex-col justify-center items-center'>
                         <button className="gap-8 flex-shrink-0 rounded-full bg-green-500 text-xl p-4">
                             <p>¡Comienza a intercambiar!</p>
                         </button>

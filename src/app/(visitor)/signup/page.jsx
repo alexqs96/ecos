@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 export default function SignUp() {
   return (
     <>
-      <section className="flex h-[100dvh]">
+      <section className="flex h-[100dvh] ">
         <Toaster />
         <LeftPanel/>
         <SignUpForm />

@@ -175,7 +175,7 @@ export function SignUpForm() {
 
   return (
     <>
-      <section className="flex items-center w-3/4 ">
+      <section className="flex items-center w-full  max-w-md">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-2 max-w-xs w-[100%] h-fit p-8 rounded-2xl dark:bg-white/10 mt-5 shadow-xl mx-auto"

@@ -81,43 +81,43 @@ const PlantItem = ({ slug }) => {
                 Información rápida
               </h2>
             </header>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-5 gap-5">
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-5 ">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border-b-2 border-r-2  py-5  ">
                 <span className="font-medium">Espacio</span>
                 <SquareIcon />
                 {plantItem.space}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border-b-2 border-r-2 py-5 ">
                 <span className="font-medium">Temporada</span>
                 <ThermometerIcon />
                 {plantItem.season}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border-b-2 border-r-2 py-5 ">
                 <span className="font-medium">Frio</span>
                 <SnowflakeIcon />
                 {plantItem.cool ? "Tolerante" : "No Tolerante"}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border-b-2  py-5 ">
                 <span className="font-medium">Agua</span>
                 <WaterIcon />
                 {plantItem.water}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5  py-5">
                 <span className="font-medium">Germinación</span>
                 <SproutIcon />
                 {plantItem.germination}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border-l-2 py-5 ">
                 <span className="font-medium">Profundidad</span>
                 <ShovelIcon />
                 {plantItem.depth}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border-l-2 py-5 ">
                 <span className="font-medium">Sol</span>
                 <SunIcon />
                 {plantItem.sun}
               </div>
-              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border py-5 rounded-3xl transition-shadow duration-200 shadow-transparent hover:shadow-md">
+              <div className="w-full appear aspect-square flex flex-col items-center justify-center gap-5 border-l-2 py-5">
                 <span className="font-medium">Cosecha</span>
                 <HarvestIcon />
                 {plantItem.harvest}
