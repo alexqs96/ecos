@@ -86,10 +86,10 @@ export default function Comments({data, you}){
                   e.creator.username === you?
                   <button
                     disabled={deleteComment.status === "pending"}
-                    className="text-red-700"
+                    className="danger py-1.5 px-2.5 rounded-xl text-sm"
                     onClick={() => setShow(!show)}
                   >
-                    <FaTrashAlt size={20} />
+                    Borrar
                   </button>
                   :
                   null

@@ -80,7 +80,7 @@ export function PostForm() {
             onError={e => {
               e.target.src = "/img/profile_default.webp"
             }}
-            src={session.user?.image || "/img/profile_default.webp"}
+            src={session.user?.photo || "/img/profile_default.webp"}
             alt={"Foto de "+session.user.username}
             unoptimized
           />
