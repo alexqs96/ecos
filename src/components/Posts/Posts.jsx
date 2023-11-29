@@ -53,9 +53,9 @@ export function Posts({query}){
     <>
     {
       status === 'pending'?
-      <section className="grid place-content-center place-items-center font-semibold py-10 gap-5">
+      // <section className="grid place-content-center place-items-center font-semibold py-10 gap-5">
         <PostSkeleton/>
-      </section>
+      // </section>
       :
       <>
       {
