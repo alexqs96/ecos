@@ -47,8 +47,8 @@ const SideNavbar = () => {
   const { data: session, status } = useSession();
 
   return (
-    <aside className={"max-sm:hidden w-full sm:max-w-[290px] transition duration-300 " + (status === 'loading' ? "opacity-0" : "opacity-100")}>
-      <div className="flex flex-col gap-5 bg-[#27b53C] bg-gradient-to-tr from-[#147b3c] to-green-500 fixed h-[100dvh] px-5 py-5 w-full max-w-[290px] overflow-y-scroll hideScrollbar">
+    <aside className={"max-sm:hidden w-full sm:max-w-xs transition duration-300 " + (status === 'loading' ? "opacity-0" : "opacity-100")}>
+      <div className="flex flex-col gap-5 bg-[#27b53C] bg-gradient-to-tr from-[#147b3c] to-green-500 fixed h-[100dvh] px-5 py-5 w-full max-w-xs overflow-y-scroll hideScrollbar">
 
         <div className="flex flex-col text-center text-white select-none">
           <span className="flex items-center gap-1.5 text-4xl font-semibold ml-6 mr-auto">

@@ -27,10 +27,11 @@ export default function PlantList() {
   const search = useRef(null);
   return (
     <main className="w-full">
-      <header className="flex p-8 col gap-3 items-center w-full">
-        <PlantIcon size={32} className={"fill-[#27b53C]"} />
-        <h1 className=" text-4xl text-[#27b53C] font-semibold">Plantas</h1>
-      </header>
+      <h1 className="text-3xl font-semibold flex items-center gap-2 text-[#27b53C] p-5">
+        <PlantIcon size={"1.2em"} className={"fill-[#27b53C]"} />
+        Plantas
+      </h1>
+
       <hr className="border-b border-t-0 w-full" />
       <section className="flex justify-center py-8 w-full">
       <div className=" flex text-lg items-center max-w-xs p-2  overflow-hidden border-2 rounded-2xl bg-white focus-within:border-green-600">
