@@ -39,6 +39,11 @@ const SIDEBAR_NAV_LINKS = [
     href: "/chats",
     label: "Mensajes",
   },
+  {
+    icon: <EcosLogo size={28} className="fill-white group-hover:fill-[#27b53C]" />,
+    href: "/ecos",
+    label: "Ecos",
+  },
 ];
 
 

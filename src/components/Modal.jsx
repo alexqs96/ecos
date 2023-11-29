@@ -50,7 +50,7 @@ export function ModalMessage({ show, setShow, text, action, status }) {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block overflow-hidden w-full max-w-[70%] sm:max-w-xs px-6 text-center bg-white align-middle shadow-xl rounded-2xl">
+            <div className="inline-block overflow-hidden w-full max-w-[80%] sm:max-w-xs p-6 text-center bg-white align-middle shadow-xl rounded-2xl">
               <span className="font-medium">{text}</span>
               <div className="grid grid-cols-2 items-center gap-4 mt-5 w-fit mx-auto">
                 <button

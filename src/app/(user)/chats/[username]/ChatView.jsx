@@ -71,8 +71,8 @@ function ChatView({ params, type }) {
   }, [messages]);
 
   return (
-    <main className='w-full flex flex-col h-[100dvh]'>
-      <h1 className="text-3xl p-5 font-semibold flex items-center gap-2 text-[#27b53C] bg-white sticky top-0">
+    <main className='w-full flex flex-col h-[85dvh] sm:h-[100dvh]'>
+      <h1 className="text-xl sm:text-3xl p-5 font-semibold flex items-center gap-2 text-[#27b53C] bg-white sticky top-0">
         <MailIcon size={"1.2em"} className={"fill-[#27b53C]"} />
         {type ? "Intercambios" : "Mensajes"} / @{params?.username}
       </h1>
