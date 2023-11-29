@@ -40,7 +40,7 @@ function TradePage() {
                 <span className="text-lg font-medium">Hubo un error al traer tus plantas, porfavor ingresa mas tarde.</span>
                 :
                 yourItemsLoading ?
-                  <span className="text-lg font-medium animate-pulse">Cargando tus plantas cosechadas...</span>
+                  <span className="text-lg font-medium animate-pulse">Cargando...</span>
                   :
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 mt-2.5">
                     {
@@ -74,7 +74,7 @@ function TradePage() {
                 <span className="text-lg font-medium">Hubo un error al traer tus plantas, porfavor ingresa mas tarde.</span>
                 :
                 yourTradesLoading ?
-                  <span className="text-lg font-medium animate-pulse">Cargando tus plantas cosechadas...</span>
+                  <span className="text-lg font-medium animate-pulse">Cargando...</span>
                   :
                   <div className="flex flex-col gap-5">
                     {
@@ -106,10 +106,7 @@ function TradePage() {
                           </Link>
                         ))
                         :
-                        <fieldset className="py-2 px-3.5 rounded-lg border shadow-lg w-fit">
-                          <legend className="px-3 font-semibold text-lg">Eco-Tip!</legend>
-                          <p className="mb-1 -mt-1">Si cosechaste alguna planta, recorda marcarla como <strong>Cosechado</strong> desde <strong>Mi Huerta</strong></p>
-                        </fieldset>
+                        null
                     }
                   </div>
             }

@@ -62,7 +62,7 @@ const SideNavbar = () => {
             <>
               <Link href={`/${session?.user?.username}`} className="flex gap-3 items-center mx-auto mt-2">
                 <Image
-                  src={session?.user?.image || "/img/profile_default.webp"}
+                  src={session?.user?.photo || "/img/profile_default.webp"}
                   alt="profile"
                   className="h-12 w-12 rounded-full"
                   width={100}

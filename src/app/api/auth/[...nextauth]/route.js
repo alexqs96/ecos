@@ -61,7 +61,13 @@ export const AuthOptions = {
   })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, trigger, user, session }) {
+      if (trigger === 'update' && session) {
+        token.surname = session.user.surname;
+        token.name = session.user.name;
+        token.photo = session.user.photo;
+      }
+
       if (user) {
         token.surname = user.surname;
         token.username = user.username;
@@ -70,7 +76,7 @@ export const AuthOptions = {
       }
       return token;
     },
-    session({ session, token }) {
+    async session({ session, token }) {
       if (token && session.user) {
         session.user.surname = token.surname;
         session.user.username = token.username;

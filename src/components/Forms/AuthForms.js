@@ -32,7 +32,7 @@ export function SignInForm({ callbackUrl }) {
     });
 
     if (res.status === 200) {
-      toast.success(WELCOME);
+      toast.success(WELCOME+" 🥳");
       setTimeout(() => {
         if (callbackUrl) {
           router.push(callbackUrl);
@@ -160,7 +160,7 @@ export function SignUpForm() {
       });
 
       if (res.status === 201) {
-        toast.success(res.statusText + " 🥳");
+        toast.success(WELCOME + " 🥳");
 
         setTimeout(() => {
           router.push("/signin");
