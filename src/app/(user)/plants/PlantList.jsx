@@ -46,7 +46,7 @@ export default function PlantList() {
         />
       </div>
       </section>
-      <div className="grid grid-cols-2 xl:grid-cols-4 p-5 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 p-5 gap-5">
       {isLoading ? (
         <p>Cargando Plantas</p>
       ) : (

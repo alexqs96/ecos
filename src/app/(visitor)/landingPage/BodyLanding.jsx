@@ -12,7 +12,7 @@ export default function BodyLanding() {
                 </div>
 
                 <div className="hidden md:block w-4/12">
-                    <Home1 size={480}/>
+                    <Home1 size={480} className="fluid"/>
                 </div>
             </div>
 
