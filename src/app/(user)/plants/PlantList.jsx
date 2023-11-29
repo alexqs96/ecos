@@ -33,8 +33,8 @@ export default function PlantList() {
       </header>
       <hr className="border-b border-t-0 w-full" />
       <section className="flex justify-center py-8 w-full">
-      <div className=" flex items-center max-w-xs p-2  overflow-hidden border-2 rounded-2xl bg-white focus-within:border-green-600">
-        <button type="button" className="px-8">
+      <div className=" flex text-lg items-center max-w-xs p-2  overflow-hidden border-2 rounded-2xl bg-white focus-within:border-green-600">
+        <button type="button" className="px-2">
           <FiSearch size={"1.2em"} />
         </button>
         <input

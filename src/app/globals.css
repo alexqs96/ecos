@@ -141,8 +141,8 @@ input:-webkit-autofill:active {
 }
 
 .hamburger span {
-  width: 32px;
-  height: 2px;
+  width: 36px;
+  height: 3px;
   display: block;
   margin: 5px auto;
   transition: all 0.3s cubic-bezier(0.52, 0.01, 0.16, 1);
@@ -150,7 +150,7 @@ input:-webkit-autofill:active {
 }
 
 .hamburger.is-active span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
+  transform: translateY(10px) rotate(45deg);
 }
 
 .hamburger.is-active span:nth-child(2) {
@@ -158,5 +158,5 @@ input:-webkit-autofill:active {
 }
 
 .hamburger.is-active span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+  transform: translateY(-7px) rotate(-45deg);
 }

@@ -33,8 +33,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es" className="scroll-smooth">
       <body className={inter.className + " bg-white max-w-screen-[1920px] mx-auto"}>
-        <Header />
         <Providers>
+          <Header />
           <section className="flex">
           <SideNavbar />
           {children}
