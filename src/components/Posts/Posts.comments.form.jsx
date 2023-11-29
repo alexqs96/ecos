@@ -73,7 +73,7 @@ export default function CommentForm({id, creator, session}) {
             onError={e => {
               e.target.src = "/img/profile_default.webp"
             }}
-            src={session?.user?.photo || "/img/profile_default.webp"}
+            src={session?.photo || "/img/profile_default.webp"}
             alt={"Foto de "+session?.username}
             unoptimized
           />
@@ -100,7 +100,6 @@ export default function CommentForm({id, creator, session}) {
                     <BsImage size={24} />
                   </span>
               </label>
-
               <button
                 disabled={sendComment.isPending}
                 className="pressable"

@@ -64,7 +64,7 @@ export default function Comments({data, you}){
               onError={e => {
                 e.target.src = "/img/profile_default.webp"
               }}
-              src={e.creator?.image || "/img/profile_default.webp"}
+              src={e.creator?.photo || "/img/profile_default.webp"}
               alt={"Foto de "+e.creator.username}
               unoptimized
             />
