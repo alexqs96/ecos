@@ -17,7 +17,7 @@ export default function HomePage() {
         {
           session?.user ?
             <>
-              <h1 className="text-3xl font-semibold flex items-center gap-2 text-[#27b53C]">
+              <h1 className="max-sm:hidden text-3xl font-semibold flex items-center gap-2 text-[#27b53C]">
                 <PiHouseFill size={"1.2em"} className={"fill-[#27b53C]"} />
                 Comunidad
               </h1>
