@@ -45,7 +45,7 @@ export async function POST(req) {
   try {
     const session = await getServerSession(AuthOptions);
     const { content, image, post } = await req.json();
-    const imagesUploaded = await UploadImages(image, true);
+    const imagesUploaded = image? await UploadImages(image, true) : null;
 
     if (!session.user) {
       return NextResponse.json(
@@ -59,7 +59,7 @@ export async function POST(req) {
       );
     }
 
-    if (!content && !image > 0) {
+    if (!content && !image) {
       return NextResponse.json(
         {
           message: MISSING_FIELDS,
@@ -74,7 +74,7 @@ export async function POST(req) {
     const newComment = new Comment({
       post,
       creator: session.user._id,
-      content,
+      content: content || "",
       image: imagesUploaded,
     });
 
