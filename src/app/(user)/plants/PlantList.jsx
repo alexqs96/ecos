@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Link from "next/link";
+import { CardSkeleton } from "@/components/ui/CardSkeleton";
 
 
 export default function PlantList() {
@@ -48,7 +49,17 @@ export default function PlantList() {
       </section>
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 p-5 gap-5">
       {isLoading ? (
-        <p>Cargando Plantas</p>
+        <>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+
+        </>
       ) : (
         (vegsFiltered.length > 0? vegsFiltered : plants).map((e, index) => (
             <div
