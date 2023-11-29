@@ -110,7 +110,7 @@ export default function Reactions({ post, data, you, share}) {
           <PostShare username={share.creator.username} createdAt={share.createdAt} content={share.content} images={share.images}/>
         </div>
       </Modal>
-      <nav className="flex justify-between items-center">
+      <nav className="flex justify-between items-center max-sm:text-sm">
         <button onClick={handleLike} className={"flex py-1.5 items-center justify-center gap-2 w-full rounded-md hover:dark:bg-white/20 hover:bg-black/5 duration-150 transition " + (data.includes(you) ? "text-green-400 font-semibold" : "")}>
           {data.includes(you) ? <AiFillLike size={20} /> : <AiOutlineLike size={20} />}
           {sendLike.isPending ? <AiOutlineLoading size={20} className="animate-spin" /> : "Me Gusta"}
