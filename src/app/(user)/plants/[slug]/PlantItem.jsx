@@ -15,6 +15,8 @@ import {
 import { Disclosure } from "@headlessui/react";
 import { MyDisclosure } from "./MyDisclosure";
 import Link from "next/link";
+import { SliderSkeleton } from "@/components/ui/SliderSkeleton";
+import { CardSkeleton } from "@/components/ui/CardSkeleton";
 
 const PlantItem = ({ slug }) => {
   const {
@@ -44,7 +46,17 @@ const PlantItem = ({ slug }) => {
       {plantItemError ? (
         <p>Hubo un error al cargar info sobre esta planta</p>
       ) : plantItemLoading ? (
-        <div> Cargando... </div>
+        <>
+        <SliderSkeleton/>
+        <section className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2  p-5 ">
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        <CardSkeleton/>
+        </section>
+        </>
       ) : (
         <section>
           <header className="flex p-5 col gap-3 items-center w-full text-4xl sticky top-0 bg-white z-30">
