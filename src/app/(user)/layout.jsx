@@ -2,6 +2,7 @@ import "@/globals.css";
 import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
 import SideNavbar from "./home/SideNavbar";
+import Header from "@/components/ui/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es" className="scroll-smooth">
       <body className={inter.className + " bg-white max-w-screen-[1920px] mx-auto"}>
+        <Header />
         <Providers>
           <section className="flex">
           <SideNavbar />

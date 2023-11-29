@@ -54,7 +54,7 @@ export function PostCard({ data, session}) {
   }
 
   return (
-    <section className="border dark:border-white/20 p-5 max-sm:py-4 rounded-xl flex flex-col gap-4">
+    <section className="border dark:border-white/20 p-5 max-sm:py-4 rounded-3xl flex flex-col gap-4">
       <ModalMessage show={show} setShow={setShow} text={"¿Estas seguro que queres borrar este Post?"} action={handleDelete} status={deletePost.status === "pending"} />
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
@@ -83,10 +83,10 @@ export function PostCard({ data, session}) {
             data.creator.username === session?.username?
             <button
               disabled={deletePost.status === "pending"}
-              className="text-red-700"
+              className="danger py-1.5 px-2.5 rounded-xl text-sm"
               onClick={() => setShow(!show)}
             >
-              <FaTrashAlt size={20} />
+              Borrar
             </button>
             :
             null
