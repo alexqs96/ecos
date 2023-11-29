@@ -6,6 +6,7 @@ import { AiOutlineLoading } from 'react-icons/ai';
 import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer'
 import { Fragment, useEffect } from 'react';
+import { PostSkeleton } from '../ui/PostSkeleton';
 
 export function Posts({query}){
   const { ref, inView } = useInView()
@@ -53,8 +54,7 @@ export function Posts({query}){
     {
       status === 'pending'?
       <section className="grid place-content-center place-items-center font-semibold py-10 gap-5">
-        <AiOutlineLoading size={24} className="animate-spin" />
-        Cargando Publicaciones
+        <PostSkeleton/>
       </section>
       :
       <>
