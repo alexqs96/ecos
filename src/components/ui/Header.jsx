@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <>
-    <header className="p-3 bg-green-500 flex items-center justify-between gap-5 sticky top-0 z-50">
+    <header className="p-3 bg-green-500 flex items-center justify-between gap-5 sticky top-0 z-50 sm:hidden">
       <Link
         href="/home"
         className='flex items-center gap-1'
