@@ -13,7 +13,7 @@ export default function PostShare({photo, username, createdAt, content, images})
         className="flex items-center gap-2 mb-2"
       >
         <Image
-          className="object-cover rounded-full h-fit"
+          className="object-cover rounded-full h-fit aspect-square"
           width={38}
           height={38}
           src={photo || "/img/profile_default.webp"}

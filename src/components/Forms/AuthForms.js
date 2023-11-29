@@ -53,7 +53,7 @@ export function SignInForm({ callbackUrl }) {
 
   return (
     <>
-      <section className="flex items-center sm:w-3/4 max-sm:w-full ">
+      <section className="flex items-center">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-2 max-w-xs w-[100%] h-fit p-8 rounded-2xl dark:bg-white/10 mt-5 shadow-xl mx-auto"
@@ -110,7 +110,7 @@ export function SignInForm({ callbackUrl }) {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="bg-[#D642C0] text-white dark:bg-white dark:text-black lg:py-3 md:py-1.5 px-3.5 mt-2 rounded-full"
+            className="bg-[#D642C0] text-white dark:bg-white dark:text-black lg:py-3 py-1.5 px-3.5 mt-2 rounded-full"
           >
             {isSubmitting ? "Ingresando.." : "Ingresar"}
           </button>
@@ -175,7 +175,7 @@ export function SignUpForm() {
 
   return (
     <>
-      <section className="flex items-center w-full  max-w-md">
+      <section className="flex items-center">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-2 max-w-xs w-[100%] h-fit p-8 rounded-2xl dark:bg-white/10 mt-5 shadow-xl mx-auto"
@@ -279,7 +279,7 @@ export function SignUpForm() {
             disabled={isSubmitting}
             type="submit"
             className={
-              "/ bg-[#D642C0] text-white dark:bg-white dark:text-black lg:py-3 md:py-1.5 px-3.5 mt-2 rounded-full" +
+              "/ bg-[#D642C0] text-white dark:bg-white dark:text-black lg:py-3 py-1.5 px-3.5 mt-2 rounded-full" +
               (!nextPage ? " hidden" : "")
             }
           >
@@ -290,7 +290,7 @@ export function SignUpForm() {
             type="button"
             onClick={() => setNextPage(!nextPage)}
             className={
-              "border border-[#D642C0] text-[#D642C0] hover:bg-[#D642C0] hover:text-white dark:text-black lg:py-3 md:py-1.5 px-3.5 mt-2 rounded-full " +
+              "border border-[#D642C0] text-[#D642C0] hover:bg-[#D642C0] hover:text-white dark:text-black lg:py-3 py-1.5 px-3.5 mt-2 rounded-full " +
               (!nextPage
                 ? " border border-[#D642C0] text-[#D642C0] hover:bg-[#D642C0] hover:text-white dark:bg-white dark:text-black mt-2"
                 : " border text-black dark:border-white dark:text-white")

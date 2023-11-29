@@ -3,46 +3,37 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { AiOutlineLoading } from 'react-icons/ai';
 import { EcosLogo } from '@/components/Icons';
-import MenuLanding from './MenuLanding';
 
 export default function HeaderLanding() {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
 
     return (
-        <header className="bg-green-500 h-10vh w-full flex justify-center py-2">
-        <div className="flex w-10/12 justify-between">
-            <div className="md:hidden">
-            <MenuLanding />
-            </div>
+        <header className="bg-gradient-to-t from-green-500 to-[#2bb95f] backdrop-blur-lg w-full flex justify-center py-3 sm:py-4 sticky top-0 z-50">
+            <div className="flex w-[90%] sm:w-10/12 justify-between">
+                <div className="text-white text-3xl sm:text-4xl font-bold flex items-center gap-2">
+                    <EcosLogo className="fill-white -mt-0.5" size={"1.2em"} />
+                    Ecos
+                </div>
 
-            <div className="text-white text-2xl font-bold flex items-center gap-x-3">
-            <EcosLogo className="" />
-            Ecos
+                <div className="flex items-center sm:text-xl text-white font-semibold gap-2.5 sm:gap-3">
+                    {status === 'loading' ? (
+                        <AiOutlineLoading size={24} className="animate-spin" />
+                    ) : status === 'authenticated' ? (
+                        <Link href="/home" className='text-xl'>
+                            Comunidad
+                        </Link>
+                    ) : (
+                        <>
+                            <Link href="/signup" className="text-white bg-fuchsia-400 font-bold py-1.5 sm:py-2 px-3.5 sm:px-5 rounded-xl sm:rounded-2xl">
+                                Unirme
+                            </Link>
+                            <Link href="/signin" className="text-fuchsia-400 bg-white font-bold py-1.5 sm:py-2 px-3.5 sm:px-5 rounded-xl sm:rounded-2xl">
+                                Ingresar
+                            </Link>
+                        </>
+                    )}
+                </div>
             </div>
-
-            <div className="hidden md:flex space-x-4">
-            {status === 'loading' ? (
-                <AiOutlineLoading size={24} className="animate-spin" />
-            ) : status === 'authenticated' ? (
-                <Link href="/home" className="border p-2 rounded-md">
-                Ir al inicio @{session?.user?.username}
-                </Link>
-            ) : (
-                <>
-                <button className="flex flex-col justify-center items-center gap-8 flex-shrink-0 rounded-full bg-fuchsia-400 px-10 py-3">
-                    <Link href="/signup" className="text-white font-bold">
-                    Registrarse
-                    </Link>
-                </button>
-                <button className="flex items-center justify-center flex-shrink-0 flex-col gap-8 rounded-full border border-fuchsia-800 bg-white px-10 py-3">
-                    <Link href="/signin" className="text-fuchsia-400 font-bold">
-                    Iniciar Sesión
-                    </Link>
-                </button>
-                </>
-            )}
-            </div>
-        </div>
         </header>
     );
 }

@@ -1,88 +1,77 @@
-import React from 'react';
-import Image from 'next/image';
+'use client'
+
 import { Carrousel1, Carrousel2, Carrousel3, Home1, Home2, Home3 } from '@/components/Images';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 export default function BodyLanding() {
+    const { status } = useSession();
+
     return (
-        <div className="bg-white h-90vh w-full flex flex-col items-center gap-y-14 pb-10">
+        <div className="bg-white w-full flex flex-col items-center gap-36">
 
-            <div className='w-10/12 flex space-around py-10'>
-                <div className="w-full md:w-7/12 content-items-center">
-                    <p className='text-black font-semibold text-4xl md:text-5xl md:m-8'>Entra a la comunidad, intercambia tus cultivos e infórmate para ser el mejor cultivador. </p>
-                </div>
+            <div className='grid md:grid-cols-2 py-10 w-10/12 mx-auto items-center gap-10 mt-16'>
+                <h1 className='text-black font-semibold text-5xl appear'>Entra a la comunidad, intercambia tus cultivos e infórmate para ser el mejor cultivador. </h1>
 
-                <div className="hidden md:block w-4/12">
-                    <Home1 size={480} className="fluid"/>
+                <div className="hidden md:flex items-center justify-center appear">
+                    <Home1 size={"85%"}/>
                 </div>
             </div>
 
-            <div className='w-10/12 flex justify-evenly'>
-                <div className='border-2 shadow-2xl rounded-lg w-10/12 md:w-3/12 flex flex-col place-items-center text-center pb-8'>
-                    <p className='text-green-800 p-4 text-xl font-semibold'>¡Conecta en comunidad!</p>
-                    <Carrousel1 size={250}/>
+            <div className='w-[85%] sm:w-[95%] lg:w-10/12 flex max-md:flex-col justify-between mx-auto gap-10 sm:gap-5'>
+                <div
+                    style={{ animationDelay: `${2 * 0.15}s` }}
+                    className='border shadow-2xl appear rounded-3xl flex flex-col place-items-center text-center p-10 sm:p-8 gap-5'
+                >
+                    <p className='text-green-800 text-[2.5em] md:text-3xl font-semibold'>¡Conecta en comunidad!</p>
+                    <Carrousel1 size={"100%"} />
                 </div>
-                <div  className='border-2 shadow-2xl rounded-lg w-10/12 md:w-3/12 flex flex-col place-items-center text-center pb-8'>
-                    <p className='text-green-800 p-4 text-xl font-semibold'>¡Crea tu huerta!</p>
-                    <Carrousel2 size={250} className=""/>
+                <div
+                    style={{ animationDelay: `${4 * 0.15}s` }}
+                    className='border shadow-2xl appear rounded-3xl flex flex-col place-items-center text-center p-10 sm:p-8 gap-5'
+                >
+                    <p className='text-green-800 text-[2.5em] md:text-3xl font-semibold'>¡Crea tu huerta!</p>
+                    <Carrousel2 size={"100%"} />
                 </div>
-                <div  className='border-2 shadow-2xl rounded-lg w-10/12 md:w-3/12 flex flex-col place-items-center text-center pb-8'>
-                    <p className='text-green-800 p-4 text-xl font-semibold'>¡Aprende sobre plantas!</p>
-                    <Carrousel3 size={250}/>
-                </div>
-            </div>
-
-            <div className='w-10/12 flex flex-col md:flex-row space-around'>
-                <div className='w-full md:w-6/12 mb-8 md:mb-0 md:flex md:flex-col md:items-center'>
-                    <h2 className='text-black m-8 text-4xl font-semibold'>Cultiva e intercambia</h2>
-                    <p className=' m-8 text-2xl text-gray-500'>¡Convierte tu pasión por la jardinería en conexiones reales! Comparte, intercambia y crece junto a otros amantes de las plantas en nuestra comunidad. Comienza hoy a intercambiar tus plantas, frutas y verduras favoritas.</p>
-                    <div className=' md:inline flex flex-col justify-center items-center'>
-                        <button className="gap-8 flex-shrink-0 rounded-full bg-green-500 text-xl p-4">
-                            <p>¡Comienza a intercambiar!</p>
-                        </button>
-                    </div>
-                </div>
-                <div className='md:w-6/12 p-4 flex flex-col place-items-center gap-5'>
-                    <Home2 size={400} />
-                    <div className='md:hidden flex flex-col justify-center items-center '>
-                        <button className="gap-8 flex-shrink-0 rounded-full bg-green-500 text-xl p-4">
-                            <p>¡Comienza a intercambiar!</p>
-                        </button>
-                    </div>
+                <div
+                    style={{ animationDelay: `${6 * 0.15}s` }}
+                    className='border shadow-2xl appear rounded-3xl flex flex-col place-items-center text-center p-10 sm:p-8 gap-5'
+                >
+                    <p className='text-green-800 text-[2.5em] md:text-3xl font-semibold'>¡Aprende sobre plantas!</p>
+                    <Carrousel3 size={"100%"} />
                 </div>
             </div>
 
-
-            <div className='w-10/12 flex flex-col md:flex-row space-around'>
-
-            <div className=' md:inline w-6/12 p-4 flex flex-col place-items-center gap-5'>
-                    <Home3 size={400} />
+            <div className='w-10/12 grid grid-cols-1 md:grid-cols-2 mx-auto items-center gap-20'>
+                <div className='w-full flex flex-col gap-5 h-fit my-auto'>
+                    <h2 className='text-black text-5xl font-semibold'>Cultiva e intercambia</h2>
+                    <p className='text-2xl text-gray-500'>¡Convierte tu pasión por la jardinería en conexiones reales! Comparte, intercambia y crece junto a otros amantes de las plantas en nuestra comunidad. Comienza hoy a intercambiar tus plantas, frutas y verduras favoritas.</p>
+                    <Link href={status === "authenticated" ? "/home" : "/signin"} className="rounded-2xl bg-green-500 text-white font-semibold text-xl py-3 px-6 w-fit">
+                        ¡Comienza a intercambiar!
+                    </Link>
                 </div>
+                <Home2 size={"100%"} className="max-sm:-order-1" />
+            </div>
 
-                <div className='w-full md:w-6/12 mb-8 md:mb-0 md:flex md:flex-col md:items-center'>
-                    <h2 className=' m-8 text-4xl font-semibold'>Infórmate y diviértete cultivando</h2>
-                    <p className=' m-8 text-2xl text-gray-500'>Descubre un mundo de diversión y aprendizaje en tu jardín virtual. Sumérgete en la magia de la agricultura, comparte tus experiencias y descubre nuevos trucos. Cultivar nunca fue tan emocionante. ¡Únete a la comunidad hoy!</p>
-                    <div className=' md:inline flex flex-col justify-center items-center'>
-                        <button className="gap-8 flex-shrink-0 rounded-full bg-green-500 text-xl p-4">
-                            <p>¡Comienza a intercambiar!</p>
-                        </button>
-                    </div>
-                </div>
+            <div className='w-10/12 grid grid-cols-1 md:grid-cols-2 mx-auto items-center gap-20'>
+                <Home3 size={"100%"} />
 
-                <div className='md:hidden p-4 flex flex-col place-items-center gap-5'>
-                    <Image
-                        src="/img/Landing6.png"
-                        width={400}
-                        height={400}
-                        alt="Picture of the plant"
-                        unoptimized
-                    />
-                    <div className='md:hidden flex flex-col justify-center items-center '>
-                        <button className="gap-8 flex-shrink-0 rounded-full bg-green-500 text-xl p-4">
-                            <p>¡Comienza a intercambiar!</p>
-                        </button>
-                    </div>
+                <div className='w-full flex flex-col gap-5 h-fit my-auto'>
+                    <h2 className='text-black text-5xl font-semibold'>Infórmate y diviértete cultivando</h2>
+                    <p className='text-2xl text-gray-500'>Descubre un mundo de diversión y aprendizaje en tu jardín virtual. Sumérgete en la magia de la agricultura, comparte tus experiencias y descubre nuevos trucos. Cultivar nunca fue tan emocionante. ¡Únete a la comunidad hoy!.</p>
+                    <Link href={status === "authenticated" ? "/home" : "/signin"} className="rounded-2xl bg-green-500 text-white font-semibold text-xl py-3 px-6 w-fit">
+                        ¡Explora nuestra comunidad!
+                    </Link>
                 </div>
             </div>
+
+            <footer className='my-10 flex max-sm:flex-col justify-between items-center gap-5 w-10/12 font-medium'>
+                <span>© {new Date().getFullYear()} ~ Fundación Pescar</span>
+
+                <div className='flex flex-col gap-1 text-right text-sm'>
+                    <em>Creando un sonido que persista en el tiempo.</em>
+                </div>
+            </footer>
         </div>
     );
 }
