@@ -21,12 +21,12 @@ export function ModalMessage({ show, setShow, text, action, status }) {
     <Transition appear show={show} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-10 overflow-y-auto"
+        className="fixed inset-0 z-10 overflow-y-auto bg-black/60"
         onClose={() => {
           setShow(false);
         }}
       >
-        <div className="min-h-screen text-center bg-black/60">
+        <div className="min-h-screen text-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -50,7 +50,7 @@ export function ModalMessage({ show, setShow, text, action, status }) {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block overflow-hidden w-full max-w-[70%] sm:max-w-xs p-6 text-center bg-white align-middle shadow-xl rounded-2xl">
+            <div className="inline-block overflow-hidden w-full max-w-[70%] sm:max-w-xs px-6 text-center bg-white align-middle shadow-xl rounded-2xl">
               <span className="font-medium">{text}</span>
               <div className="grid grid-cols-2 items-center gap-4 mt-5 w-fit mx-auto">
                 <button
@@ -93,7 +93,7 @@ export function Modal({show, setShow, children}) {
           setShow(false);
         }}
       >
-        <div className="min-h-screen flex justify-center items-center bg-black/60">
+        <div className="min-h-screen py-10 flex justify-center items-center bg-black/60">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -117,7 +117,7 @@ export function Modal({show, setShow, children}) {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-          <div className="inline-block overflow-hidden w-full max-w-[80%] sm:max-w-md -mb-10">
+          <div className="inline-block overflow-hidden w-full max-w-[80%] sm:max-w-md py-10 -mb-10">
           {children}
           </div>
           </Transition.Child>
