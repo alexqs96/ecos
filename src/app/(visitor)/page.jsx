@@ -2,6 +2,7 @@
 
 import HeaderLanding from "./landingPage/HeaderLanding";
 import BodyLanding from "./landingPage/BodyLanding";
+import { TopNavbarMobile } from "@/components/TopNavbarMobile";
 
 export default function Landing() {
 

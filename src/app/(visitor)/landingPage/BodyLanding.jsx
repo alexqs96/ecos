@@ -14,7 +14,7 @@ export default function BodyLanding() {
                 <h1 className='text-black font-semibold text-5xl appear'>Entra a la comunidad, intercambia tus cultivos e infórmate para ser el mejor cultivador. </h1>
 
                 <div className="hidden md:flex items-center justify-center appear">
-                    <Home1 size={"85%"} />
+                    <Home1 size={"85%"}/>
                 </div>
             </div>
 
