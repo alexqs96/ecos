@@ -117,7 +117,7 @@ export function Modal({show, setShow, children}) {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-          <div className="inline-block overflow-hidden w-full max-w-[80%] sm:max-w-md py-10 -mb-10">
+          <div className="inline-block overflow-hidden w-full max-w-[90%] sm:max-w-md py-10 -mb-10">
           {children}
           </div>
           </Transition.Child>
