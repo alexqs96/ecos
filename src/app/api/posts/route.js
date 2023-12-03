@@ -40,7 +40,7 @@ export async function GET(req){
     })
   } catch (error) {
     console.log("/posts error: "+error);
-    return NextResponse.json({},{
+    return NextResponse.json([],{
       status: 500,
       statusText: SERVER_ERROR
     })

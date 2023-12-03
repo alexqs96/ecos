@@ -4,8 +4,10 @@ import { PostForm } from '@/components/Posts/Posts.form'
 import { Toaster } from 'react-hot-toast'
 import { Posts } from '@/components/Posts/Posts'
 import ContactsSidebar from '@/components/ContactsSidebar'
-import { PiHouseFill } from 'react-icons/pi'
+import { PiHouseFill, PiSignIn } from 'react-icons/pi'
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
+import { CommunityIcon } from '@/components/Icons'
 
 export default function HomePage() {
   const { data: session, status } = useSession()
@@ -30,7 +32,22 @@ export default function HomePage() {
               }
             </>
             :
-            null
+            <>
+              <Link
+                href="/signin"
+                className="group bg-green-500 w-fit mx-auto flex gap-3 items-center text-left px-6 py-4 rounded-full font-semibold text-white text-lg transition duration-150"
+              >
+                <PiSignIn size={28} />
+                <span className="w-[8ch]">Ingresar</span>
+              </Link>
+              <Link
+                href="/signup"
+                className="group bg-green-500 w-fit mx-auto flex gap-3 items-center text-left px-6 py-4 rounded-full font-semibold text-white text-lg transition duration-150"
+              >
+                <CommunityIcon className="fill-current" size={28} />
+                <span className="w-[8ch]">Unirme</span>
+              </Link>
+            </>
         }
       </section>
       <ContactsSidebar />

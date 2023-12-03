@@ -1,11 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { useRef, useState } from 'react'
-import { EcosLogo, GardenIcon, MessageIcon, PlantIcon, ProfileIcon, TradeIcon } from '../Icons'
-import { PiHouseFill } from 'react-icons/pi'
+import { useState } from 'react'
+import { CommunityIcon, EcosLogo, GardenIcon, LogoutIcon, MessageIcon, PlantIcon, ProfileIcon, TradeIcon } from '../Icons'
+import { PiHouseFill, PiSignIn } from 'react-icons/pi'
 import { usePathname } from 'next/navigation'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 const SIDEBAR_NAV_LINKS = [
   {
@@ -76,6 +76,7 @@ const Header = () => {
         <div className='flex flex-col gap-3 mt-20 mx-8 pb-10 text-white'>
         {
           openMenu?
+          session?.user ?
           <>
             <EcosLogo size={"8em"} className={"fill-white fixed bottom-4 right-4 opacity-10"} />
 
@@ -99,6 +100,31 @@ const Header = () => {
                 )
               })
             }
+
+              <button
+                onClick={() => signOut()}
+                className="group w-fit mx-auto flex gap-3 items-center text-left px-5 py-4 rounded-full mt-10 hover:bg-white hover:text-[#27b53C] font-semibold text-white text-lg transition duration-150"
+              >
+                <LogoutIcon size={28} className="fill-white group-hover:fill-[#27b53C]" />
+                <span className="w-[13ch]">Cerrar Sesión</span>
+              </button>
+          </>
+          :
+          <>
+            <Link
+              href="/signin"
+              className="mt-4 group w-fit mx-auto flex gap-3 items-center text-left px-6 py-4 rounded-full hover:bg-white hover:text-[#27b53C] font-semibold text-white text-lg transition duration-150"
+            >
+              <PiSignIn size={28} />
+              <span className="w-[8ch]">Ingresar</span>
+            </Link>
+            <Link
+              href="/signup"
+              className="-mt-2 group w-fit mx-auto flex gap-3 items-center text-left px-6 py-4 rounded-full hover:bg-white hover:text-[#27b53C] font-semibold text-white text-lg transition duration-150"
+            >
+              <CommunityIcon className="fill-current" size={28} />
+              <span className="w-[8ch]">Unirme</span>
+            </Link>
           </>
           :
           null
