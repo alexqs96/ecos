@@ -126,13 +126,13 @@ export function SignInForm({ callbackUrl }) {
           </Link>
         </form>
 
-        {/* <button
+      <button
         type="button"
         className="border p-2 rounded-md block h-fit mt-auto"
         onClick={() => InvitedMode()}
       >
         Ingresar como Invitado
-      </button> */}
+      </button>
       </section>
     </>
   );
