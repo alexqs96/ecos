@@ -124,15 +124,15 @@ export function SignInForm({ callbackUrl }) {
               Regístrate aqui.
             </strong>
           </Link>
-        </form>
 
-      <button
-        type="button"
-        className="border p-2 rounded-md block h-fit mt-auto"
-        onClick={() => InvitedMode()}
-      >
-        Ingresar como Invitado
-      </button>
+          <button
+            type="button"
+            className="border py-1.5 px-2.5 rounded-md text-sm w-fit mx-auto"
+            onClick={() => InvitedMode()}
+          >
+            Ingresar como Invitado
+          </button>
+        </form>
       </section>
     </>
   );

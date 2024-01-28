@@ -12,12 +12,16 @@ import { CommunityIcon } from '@/components/Icons'
 export default function HomePage() {
   const { data: session, status } = useSession()
   
+  if (status === "loading") {
+    return null
+  }
+
   return (
     <>
       <Toaster />
       <section className='grid gap-5 w-full mb-10 p-5'>
         {
-          session?.user ?
+          session?.user?
             <>
               <h1 className="max-sm:hidden text-3xl font-semibold flex items-center gap-2 text-[#27b53C]">
                 <PiHouseFill size={"1.2em"} className={"fill-[#27b53C]"} />
